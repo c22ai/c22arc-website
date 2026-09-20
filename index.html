@@ -212,14 +212,26 @@
   <div class="footer-copy">© 2026 Customer22 LLC. All rights reserved. IP protected under C22Arc proprietary licensing.</div>
   <div class="footer-stack">Built on <span>Vercel · Supabase · GitHub</span></div>
 </footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
+const SUPABASE_URL = 'https://pzghmurcwxputubvlyyb.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB6Z2htdXJjd3hwdXR1YnZseXliIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk5MjA5MDUsImV4cCI6MjEwNTQ5NjkwNX0.udHWFQi-wWegPuiUZGSL5N1wlMtF7mNzNl6hvpWwlZA';
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
 document.getElementById('inquiryForm').addEventListener('submit', async function(e) {
   e.preventDefault();
   const btn = this.querySelector('.form-submit');
   const success = document.getElementById('formSuccess');
   btn.textContent = 'Sending...'; btn.disabled = true;
   try {
-    await new Promise(r => setTimeout(r, 800));
+    const { error } = await supabase.from('inquiries').insert({
+      name: document.getElementById('name').value,
+      email: document.getElementById('email').value,
+      org: document.getElementById('org').value || null,
+      service: document.getElementById('service').value || null,
+      message: document.getElementById('message').value
+    });
+    if (error) throw error;
     this.style.display = 'none'; success.style.display = 'block';
   } catch(err) {
     btn.textContent = 'Send Inquiry →'; btn.disabled = false;
