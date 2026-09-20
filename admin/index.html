@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>C22Arc — Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --base: #080B14; --surface: #0F172A; --surface2: #1E293B; --surface3: #2D3B52;
+  --accent: #2563EB; --accent-light: #3B82F6; --accent-dim: rgba(37,99,235,0.12);
+  --green: #22C55E; --yellow: #EAB308; --red: #EF4444;
+  --white: #FFFFFF; --text: #E2E8F0; --muted: #64748B; --border: rgba(255,255,255,0.07);
+  --font-display: 'Syne', sans-serif; --font-body: 'Inter', sans-serif; --font-mono: 'JetBrains Mono', monospace;
+}
+html, body { height: 100%; }
+body { background: var(--base); color: var(--text); font-family: var(--font-body); font-size: 14px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+
+/* ── Auth Screen ── */
+.auth-screen { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 2rem; }
+.auth-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2.5rem; width: 100%; max-width: 400px; text-align: center; }
+.auth-logo { font-family: var(--font-display); font-weight: 800; font-size: 1.5rem; color: var(--white); margin-bottom: 0.25rem; }
+.auth-logo span { color: var(--accent-light); }
+.auth-subtitle { color: var(--muted); font-size: 0.875rem; margin-bottom: 2rem; }
+.auth-input { width: 100%; padding: 0.75rem 1rem; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; color: var(--white); font-family: var(--font-body); font-size: 0.9375rem; outline: none; transition: border-color 0.2s; margin-bottom: 1rem; }
+.auth-input:focus { border-color: var(--accent); }
+.auth-btn { width: 100%; padding: 0.75rem; background: var(--accent); color: var(--white); border: none; border-radius: 8px; font-family: var(--font-body); font-weight: 600; font-size: 0.9375rem; cursor: pointer; transition: background 0.2s; }
+.auth-btn:hover { background: var(--accent-light); }
+.auth-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.auth-msg { font-size: 0.8125rem; margin-top: 1rem; min-height: 1.25rem; }
+.auth-msg.success { color: var(--green); }
+.auth-msg.error { color: var(--red); }
+
+/* ── Admin Shell ── */
+.admin-shell { display: none; height: 100vh; }
+.admin-shell.active { display: grid; grid-template-columns: 220px 1fr; grid-template-rows: 56px 1fr; }
+
+/* Top bar */
+.topbar { grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; padding: 0 1.5rem; background: var(--surface); border-bottom: 1px solid var(--border); }
+.topbar-left { display: flex; align-items: center; gap: 1rem; }
+.topbar-logo { font-family: var(--font-display); font-weight: 800; font-size: 1.125rem; color: var(--white); }
+.topbar-logo span { color: var(--accent-light); }
+.topbar-badge { font-size: 0.6875rem; font-weight: 600; color: var(--accent-light); background: var(--accent-dim); padding: 0.2rem 0.5rem; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.05em; }
+.topbar-right { display: flex; align-items: center; gap: 1rem; }
+.topbar-user { font-size: 0.8125rem; color: var(--muted); }
+.topbar-btn { background: none; border: 1px solid var(--border); color: var(--muted); padding: 0.375rem 0.75rem; border-radius: 6px; font-size: 0.75rem; cursor: pointer; transition: all 0.2s; }
+.topbar-btn:hover { border-color: var(--red); color: var(--red); }
+
+/* Sidebar */
+.sidebar { background: var(--surface); border-right: 1px solid var(--border); padding: 1rem 0; overflow-y: auto; }
+.sidebar-section { padding: 0 0.75rem; margin-bottom: 1.5rem; }
+.sidebar-label { font-size: 0.6875rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; padding: 0 0.75rem; margin-bottom: 0.5rem; }
+.sidebar-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0.75rem; border-radius: 6px; color: var(--muted); cursor: pointer; transition: all 0.15s; font-size: 0.8125rem; font-weight: 500; }
+.sidebar-item:hover { background: var(--surface2); color: var(--text); }
+.sidebar-item.active { background: var(--accent-dim); color: var(--accent-light); }
+.sidebar-icon { width: 18px; height: 18px; flex-shrink: 0; opacity: 0.7; }
+.sidebar-item.active .sidebar-icon { opacity: 1; }
+.sidebar-badge { margin-left: auto; font-size: 0.6875rem; font-weight: 600; background: var(--accent); color: var(--white); padding: 0.1rem 0.4rem; border-radius: 4px; min-width: 18px; text-align: center; }
+
+/* Main content */
+.main { overflow-y: auto; background: var(--base); }
+.panel { display: none; height: 100%; }
+.panel.active { display: flex; flex-direction: column; }
+
+/* ── Inquiries Panel ── */
+.inquiries-header { padding: 1.5rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+.inquiries-header h2 { font-family: var(--font-display); font-weight: 700; font-size: 1.25rem; color: var(--white); }
+.filter-tabs { display: flex; gap: 0.25rem; background: var(--surface); border-radius: 6px; padding: 0.25rem; }
+.filter-tab { padding: 0.375rem 0.75rem; border-radius: 4px; font-size: 0.75rem; font-weight: 500; color: var(--muted); cursor: pointer; border: none; background: none; transition: all 0.15s; }
+.filter-tab.active { background: var(--accent-dim); color: var(--accent-light); }
+.inquiries-list { flex: 1; overflow-y: auto; padding: 0.75rem; }
+.inquiry-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; margin-bottom: 0.5rem; cursor: pointer; transition: border-color 0.2s; }
+.inquiry-card:hover { border-color: var(--accent); }
+.inquiry-card.unread { border-left: 3px solid var(--accent-light); }
+.inquiry-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem; }
+.inquiry-name { font-weight: 600; color: var(--white); font-size: 0.875rem; }
+.inquiry-time { font-size: 0.75rem; color: var(--muted); }
+.inquiry-org { font-size: 0.75rem; color: var(--accent-light); margin-bottom: 0.375rem; }
+.inquiry-preview { font-size: 0.8125rem; color: var(--muted); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.inquiry-meta { display: flex; gap: 0.5rem; margin-top: 0.5rem; }
+.inquiry-tag { font-size: 0.6875rem; padding: 0.15rem 0.4rem; border-radius: 3px; font-weight: 500; }
+.tag-new { background: rgba(37,99,235,0.15); color: var(--accent-light); }
+.tag-contacted { background: rgba(34,197,94,0.15); color: var(--green); }
+.tag-archived { background: rgba(100,116,139,0.15); color: var(--muted); }
+
+/* Inquiry detail */
+.inquiry-detail { display: none; padding: 2rem; max-width: 640px; }
+.inquiry-detail.active { display: block; }
+.inquiry-detail h3 { font-family: var(--font-display); font-weight: 700; color: var(--white); margin-bottom: 0.25rem; }
+.inquiry-detail-email { color: var(--accent-light); font-size: 0.875rem; margin-bottom: 1.5rem; }
+.inquiry-field { margin-bottom: 1rem; }
+.inquiry-field-label { font-size: 0.6875rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem; }
+.inquiry-field-value { color: var(--text); font-size: 0.9375rem; line-height: 1.6; }
+.inquiry-actions { display: flex; gap: 0.5rem; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+.action-btn { padding: 0.5rem 1rem; border-radius: 6px; font-size: 0.8125rem; font-weight: 600; cursor: pointer; border: none; transition: all 0.2s; }
+.action-btn.primary { background: var(--accent); color: var(--white); }
+.action-btn.primary:hover { background: var(--accent-light); }
+.action-btn.ghost { background: none; border: 1px solid var(--border); color: var(--text); }
+.action-btn.ghost:hover { border-color: var(--text); }
+
+/* ── Arc Chat Panel ── */
+.chat-container { display: flex; flex-direction: column; height: 100%; }
+.chat-header { padding: 1rem 1.5rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+.chat-header h2 { font-family: var(--font-display); font-weight: 700; font-size: 1.25rem; color: var(--white); }
+.chat-sessions { display: flex; gap: 0.5rem; align-items: center; }
+.chat-session-btn { padding: 0.375rem 0.75rem; border-radius: 6px; font-size: 0.75rem; font-weight: 500; color: var(--muted); background: none; border: 1px solid var(--border); cursor: pointer; transition: all 0.15s; }
+.chat-session-btn:hover { border-color: var(--accent); color: var(--accent-light); }
+.chat-session-btn.active { background: var(--accent-dim); border-color: var(--accent); color: var(--accent-light); }
+.chat-messages { flex: 1; overflow-y: auto; padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; }
+.chat-msg { max-width: 80%; padding: 0.75rem 1rem; border-radius: 10px; font-size: 0.875rem; line-height: 1.6; }
+.chat-msg.user { align-self: flex-end; background: var(--accent); color: var(--white); border-bottom-right-radius: 4px; }
+.chat-msg.assistant { align-self: flex-start; background: var(--surface); color: var(--text); border-bottom-left-radius: 4px; border: 1px solid var(--border); }
+.chat-msg.assistant pre { background: var(--surface2); padding: 0.5rem 0.75rem; border-radius: 4px; overflow-x: auto; margin: 0.5rem 0; font-family: var(--font-mono); font-size: 0.8125rem; }
+.chat-msg.assistant code { font-family: var(--font-mono); font-size: 0.8125rem; }
+.chat-msg .msg-time { font-size: 0.6875rem; color: rgba(255,255,255,0.5); margin-top: 0.375rem; display: block; }
+.chat-msg.assistant .msg-time { color: var(--muted); }
+.chat-typing { align-self: flex-start; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 0.75rem 1rem; display: none; }
+.chat-typing.active { display: flex; gap: 0.375rem; align-items: center; }
+.typing-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--muted); animation: typingBounce 1.4s ease-in-out infinite; }
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes typingBounce { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-4px); } }
+.chat-input-area { padding: 1rem 1.5rem; border-top: 1px solid var(--border); display: flex; gap: 0.75rem; align-items: flex-end; }
+.chat-input { flex: 1; resize: none; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 0.75rem 1rem; color: var(--white); font-family: var(--font-body); font-size: 0.875rem; line-height: 1.5; outline: none; min-height: 42px; max-height: 200px; transition: border-color 0.2s; }
+.chat-input:focus { border-color: var(--accent); }
+.chat-input::placeholder { color: var(--muted); }
+.chat-send { width: 42px; height: 42px; border-radius: 8px; background: var(--accent); border: none; color: var(--white); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; flex-shrink: 0; }
+.chat-send:hover { background: var(--accent-light); }
+.chat-send:disabled { opacity: 0.4; cursor: not-allowed; }
+.chat-send svg { width: 18px; height: 18px; }
+.chat-welcome { text-align: center; color: var(--muted); padding: 4rem 2rem; }
+.chat-welcome h3 { font-family: var(--font-display); font-weight: 700; font-size: 1.5rem; color: var(--white); margin-bottom: 0.5rem; }
+.chat-welcome p { max-width: 400px; margin: 0 auto; font-size: 0.875rem; line-height: 1.7; }
+
+/* ── Dashboard Panel ── */
+.dashboard { padding: 1.5rem; }
+.dashboard h2 { font-family: var(--font-display); font-weight: 700; font-size: 1.25rem; color: var(--white); margin-bottom: 1.5rem; }
+.stat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.75rem; margin-bottom: 2rem; }
+.stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; }
+.stat-card-label { font-size: 0.75rem; color: var(--muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; }
+.stat-card-value { font-family: var(--font-display); font-size: 2rem; font-weight: 700; color: var(--white); margin-top: 0.25rem; }
+.stat-card-sub { font-size: 0.75rem; color: var(--muted); margin-top: 0.25rem; }
+
+/* Empty state */
+.empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 4rem 2rem; color: var(--muted); text-align: center; }
+.empty-state h3 { font-family: var(--font-display); color: var(--white); margin-bottom: 0.5rem; }
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .admin-shell.active { grid-template-columns: 1fr; }
+  .sidebar { display: none; }
+  .topbar { padding: 0 1rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ Auth Screen ═══ -->
+<div class="auth-screen" id="authScreen">
+  <div class="auth-card">
+    <div class="auth-logo">C22<span>Arc</span></div>
+    <div class="auth-subtitle">Admin Console</div>
+    <form id="authForm">
+      <input class="auth-input" type="email" id="authEmail" placeholder="Email address" required autocomplete="email">
+      <button class="auth-btn" type="submit" id="authBtn">Send Magic Link</button>
+    </form>
+    <div class="auth-msg" id="authMsg"></div>
+  </div>
+</div>
+
+<!-- ═══ Admin Shell ═══ -->
+<div class="admin-shell" id="adminShell">
+  <!-- Top bar -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="topbar-logo">C22<span>Arc</span></div>
+      <span class="topbar-badge">Admin</span>
+    </div>
+    <div class="topbar-right">
+      <span class="topbar-user" id="userEmail"></span>
+      <button class="topbar-btn" id="logoutBtn">Sign Out</button>
+    </div>
+  </div>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-label">Overview</div>
+      <div class="sidebar-item active" data-panel="dashboard">
+        <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        Dashboard
+      </div>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">Operations</div>
+      <div class="sidebar-item" data-panel="inquiries">
+        <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Inquiries
+        <span class="sidebar-badge" id="inquiryCount">0</span>
+      </div>
+      <div class="sidebar-item" data-panel="chat">
+        <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Arc Chat
+      </div>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">Coming Soon</div>
+      <div class="sidebar-item" style="opacity:0.4; cursor:default;">
+        <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Morning Brief
+      </div>
+      <div class="sidebar-item" style="opacity:0.4; cursor:default;">
+        <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        SOW Generator
+      </div>
+      <div class="sidebar-item" style="opacity:0.4; cursor:default;">
+        <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 7 8 11.7z"/></svg>
+        Geo Intel
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main">
+    <!-- Dashboard Panel -->
+    <div class="panel active" id="panel-dashboard">
+      <div class="dashboard">
+        <h2>Dashboard</h2>
+        <div class="stat-grid">
+          <div class="stat-card">
+            <div class="stat-card-label">Total Inquiries</div>
+            <div class="stat-card-value" id="statTotal">—</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-label">New / Unread</div>
+            <div class="stat-card-value" id="statNew">—</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-label">Contacted</div>
+            <div class="stat-card-value" id="statContacted">—</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-label">Chat Sessions</div>
+            <div class="stat-card-value" id="statSessions">—</div>
+          </div>
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1.5rem;">
+          <h3 style="font-family:var(--font-display);font-weight:700;color:var(--white);font-size:1rem;margin-bottom:0.75rem;">Quick Actions</h3>
+          <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+            <button class="action-btn primary" onclick="switchPanel('inquiries')">View Inquiries</button>
+            <button class="action-btn primary" onclick="switchPanel('chat')">Open Arc Chat</button>
+            <a href="/" class="action-btn ghost" target="_blank" style="text-decoration:none;">View Live Site →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Inquiries Panel -->
+    <div class="panel" id="panel-inquiries">
+      <div class="inquiries-header">
+        <h2>Inquiries</h2>
+        <div class="filter-tabs">
+          <button class="filter-tab active" data-filter="all">All</button>
+          <button class="filter-tab" data-filter="new">New</button>
+          <button class="filter-tab" data-filter="contacted">Contacted</button>
+          <button class="filter-tab" data-filter="archived">Archived</button>
+        </div>
+      </div>
+      <div style="display:flex;flex:1;overflow:hidden;">
+        <div class="inquiries-list" id="inquiriesList" style="flex:1;min-width:320px;">
+          <div class="empty-state" id="inquiriesEmpty">
+            <h3>No inquiries yet</h3>
+            <p style="font-size:0.8125rem;">New form submissions from c22arc.com will appear here.</p>
+          </div>
+        </div>
+        <div class="inquiry-detail" id="inquiryDetail" style="flex:1;border-left:1px solid var(--border);overflow-y:auto;"></div>
+      </div>
+    </div>
+
+    <!-- Arc Chat Panel -->
+    <div class="panel" id="panel-chat">
+      <div class="chat-container">
+        <div class="chat-header">
+          <h2>Arc Chat</h2>
+          <div class="chat-sessions">
+            <button class="chat-session-btn active" id="newSessionBtn">+ New Session</button>
+          </div>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+          <div class="chat-welcome">
+            <h3>Arc Chat</h3>
+            <p>Your AI assistant for C22Arc operations. Ask about inquiries, draft SOWs, research prospects, or discuss strategy.</p>
+            <p style="margin-top:1rem;font-size:0.75rem;color:var(--muted);">Conversations are saved to your Supabase project.</p>
+          </div>
+        </div>
+        <div class="chat-typing" id="chatTyping">
+          <div class="typing-dot"></div>
+          <div class="typing-dot"></div>
+          <div class="typing-dot"></div>
+        </div>
+        <div class="chat-input-area">
+          <textarea class="chat-input" id="chatInput" placeholder="Message Arc Chat..." rows="1"></textarea>
+          <button class="chat-send" id="chatSend" disabled>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// C22Arc Admin — Supabase Auth + Inquiry Mgmt + Arc Chat
+// ═══════════════════════════════════════════════════════════════
+
+const SUPABASE_URL = 'https://pzghmurcwxputubvlyyb.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB6Z2htdXJjd3hwdXR1YnZseXliIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk5MjA5MDUsImV4cCI6MjEwNTQ5NjkwNX0.udHWFQi-wWegPuiUZGSL5N1wlMtF7mNzNl6hvpWwlZA';
+const ALLOWED_EMAIL = 'aj@c22arc.com';
+
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+// ── State ──
+let currentSessionId = crypto.randomUUID();
+let inquiries = [];
+let currentFilter = 'all';
+
+// ── Auth ──
+const authScreen = document.getElementById('authScreen');
+const adminShell = document.getElementById('adminShell');
+const authForm = document.getElementById('authForm');
+const authMsg = document.getElementById('authMsg');
+
+async function checkSession() {
+  const { data: { session } } = await sb.auth.getSession();
+  if (session) {
+    showAdmin(session.user);
+  }
+}
+
+// Handle auth redirect (magic link callback)
+sb.auth.onAuthStateChange((event, session) => {
+  if (event === 'SIGNED_IN' && session) {
+    showAdmin(session.user);
+  }
+});
+
+authForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = document.getElementById('authEmail').value.trim();
+  const btn = document.getElementById('authBtn');
+
+  // Allow AJ's known emails
+  const allowed = ['aj@c22arc.com', 'c22autonomousai@gmail.com'];
+  if (!allowed.includes(email.toLowerCase())) {
+    authMsg.textContent = 'Access restricted.';
+    authMsg.className = 'auth-msg error';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+
+  const { error } = await sb.auth.signInWithOtp({
+    email,
+    options: { emailRedirectTo: window.location.origin + '/admin/' }
+  });
+
+  if (error) {
+    authMsg.textContent = error.message;
+    authMsg.className = 'auth-msg error';
+  } else {
+    authMsg.textContent = 'Check your email for the login link.';
+    authMsg.className = 'auth-msg success';
+  }
+  btn.disabled = false;
+  btn.textContent = 'Send Magic Link';
+});
+
+function showAdmin(user) {
+  authScreen.style.display = 'none';
+  adminShell.classList.add('active');
+  document.getElementById('userEmail').textContent = user.email;
+  loadInquiries();
+  loadDashboardStats();
+}
+
+document.getElementById('logoutBtn').addEventListener('click', async () => {
+  await sb.auth.signOut();
+  adminShell.classList.remove('active');
+  authScreen.style.display = 'flex';
+});
+
+// ── Navigation ──
+document.querySelectorAll('.sidebar-item[data-panel]').forEach(item => {
+  item.addEventListener('click', () => switchPanel(item.dataset.panel));
+});
+
+function switchPanel(name) {
+  document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+  document.querySelector(`.sidebar-item[data-panel="${name}"]`)?.classList.add('active');
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.getElementById(`panel-${name}`)?.classList.add('active');
+}
+
+// ── Inquiries ──
+async function loadInquiries() {
+  const { data, error } = await sb.from('inquiries')
+    .select('*')
+    .order('submitted_at', { ascending: false });
+
+  if (error) { console.error('Load inquiries:', error); return; }
+  inquiries = data || [];
+  document.getElementById('inquiryCount').textContent = inquiries.filter(i => i.status === 'new').length || '';
+  renderInquiries();
+}
+
+function renderInquiries() {
+  const list = document.getElementById('inquiriesList');
+  const empty = document.getElementById('inquiriesEmpty');
+  const filtered = currentFilter === 'all' ? inquiries : inquiries.filter(i => i.status === currentFilter);
+
+  if (filtered.length === 0) {
+    list.innerHTML = '';
+    list.appendChild(empty);
+    empty.style.display = 'flex';
+    return;
+  }
+  empty.style.display = 'none';
+  list.innerHTML = filtered.map(inq => `
+    <div class="inquiry-card ${inq.status === 'new' ? 'unread' : ''}" onclick="showInquiry('${inq.id}')">
+      <div class="inquiry-top">
+        <span class="inquiry-name">${esc(inq.name)}</span>
+        <span class="inquiry-time">${timeAgo(inq.submitted_at)}</span>
+      </div>
+      ${inq.org ? `<div class="inquiry-org">${esc(inq.org)}</div>` : ''}
+      <div class="inquiry-preview">${esc(inq.message)}</div>
+      <div class="inquiry-meta">
+        <span class="inquiry-tag tag-${inq.status}">${inq.status}</span>
+        ${inq.service ? `<span class="inquiry-tag" style="background:var(--surface2);color:var(--text);">${esc(inq.service)}</span>` : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+function showInquiry(id) {
+  const inq = inquiries.find(i => i.id === id);
+  if (!inq) return;
+  const detail = document.getElementById('inquiryDetail');
+  detail.classList.add('active');
+  detail.innerHTML = `
+    <h3>${esc(inq.name)}</h3>
+    <div class="inquiry-detail-email">${esc(inq.email)}</div>
+    ${inq.org ? `<div class="inquiry-field"><div class="inquiry-field-label">Organization</div><div class="inquiry-field-value">${esc(inq.org)}</div></div>` : ''}
+    ${inq.service ? `<div class="inquiry-field"><div class="inquiry-field-label">Service Interest</div><div class="inquiry-field-value">${esc(inq.service)}</div></div>` : ''}
+    <div class="inquiry-field"><div class="inquiry-field-label">Message</div><div class="inquiry-field-value">${esc(inq.message)}</div></div>
+    <div class="inquiry-field"><div class="inquiry-field-label">Submitted</div><div class="inquiry-field-value">${new Date(inq.submitted_at).toLocaleString()}</div></div>
+    <div class="inquiry-actilder="Message Arc Chat..." rows="1"></textarea>
+          <button class="chat-send" id="chatSend" disabled>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// C22Arc Admin — Supabase Auth + Inquiry Mgmt + Arc Chat
+// ═══════════════════════════════════════════════════════════════
+
+const SUPABASE_URL = 'https://pzghmurcwxputubvlyyb.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB6Z2htdXJjd3hwdXR1YnZseXliIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk5MjA5MDUsImV4cCI6MjEwNTQ5NjkwNX0.udHWFQi-wWegPuiUZGSL5N1wlMtF7mNzNl6hvpWwlZA';
+const ALLOWED_EMAIL = 'aj@c22arc.com';
+
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+// ── State ──
+let currentSessionId = crypto.randomUUID();
+let inquiries = [];
+let currentFilter = 'all';
+
+// ── Auth ──
+const authScreen = document.getElementById('authScreen');
+const adminShell = document.getElementById('adminShell');
+const authForm = document.getElementById('authForm');
+const authMsg = document.getElementById('authMsg');
+
+async function checkSession() {
+  const { data: { session } } = await sb.auth.getSession();
+  if (session) {
+    showAdmin(session.user);
+  }
+}
+
+// Handle auth redirect (magic link callback)
+sb.auth.onAuthStateChange((event, session) => {
+  if (event === 'SIGNED_IN' && session) {
+    showAdmin(session.user);
+  }
+});
+
+authForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = document.getElementById('authEmail').value.trim();
+  const btn = document.getElementById('authBtn');
+
+  // Allow AJ's known emails
+  const allowed = ['aj@c22arc.com', 'c22autonomousai@gmail.com'];
+  if (!allowed.includes(email.toLowerCase())) {
+    authMsg.textContent = 'Access restricted.';
+    authMsg.className = 'auth-msg error';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+
+  const { error } = await sb.auth.signInWithOtp({
+    email,
+    options: { emailRedirectTo: window.location.origin + '/admin/' }
+  });
+
+  if (error) {
+    authMsg.textContent = error.message;
+    authMsg.className = 'auth-msg error';
+  } else {
+    authMsg.textContent = 'Check your email for the login link.';
+    authMsg.className = 'auth-msg success';
+  }
+  btn.disabled = false;
+  btn.textContent = 'Send Magic Link';
+});
+
+function showAdmin(user) {
+  authScreen.style.display = 'none';
+  adminShell.classList.add('active');
+  document.getElementById('userEmail').textContent = user.email;
+  loadInquiries();
+  loadDashboardStats();
+}
+
+document.getElementById('logoutBtn').addEventListener('click', async () => {
+  await sb.auth.signOut();
+  adminShell.classList.remove('active');
+  authScreen.style.display = 'flex';
+});
+
+// ── Navigation ──
+document.querySelectorAll('.sidebar-item[data-panel]').forEach(item => {
+  item.addEventListener('click', () => switchPanel(item.dataset.panel));
+});
+
+function switchPanel(name) {
+  document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+  document.querySelector(`.sidebar-item[data-panel="${name}"]`)?.classList.add('active');
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.getElementById(`panel-${name}`)?.classList.add('active');
+}
+
+// ── Inquiries ──
+async function loadInquiries() {
+  const { data, error } = await sb.from('inquiries')
+    .select('*')
+    .order('submitted_at', { ascending: false });
+
+  if (error) { console.error('Load inquiries:', error); return; }
+  inquiries = data || [];
+  document.getElementById('inquiryCount').textContent = inquiries.filter(i => i.status === 'new').length || '';
+  renderInquiries();
+}
+
+function renderInquiries() {
+  const list = document.getElementById('inquiriesList');
+  const empty = document.getElementById('inquiriesEmpty');
+  const filtered = currentFilter === 'all' ? inquiries : inquiries.filter(i => i.status === currentFilter);
+
+  if (filtered.length === 0) {
+    list.innerHTML = '';
+    list.appendChild(empty);
+    empty.style.display = 'flex';
+    return;
+  }
+  empty.style.display = 'none';
+  list.innerHTML = filtered.map(inq => `
+    <div class="inquiry-card ${inq.status === 'new' ? 'unread' : ''}" onclick="showInquiry('${inq.id}')">
+      <div class="inquiry-top">
+        <span class="inquiry-name">${esc(inq.name)}</span>
+        <span class="inquiry-time">${timeAgo(inq.submitted_at)}</span>
+      </div>
+      ${inq.org ? `<div class="inquiry-org">${esc(inq.org)}</div>` : ''}
+      <div class="inquiry-preview">${esc(inq.message)}</div>
+      <div class="inquiry-meta">
+        <span class="inquiry-tag tag-${inq.status}">${inq.status}</span>
+        ${inq.service ? `<span class="inquiry-tag" style="background:var(--surface2);color:var(--text);">${esc(inq.service)}</span>` : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+function showInquiry(id) {
+  const inq = inquiries.find(i => i.id === id);
+  if (!inq) return;
+  const detail = document.getElementById('inquiryDetail');
+  detail.classList.add('active');
+  detail.innerHTML = `
+    <h3>${esc(inq.name)}</h3>
+    <div class="inquiry-detail-email">${esc(inq.email)}</div>
+    ${inq.org ? `<div class="inquiry-field"><div class="inquiry-field-label">Organization</div><div class="inquiry-field-value">${esc(inq.org)}</div></div>` : ''}
+    ${inq.service ? `<div class="inquiry-field"><div class="inquiry-field-label">Service Interest</div><div class="inquiry-field-value">${esc(inq.service)}</div></div>` : ''}
+    <div class="inquiry-field"><div class="inquiry-field-label">Message</div><div class="inquiry-field-value">${esc(inq.message)}</div></div>
+    <div class="inquiry-field"><div class="inquiry-field-label">Submitted</div><div class="inquiry-field-value">${new Date(inq.submitted_at).toLocaleString()}</div></div>
+    <div class="inquiry-actions">
+      <button class="action-btn primary" onclick="updateStatus('${id}','contacted')">Mark Contacted</button>
+      <button class="action-btn ghost" onclick="updateStatus('${id}','archived')">Archive</button>
+      <a href="mailto:${esc(inq.email)}?subject=Re: C22Arc Inquiry" class="action-btn ghost" style="text-decoration:none;">Reply via Email</a>
+    </div>
+  `;
+}
+
+async function updateStatus(id, status) {
+  const updates = { status };
+  if (status === 'contacted') updates.responded_at = new Date().toISOString();
+  await sb.from('inquiries').update(updates).eq('id', id);
+  await loadInquiries();
+  showInquiry(id);
+}
+
+document.querySelectorAll('.filter-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    currentFilter = tab.dataset.filter;
+    renderInquiries();
+  });
+});
+
+// ── Dashboard Stats ──
+async function loadDashboardStats() {
+  document.getElementById('statTotal').textContent = inquiries.length;
+  document.getElementById('statNew').textContent = inquiries.filter(i => i.status === 'new').length;
+  document.getElementById('statContacted').textContent = inquiries.filter(i => i.status === 'contacted').length;
+
+  const { count } = await sb.from('conversations')
+    .select('session_id', { count: 'exact', head: true });
+  document.getElementById('statSessions').textContent = count || 0;
+}
+
+// ── Arc Chat ──
+const chatMessages = document.getElementById('chatMessages');
+const chatInput = document.getElementById('chatInput');
+const chatSend = document.getElementById('chatSend');
+const chatTyping = document.getElementById('chatTyping');
+let chatHistory = []; // In-memory for current session
+
+chatInput.addEventListener('input', () => {
+  chatSend.disabled = !chatInput.value.trim();
+  chatInput.style.height = 'auto';
+  chatInput.style.height = Math.min(chatInput.scrollHeight, 200) + 'px';
+});
+
+chatInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    if (chatInput.value.trim()) sendMessage();
+  }
+});
+
+chatSend.addEventListener('click', sendMessage);
+
+document.getElementById('newSessionBtn').addEventListener('click', () => {
+  currentSessionId = crypto.randomUUID();
+  chatHistory = [];
+  chatMessages.innerHTML = `
+    <div class="chat-welcome">
+      <h3>Arc Chat</h3>
+      <p>Your AI assistant for C22Arc operations. Ask about inquiries, draft SOWs, research prospects, or discuss strategy.</p>
+      <p style="margin-top:1rem;font-size:0.75rem;color:var(--muted);">Conversations are saved to your Supabase project.</p>
+    </div>
+  `;
+});
+
+async function sendMessage() {
+  const text = chatInput.value.trim();
+  if (!text) return;
+
+  // Clear welcome on first message
+  const welcome = chatMessages.querySelector('.chat-welcome');
+  if (welcome) welcome.remove();
+
+  // Add user message to UI
+  appendMsg('user', text);
+  chatInput.value = '';
+  chatInput.style.height = 'auto';
+  chatSend.disabled = true;
+
+  // Save user message to Supabase
+  await sb.from('conversations').insert({
+    session_id: currentSessionId,
+    role: 'user',
+    content: text,
+    metadata: {}
+  });
+
+  chatHistory.push({ role: 'user', content: text });
+
+  // Show typing indicator
+  chatTyping.classList.add('active');
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+
+  try {
+    // Call Arc Chat backend (Edge Function)
+    const { data: { session } } = await sb.auth.getSession();
+    const resp = await fetch(`${SUPABASE_URL}/functions/v1/arc-chat`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${session.access_token}`
+      },
+      body: JSON.stringify({
+        session_id: currentSessionId,
+        messages: chatHistory
+      })
+    });
+
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    const result = await resp.json();
+    const reply = result.content || result.message || 'No response.';
+
+    chatHistory.push({ role: 'assistant', content: reply });
+
+    // Save assistant response to Supabase
+    await sb.from('conversations').insert({
+      session_id: currentSessionId,
+      role: 'assistant',
+      content: reply,
+      metadata: {}
+    });
+
+    appendMsg('assistant', reply);
+  } catch (err) {
+    console.error('Arc Chat error:', err);
+    appendMsg('assistant', '⚠️ Arc Chat is not yet connected. The Edge Function `arc-chat` needs to be deployed to your Supabase project. For now, conversations are saved and this will light up once the function is live.');
+  } finally {
+    chatTyping.classList.remove('active');
+  }
+}
+
+function appendMsg(role, text) {
+  const div = document.createElement('div');
+  div.className = `chat-msg ${role}`;
+  // Basic markdown-ish rendering for assistant
+  let html = esc(text);
+  if (role === 'assistant') {
+    html = html
+      .replace(/```([\s\S]*?)```/g, '<pre>$1</pre>')
+      .replace(/`([^`]+)`/g, '<code>$1</code>')
+      .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+      .replace(/\n/g, '<br>');
+  }
+  div.innerHTML = html + `<span class="msg-time">${new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</span>`;
+  chatMessages.appendChild(div);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+// ── Helpers ──
+function esc(s) {
+  if (!s) return '';
+  const d = document.createElement('div');
+  d.textContent = s;
+  return d.innerHTML;
+}
+
+function timeAgo(ts) {
+  const d = (Date.now() - new Date(ts)) / 1000;
+  if (d < 60) return 'just now';
+  if (d < 3600) return Math.floor(d/60) + 'm ago';
+  if (d < 86400) return Math.floor(d/3600) + 'h ago';
+  return Math.floor(d/86400) + 'd ago';
+}
+
+// ── Init ──
+checkSession();
+</script>
+</body>
+</html>
