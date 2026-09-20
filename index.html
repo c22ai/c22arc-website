@@ -1446,7 +1446,11 @@ if (!prefersReducedMotion) {
         revealObserver.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.1 });
+  }, { threshold: 0, rootMargin: '0px 0px 50px 0px' });
+    // Fallback: force-reveal any elements still hidden after 2s
+    setTimeout(() => {
+      document.querySelectorAll('.reveal:not(.visible)').forEach(el => el.classList.add('visible'));
+    }, 2000);
 
   document.querySelectorAll('.reveal').forEach((el, i) => {
     // Stagger siblings
