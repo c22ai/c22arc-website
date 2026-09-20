@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>C22Arc — Autonomous AI Development</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --base: #080B14; --surface: #0F172A; --surface2: #1E293B;
+    --accent: #2563EB; --accent-light: #3B82F6; --accent-dim: rgba(37,99,235,0.12);
+    --white: #FFFFFF; --text: #E2E8F0; --muted: #64748B; --border: rgba(255,255,255,0.07);
+    --font-display: 'Syne', sans-serif; --font-body: 'Inter', sans-serif;
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--base); color: var(--text); font-family: var(--font-body); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 4rem; background: rgba(8,11,20,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+  .nav-logo { font-family: var(--font-display); font-weight: 800; font-size: 1.25rem; color: var(--white); text-decoration: none; letter-spacing: -0.02em; }
+  .nav-logo span { color: var(--accent-light); }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.875rem; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--white); }
+  .nav-cta { background: var(--accent); color: var(--white); padding: 0.5rem 1.25rem; border-radius: 6px; font-size: 0.875rem; font-weight: 600; text-decoration: none; transition: background 0.2s; }
+  .nav-cta:hover { background: var(--accent-light); }
+  .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 8rem 4rem 6rem; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: -20%; left: -10%; width: 60%; height: 80%; background: radial-gradient(ellipse, rgba(37,99,235,0.08) 0%, transparent 70%); pointer-events: none; }
+  .hero-eyebrow { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 2rem; }
+  .hero-eyebrow-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent-light); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+  .hero-eyebrow-text { font-size: 0.8125rem; font-weight: 500; color: var(--accent-light); letter-spacing: 0.05em; text-transform: uppercase; }
+  .hero-stat { font-family: var(--font-display); font-size: clamp(5rem, 14vw, 11rem); font-weight: 800; line-height: 0.9; color: var(--white); letter-spacing: -0.04em; margin-bottom: 1rem; }
+  .hero-stat span { color: var(--accent-light); }
+  .hero-headline { font-family: var(--font-display); font-size: clamp(1.5rem, 3.5vw, 2.25rem); font-weight: 700; color: var(--white); line-height: 1.2; max-width: 640px; margin-bottom: 1.5rem; letter-spacing: -0.02em; }
+  .hero-sub { font-size: 1.0625rem; color: var(--muted); max-width: 560px; line-height: 1.7; margin-bottom: 3rem; }
+  .hero-sub strong { color: var(--text); font-weight: 500; }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
+  .btn-primary { background: var(--accent); color: var(--white); padding: 0.875rem 2rem; border-radius: 8px; font-size: 0.9375rem; font-weight: 600; text-decoration: none; transition: background 0.2s, transform 0.1s; display: inline-flex; align-items: center; gap: 0.5rem; }
+  .btn-primary:hover { background: var(--accent-light); transform: translateY(-1px); }
+  .btn-ghost { color: var(--text); padding: 0.875rem 1.5rem; border-radius: 8px; font-size: 0.9375rem; font-weight: 500; text-decoration: none; border: 1px solid var(--border); transition: border-color 0.2s, color 0.2s; }
+  .btn-ghost:hover { border-color: var(--accent-light); color: var(--accent-light); }
+  .hero-metrics { display: flex; gap: 3rem; margin-top: 5rem; padding-top: 3rem; border-top: 1px solid var(--border); }
+  .metric-value { font-family: var(--font-display); font-size: 2rem; font-weight: 700; color: var(--white); letter-spacing: -0.03em; }
+  .metric-label { font-size: 0.8125rem; color: var(--muted); margin-top: 0.25rem; }
+  section { padding: 6rem 4rem; border-top: 1px solid var(--border); }
+  .section-label { font-size: 0.75rem; font-weight: 600; color: var(--accent-light); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 1.25rem; }
+  .section-title { font-family: var(--font-display); font-size: clamp(1.75rem, 3vw, 2.5rem); font-weight: 700; color: var(--white); letter-spacing: -0.03em; line-height: 1.15; max-width: 640px; margin-bottom: 1.25rem; }
+  .section-body { font-size: 1.0625rem; color: var(--muted); max-width: 560px; line-height: 1.75; }
+  .phases { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-top: 3.5rem; }
+  .phase { background: var(--surface); padding: 2.25rem; }
+  .phase:hover { background: var(--surface2); }
+  .phase-number { font-family: var(--font-display); font-size: 3.5rem; font-weight: 800; line-height: 1; margin-bottom: 1rem; background: linear-gradient(135deg, var(--accent) 0%, transparent 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .phase-name { font-family: var(--font-display); font-size: 1.125rem; font-weight: 700; color: var(--white); margin-bottom: 0.75rem; letter-spacing: -0.01em; }
+  .phase-desc { font-size: 0.9375rem; color: var(--muted); line-height: 1.65; }
+  .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 3.5rem; }
+  .service-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2rem; transition: border-color 0.2s, transform 0.15s; }
+  .service-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .service-icon { width: 40px; height: 40px; background: var(--accent-dim); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem; font-size: 1.125rem; }
+  .service-name { font-family: var(--font-display); font-size: 1.0625rem; font-weight: 700; color: var(--white); margin-bottom: 0.625rem; letter-spacing: -0.01em; }
+  .service-desc { font-size: 0.9rem; color: var(--muted); line-height: 1.65; }
+  .trust-block { margin-top: 3.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .trust-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2.5rem; }
+  .trust-card.featured { border-color: var(--accent); background: linear-gradient(135deg, rgba(37,99,235,0.08) 0%, var(--surface) 100%); }
+  .trust-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--accent-dim); border: 1px solid rgba(37,99,235,0.3); border-radius: 100px; padding: 0.375rem 0.875rem; font-size: 0.75rem; font-weight: 600; color: var(--accent-light); margin-bottom: 1.25rem; }
+  .trust-title { font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; color: var(--white); margin-bottom: 0.875rem; letter-spacing: -0.02em; }
+  .trust-body { font-size: 0.9375rem; color: var(--muted); line-height: 1.7; margin-bottom: 1.25rem; }
+  .trust-buyers { font-size: 0.8125rem; color: var(--muted); font-style: italic; }
+  .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-top: 3.5rem; }
+  .price-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2rem; }
+  .price-card.featured { border-color: var(--accent); background: linear-gradient(160deg, rgba(37,99,235,0.1) 0%, var(--surface) 60%); }
+  .price-tier { font-size: 0.75rem; font-weight: 600; color: var(--accent-light); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.75rem; }
+  .price-amount { font-family: var(--font-display); font-size: 2.25rem; font-weight: 800; color: var(--white); letter-spacing: -0.04em; margin-bottom: 0.375rem; }
+  .price-scope { font-size: 0.875rem; color: var(--muted); margin-bottom: 1.5rem; line-height: 1.5; }
+  .price-divider { height: 1px; background: var(--border); margin-bottom: 1.25rem; }
+  .price-note { font-size: 0.8125rem; color: var(--muted); line-height: 1.6; }
+  .verticals-row { display: flex; flex-wrap: wrap; gap: 0.625rem; margin-top: 2rem; }
+  .vertical-tag { background: var(--surface); border: 1px solid var(--border); border-radius: 100px; padding: 0.375rem 1rem; font-size: 0.8125rem; color: var(--muted); font-weight: 500; transition: border-color 0.2s, color 0.2s; }
+  .vertical-tag:hover { border-color: var(--accent-light); color: var(--text); }
+  .inquiry-section { background: var(--surface); }
+  .inquiry-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+  .form-group { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.25rem; }
+  label { font-size: 0.8125rem; font-weight: 500; color: var(--text); }
+  input, textarea, select { background: var(--base); border: 1px solid var(--border); border-radius: 8px; padding: 0.75rem 1rem; color: var(--white); font-family: var(--font-body); font-size: 0.9375rem; outline: none; transition: border-color 0.2s; width: 100%; }
+  input:focus, textarea:focus, select:focus { border-color: var(--accent-light); }
+  select option { background: var(--surface); }
+  textarea { resize: vertical; min-height: 120px; }
+  .form-submit { background: var(--accent); color: var(--white); border: none; padding: 0.875rem 2rem; border-radius: 8px; font-size: 0.9375rem; font-weight: 600; font-family: var(--font-body); cursor: pointer; width: 100%; transition: background 0.2s; }
+  .form-submit:hover { background: var(--accent-light); }
+  .form-note { font-size: 0.8125rem; color: var(--muted); margin-top: 0.875rem; line-height: 1.6; }
+  .contact-sidebar { padding-top: 0.5rem; }
+  .contact-item { display: flex; flex-direction: column; gap: 0.25rem; padding: 1.25rem 0; border-bottom: 1px solid var(--border); }
+  .contact-label { font-size: 0.75rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+  .contact-value { font-size: 1rem; color: var(--text); font-weight: 500; text-decoration: none; }
+  .contact-value:hover { color: var(--accent-light); }
+  footer { padding: 3rem 4rem; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+  .footer-logo { font-family: var(--font-display); font-weight: 800; font-size: 1.125rem; color: var(--white); letter-spacing: -0.02em; }
+  .footer-logo span { color: var(--accent-light); }
+  .footer-copy { font-size: 0.8125rem; color: var(--muted); }
+  .footer-stack { font-size: 0.8125rem; color: var(--muted); }
+  .footer-stack span { color: var(--text); }
+  .form-success { display: none; background: rgba(37,99,235,0.1); border: 1px solid rgba(37,99,235,0.3); border-radius: 8px; padding: 1.5rem; text-align: center; color: var(--accent-light); font-weight: 500; }
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; } .nav-links { display: none; }
+    .hero { padding: 7rem 1.5rem 4rem; } .hero-metrics { flex-wrap: wrap; gap: 2rem; }
+    section { padding: 4rem 1.5rem; } .trust-block { grid-template-columns: 1fr; }
+    .inquiry-wrap { grid-template-columns: 1fr; gap: 3rem; }
+    footer { padding: 2rem 1.5rem; flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+<nav>
+  <a href="/" class="nav-logo">C22<span>Arc</span></a>
+  <ul class="nav-links">
+    <li><a href="#how">How We Work</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#governance">Governance</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+  </ul>
+  <a href="#inquiry" class="nav-cta">Start a Project</a>
+</nav>
+<section class="hero">
+  <div class="hero-eyebrow"><div class="hero-eyebrow-dot"></div><span class="hero-eyebrow-text">Autonomous AI Development · Global Delivery</span></div>
+  <div class="hero-stat">60<span>+</span></div>
+  <h1 class="hero-headline">Production AI systems shipped.<br>Any industry. Any geography.</h1>
+  <p class="hero-sub">C22Arc builds autonomous AI applications for organizations that need <strong>working software</strong>, not prototypes. Remote or on-site. Work for hire. You own everything we deliver.</p>
+  <div class="hero-actions"><a href="#inquiry" class="btn-primary">Start a Project &rarr;</a><a href="#services" class="btn-ghost">See Our Services</a></div>
+  <div class="hero-metrics">
+    <div><div class="metric-value">32</div><div class="metric-label">Specialized AI Agents</div></div>
+    <div><div class="metric-value">186+</div><div class="metric-label">API Endpoints</div></div>
+    <div><div class="metric-value">12</div><div class="metric-label">Industry Verticals</div></div>
+    <div><div class="metric-value">SOC 2</div><div class="metric-label">Compliant Platform</div></div>
+  </div>
+</section>
+<section id="how">
+  <div class="section-label">Methodology</div>
+  <h2 class="section-title">We diagnose before we build.<br>We mentor after we deliver.</h2>
+  <p class="section-body">Most AI developers take a spec and ship code. Every C22Arc engagement follows a three-phase model that produces systems clients can actually own and scale.</p>
+  <div class="phases">
+    <div class="phase"><div class="phase-number">01</div><div class="phase-name">Discover</div><p class="phase-desc">We develop the use case from your raw problem — not what you think you need, but what you actually need. The problem is defined before a single line of code is written.</p></div>
+    <div class="phase"><div class="phase-number">02</div><div class="phase-name">Define</div><p class="phase-desc">That use case becomes structured requirements. We educate your team on what the solution must look like and why. You understand precisely what you are receiving before we build it.</p></div>
+    <div class="phase"><div class="phase-number">03</div><div class="phase-name">Deliver + Mentor</div><p class="phase-desc">We ship production software, then stay to mentor your team until they own it. You don't just receive an application — you gain the capability to own and scale it.</p></div>
+  </div>
+</section>
+<section id="services">
+  <div class="section-label">What We Build</div>
+  <h2 class="section-title">Autonomous AI across<br>12 industry verticals.</h2>
+  <p class="section-body">C22Arc delivers across the full stack — from single agents to multi-agent orchestration platforms, EHR automation suites, and enterprise SaaS systems.</p>
+  <div class="services-grid">
+    <div class="service-card"><div class="service-icon">⚡</div><div class="service-name">Autonomous AI Agent Development</div><p class="service-desc">Purpose-built agents that replace manual workflows. From single-task automations to 32-agent orchestration pipelines.</p></div>
+    <div class="service-card"><div class="service-icon">🏗️</div><div class="service-name">Full-Stack AI SaaS Engineering</div><p class="service-desc">Production SaaS platforms with AI at the core. React, Supabase, Vercel. Built to ship, not to demo.</p></div>
+    <div class="service-card"><div class="service-icon">🏥</div><div class="service-name">Healthcare AI & EHR Automation</div><p class="service-desc">Oracle Health / Cerner workflow automation. DCW Hub, CCL Master Agent, ReportWheel clinical analytics, DTA Wizard, EHR Support Hub.</p></div>
+    <div class="service-card"><div class="service-icon">🔄</div><div class="service-name">AI-Powered Workflow Automation</div><p class="service-desc">Cross-vertical workflow elimination. Any process that is repetitive, rule-based, or document-heavy is a candidate.</p></div>
+    <div class="service-card"><div class="service-icon">📊</div><div class="service-name">AI Data Analytics & Intelligence</div><p class="service-desc">Turn raw operational data into intelligence. Clinical reporting, executive dashboards, and predictive analytics pipelines.</p></div>
+    <div class="service-card"><div class="service-icon">🗺️</div><div class="service-name">Autonomous Geofencing & Targeting</div><p class="service-desc">C22Arc's proprietary geographic intelligence engine. Identify, analyze, and engage prospects by territory and vertical.</p></div>
+  </div>
+  <div class="verticals-row">
+    <span class="vertical-tag">Healthcare</span><span class="vertical-tag">SaaS</span><span class="vertical-tag">SMB Automation</span><span class="vertical-tag">Data & Analytics</span><span class="vertical-tag">Finance</span><span class="vertical-tag">Media</span><span class="vertical-tag">Legal</span><span class="vertical-tag">Real Estate</span><span class="vertical-tag">Music</span><span class="vertical-tag">Political</span><span class="vertical-tag">Infrastructure</span><span class="vertical-tag">Consumer</span>
+  </div>
+</section>
+<section id="governance">
+  <div class="section-label">Trust & Governance Suite</div>
+  <h2 class="section-title">Enterprise compliance.<br>Delivered as a service.</h2>
+  <p class="section-body">C22Arc is SOC 2 compliant — documented, audited, and enforced across every application we build and operate. We also deliver compliance and governance as standalone work-for-hire services.</p>
+  <div class="trust-block">
+    <div class="trust-card featured"><div class="trust-badge"><span>✓</span> SOC 2 Compliant</div><div class="trust-title">SOC 2 Compliance Delivery</div><p class="trust-body">C22Arc's platform is SOC 2 compliant — documented, audited, and enforced. We deliver SOC 2 readiness as a standalone service for client organizations preparing for audit, investment, or regulatory review.</p><p class="trust-buyers">Buyers: healthcare systems, government contractors, enterprise software organizations, pre-Series A companies.</p></div>
+    <div class="trust-card"><div class="trust-badge"><span>⬡</span> Provenance Protocol</div><div class="trust-title">Governance Protocol Agent</div><p class="trust-body">Every digital asset your organization produces is stamped at creation with a traceable Provenance Serial, copyright classification, and policy-compliant documentation. The agent runs autonomously. Your IP is documented, defensible, and yours.</p><p class="trust-buyers">Buyers: law firms, healthcare systems, government contractors, AI-forward companies.</p></div>
+  </div>
+</section>
+<section id="pricing">
+  <div class="section-label">Investment</div>
+  <h2 class="section-title">Project-based. Fixed scope.<br>You own everything.</h2>
+  <p class="section-body">All C22Arc engagements are work-for-hire. Upon delivery, the client owns all code, documentation, and IP outright.</p>
+  <div class="pricing-grid">
+    <div class="price-card"><div class="price-tier">Starter</div><div class="price-amount">$5K</div><p class="price-scope">Single agent or focused workflow automation. Scoped delivery, full documentation.</p><div class="price-divider"></div><p class="price-note">Best for: single-process automation, MVP agents, focused integrations.</p></div>
+    <div class="price-card featured"><div class="price-tier">Standard</div><div class="price-amount">$10–15K</div><p class="price-scope">Multi-component AI system or full SaaS platform. Discovery, build, and mentorship.</p><div class="price-divider"></div><p class="price-note">Best for: multi-agent pipelines, SaaS platforms, workflow suites.</p></div>
+    <div class="price-card"><div class="price-tier">Enterprise</div><div class="price-amount">$20–25K</div><p class="price-scope">Complex multi-agent platform, full delivery cycle, and extended post-delivery mentorship.</p><div class="price-divider"></div><p class="price-note">Best for: enterprise platforms, full EHR automation suites, multi-vertical systems.</p></div>
+    <div class="price-card"><div class="price-tier">Trust & Governance</div><div class="price-amount">$8K+</div><p class="price-scope">SOC 2 readiness delivery or Governance Protocol Agent deployment. Standalone engagement.</p><div class="price-divider"></div><p class="price-note">Best for: compliance-driven organizations, pre-audit preparation, IP governance.</p></div>
+  </div>
+</section>
+<section class="inquiry-section" id="inquiry">
+  <div class="inquiry-wrap">
+    <div>
+      <div class="section-label">Start a Project</div>
+      <h2 class="section-title">Tell us what you're building.</h2>
+      <p class="section-body">Every C22Arc engagement starts with a discovery conversation. Describe your problem — we'll tell you what it would take to solve it.</p>
+      <div class="contact-sidebar" style="margin-top:2.5rem;">
+        <div class="contact-item"><span class="contact-label">Email</span><a href="mailto:aj@c22arc.com" class="contact-value">aj@c22arc.com</a></div>
+        <div class="contact-item"><span class="contact-label">Phone</span><a href="tel:+19728664140" class="contact-value">(972) 866-4140</a></div>
+        <div class="contact-item"><span class="contact-label">Location</span><span class="contact-value">Denver, CO — Global Delivery</span></div>
+        <div class="contact-item"><span class="contact-label">Response Time</span><span class="contact-value">Within 24 hours</span></div>
+      </div>
+    </div>
+    <div>
+      <form id="inquiryForm">
+        <div class="form-group"><label for="name">Your Name</label><input type="text" id="name" name="name" placeholder="Jane Smith" required></div>
+        <div class="form-group"><label for="email">Email Address</label><input type="email" id="email" name="email" placeholder="jane@company.com" required></div>
+        <div class="form-group"><label for="org">Organization</label><input type="text" id="org" name="org" placeholder="Company or hospital name"></div>
+        <div class="form-group"><label for="service">Service Line</label><select id="service" name="service"><option value="">Select a service</option><option>Autonomous AI Agent Development</option><option>Full-Stack AI SaaS Engineering</option><option>Healthcare AI & EHR Automation</option><option>AI-Powered Workflow Automation</option><option>Trust & Governance Suite (SOC 2)</option><option>Governance Protocol Agent</option><option>AI Data Analytics & Intelligence</option><option>Not sure — need discovery</option></select></div>
+        <div class="form-group"><label for="message">Describe your problem</label><textarea id="message" name="message" placeholder="What are you trying to solve? What does success look like?" required></textarea></div>
+        <button type="submit" class="form-submit">Send Inquiry &rarr;</button>
+        <p class="form-note">We respond within 24 hours. All inquiries are confidential.</p>
+        <div class="form-success" id="formSuccess">✓ Inquiry received. AJ will respond within 24 hours.</div>
+      </form>
+    </div>
+  </div>
+</section>
+<footer>
+  <div class="footer-logo">C22<span>Arc</span></div>
+  <div class="footer-copy">© 2026 Customer22 LLC. All rights reserved. IP protected under C22Arc proprietary licensing.</div>
+  <div class="footer-stack">Built on <span>Vercel · Supabase · GitHub</span></div>
+</footer>
+<script>
+document.getElementById('inquiryForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const btn = this.querySelector('.form-submit');
+  const success = document.getElementById('formSuccess');
+  btn.textContent = 'Sending...'; btn.disabled = true;
+  try {
+    await new Promise(r => setTimeout(r, 800));
+    this.style.display = 'none'; success.style.display = 'block';
+  } catch(err) {
+    btn.textContent = 'Send Inquiry →'; btn.disabled = false;
+    alert('Submission failed. Please email aj@c22arc.com directly.');
+  }
+});
+</script>
+</body>
+</html>
