@@ -4,239 +4,1557 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>C22Arc — Autonomous AI Development</title>
+<meta name="description" content="C22Arc builds autonomous AI systems for healthcare, EHR automation, and enterprise organizations. Production software, not prototypes. Work-for-hire. SOC 2 compliant.">
+<link rel="canonical" href="https://c22arc.com/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://c22arc.com/">
+<meta property="og:title" content="C22Arc — Autonomous AI Development">
+<meta property="og:description" content="Production AI systems for healthcare and enterprise. Work-for-hire. SOC 2 compliant. You own everything we deliver.">
+<meta property="og:image" content="https://c22arc.com/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="C22Arc — Autonomous AI Development">
+<meta name="twitter:description" content="Production AI systems for healthcare and enterprise. Work-for-hire. SOC 2 compliant.">
+<meta name="twitter:image" content="https://c22arc.com/og-image.png">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23080B14'/><text x='4' y='23' font-family='system-ui' font-weight='800' font-size='14' fill='%233B82F6'>C22</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "C22Arc",
+  "legalName": "Customer22 LLC",
+  "url": "https://c22arc.com",
+  "email": "aj@c22arc.com",
+  "telephone": "+19728664140",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Denver",
+    "addressRegion": "CO",
+    "addressCountry": "US"
+  },
+  "description": "Autonomous AI development studio specializing in healthcare EHR automation and enterprise AI systems.",
+  "knowsAbout": ["Autonomous AI", "EHR Automation", "Oracle Health", "Cerner", "Healthcare IT"],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "AI Development Services",
+    "itemListElement": [
+      {"@type": "Offer", "name": "Healthcare AI & EHR Automation"},
+      {"@type": "Offer", "name": "Autonomous AI Agent Development"},
+      {"@type": "Offer", "name": "Full-Stack AI SaaS Engineering"}
+    ]
+  }
+}
+</script>
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --base: #080B14; --surface: #0F172A; --surface2: #1E293B;
-    --accent: #2563EB; --accent-light: #3B82F6; --accent-dim: rgba(37,99,235,0.12);
-    --white: #FFFFFF; --text: #E2E8F0; --muted: #64748B; --border: rgba(255,255,255,0.07);
-    --font-display: 'Syne', sans-serif; --font-body: 'Inter', sans-serif;
-  }
-  html { scroll-behavior: smooth; }
-  body { background: var(--base); color: var(--text); font-family: var(--font-body); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
-  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 4rem; background: rgba(8,11,20,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
-  .nav-logo { font-family: var(--font-display); font-weight: 800; font-size: 1.25rem; color: var(--white); text-decoration: none; letter-spacing: -0.02em; }
-  .nav-logo span { color: var(--accent-light); }
-  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
-  .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.875rem; font-weight: 500; transition: color 0.2s; }
-  .nav-links a:hover { color: var(--white); }
-  .nav-cta { background: var(--accent); color: var(--white); padding: 0.5rem 1.25rem; border-radius: 6px; font-size: 0.875rem; font-weight: 600; text-decoration: none; transition: background 0.2s; }
-  .nav-cta:hover { background: var(--accent-light); }
-  .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 8rem 4rem 6rem; position: relative; overflow: hidden; }
-  .hero::before { content: ''; position: absolute; top: -20%; left: -10%; width: 60%; height: 80%; background: radial-gradient(ellipse, rgba(37,99,235,0.08) 0%, transparent 70%); pointer-events: none; }
-  .hero-eyebrow { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 2rem; }
-  .hero-eyebrow-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent-light); animation: pulse 2s infinite; }
-  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
-  .hero-eyebrow-text { font-size: 0.8125rem; font-weight: 500; color: var(--accent-light); letter-spacing: 0.05em; text-transform: uppercase; }
-  .hero-stat { font-family: var(--font-display); font-size: clamp(5rem, 14vw, 11rem); font-weight: 800; line-height: 0.9; color: var(--white); letter-spacing: -0.04em; margin-bottom: 1rem; }
-  .hero-stat span { color: var(--accent-light); }
-  .hero-headline { font-family: var(--font-display); font-size: clamp(1.5rem, 3.5vw, 2.25rem); font-weight: 700; color: var(--white); line-height: 1.2; max-width: 640px; margin-bottom: 1.5rem; letter-spacing: -0.02em; }
-  .hero-sub { font-size: 1.0625rem; color: var(--muted); max-width: 560px; line-height: 1.7; margin-bottom: 3rem; }
-  .hero-sub strong { color: var(--text); font-weight: 500; }
-  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
-  .btn-primary { background: var(--accent); color: var(--white); padding: 0.875rem 2rem; border-radius: 8px; font-size: 0.9375rem; font-weight: 600; text-decoration: none; transition: background 0.2s, transform 0.1s; display: inline-flex; align-items: center; gap: 0.5rem; }
-  .btn-primary:hover { background: var(--accent-light); transform: translateY(-1px); }
-  .btn-ghost { color: var(--text); padding: 0.875rem 1.5rem; border-radius: 8px; font-size: 0.9375rem; font-weight: 500; text-decoration: none; border: 1px solid var(--border); transition: border-color 0.2s, color 0.2s; }
-  .btn-ghost:hover { border-color: var(--accent-light); color: var(--accent-light); }
-  .hero-metrics { display: flex; gap: 3rem; margin-top: 5rem; padding-top: 3rem; border-top: 1px solid var(--border); }
-  .metric-value { font-family: var(--font-display); font-size: 2rem; font-weight: 700; color: var(--white); letter-spacing: -0.03em; }
-  .metric-label { font-size: 0.8125rem; color: var(--muted); margin-top: 0.25rem; }
-  section { padding: 6rem 4rem; border-top: 1px solid var(--border); }
-  .section-label { font-size: 0.75rem; font-weight: 600; color: var(--accent-light); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 1.25rem; }
-  .section-title { font-family: var(--font-display); font-size: clamp(1.75rem, 3vw, 2.5rem); font-weight: 700; color: var(--white); letter-spacing: -0.03em; line-height: 1.15; max-width: 640px; margin-bottom: 1.25rem; }
-  .section-body { font-size: 1.0625rem; color: var(--muted); max-width: 560px; line-height: 1.75; }
-  .phases { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-top: 3.5rem; }
-  .phase { background: var(--surface); padding: 2.25rem; }
-  .phase:hover { background: var(--surface2); }
-  .phase-number { font-family: var(--font-display); font-size: 3.5rem; font-weight: 800; line-height: 1; margin-bottom: 1rem; background: linear-gradient(135deg, var(--accent) 0%, transparent 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-  .phase-name { font-family: var(--font-display); font-size: 1.125rem; font-weight: 700; color: var(--white); margin-bottom: 0.75rem; letter-spacing: -0.01em; }
-  .phase-desc { font-size: 0.9375rem; color: var(--muted); line-height: 1.65; }
-  .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 3.5rem; }
-  .service-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2rem; transition: border-color 0.2s, transform 0.15s; }
-  .service-card:hover { border-color: var(--accent); transform: translateY(-2px); }
-  .service-icon { width: 40px; height: 40px; background: var(--accent-dim); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem; font-size: 1.125rem; }
-  .service-name { font-family: var(--font-display); font-size: 1.0625rem; font-weight: 700; color: var(--white); margin-bottom: 0.625rem; letter-spacing: -0.01em; }
-  .service-desc { font-size: 0.9rem; color: var(--muted); line-height: 1.65; }
-  .trust-block { margin-top: 3.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-  .trust-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2.5rem; }
-  .trust-card.featured { border-color: var(--accent); background: linear-gradient(135deg, rgba(37,99,235,0.08) 0%, var(--surface) 100%); }
-  .trust-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--accent-dim); border: 1px solid rgba(37,99,235,0.3); border-radius: 100px; padding: 0.375rem 0.875rem; font-size: 0.75rem; font-weight: 600; color: var(--accent-light); margin-bottom: 1.25rem; }
-  .trust-title { font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; color: var(--white); margin-bottom: 0.875rem; letter-spacing: -0.02em; }
-  .trust-body { font-size: 0.9375rem; color: var(--muted); line-height: 1.7; margin-bottom: 1.25rem; }
-  .trust-buyers { font-size: 0.8125rem; color: var(--muted); font-style: italic; }
-  .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-top: 3.5rem; }
-  .price-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2rem; }
-  .price-card.featured { border-color: var(--accent); background: linear-gradient(160deg, rgba(37,99,235,0.1) 0%, var(--surface) 60%); }
-  .price-tier { font-size: 0.75rem; font-weight: 600; color: var(--accent-light); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.75rem; }
-  .price-amount { font-family: var(--font-display); font-size: 2.25rem; font-weight: 800; color: var(--white); letter-spacing: -0.04em; margin-bottom: 0.375rem; }
-  .price-scope { font-size: 0.875rem; color: var(--muted); margin-bottom: 1.5rem; line-height: 1.5; }
-  .price-divider { height: 1px; background: var(--border); margin-bottom: 1.25rem; }
-  .price-note { font-size: 0.8125rem; color: var(--muted); line-height: 1.6; }
-  .verticals-row { display: flex; flex-wrap: wrap; gap: 0.625rem; margin-top: 2rem; }
-  .vertical-tag { background: var(--surface); border: 1px solid var(--border); border-radius: 100px; padding: 0.375rem 1rem; font-size: 0.8125rem; color: var(--muted); font-weight: 500; transition: border-color 0.2s, color 0.2s; }
-  .vertical-tag:hover { border-color: var(--accent-light); color: var(--text); }
-  .inquiry-section { background: var(--surface); }
-  .inquiry-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
-  .form-group { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.25rem; }
-  label { font-size: 0.8125rem; font-weight: 500; color: var(--text); }
-  input, textarea, select { background: var(--base); border: 1px solid var(--border); border-radius: 8px; padding: 0.75rem 1rem; color: var(--white); font-family: var(--font-body); font-size: 0.9375rem; outline: none; transition: border-color 0.2s; width: 100%; }
-  input:focus, textarea:focus, select:focus { border-color: var(--accent-light); }
-  select option { background: var(--surface); }
-  textarea { resize: vertical; min-height: 120px; }
-  .form-submit { background: var(--accent); color: var(--white); border: none; padding: 0.875rem 2rem; border-radius: 8px; font-size: 0.9375rem; font-weight: 600; font-family: var(--font-body); cursor: pointer; width: 100%; transition: background 0.2s; }
-  .form-submit:hover { background: var(--accent-light); }
-  .form-note { font-size: 0.8125rem; color: var(--muted); margin-top: 0.875rem; line-height: 1.6; }
-  .contact-sidebar { padding-top: 0.5rem; }
-  .contact-item { display: flex; flex-direction: column; gap: 0.25rem; padding: 1.25rem 0; border-bottom: 1px solid var(--border); }
-  .contact-label { font-size: 0.75rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
-  .contact-value { font-size: 1rem; color: var(--text); font-weight: 500; text-decoration: none; }
-  .contact-value:hover { color: var(--accent-light); }
-  footer { padding: 3rem 4rem; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
-  .footer-logo { font-family: var(--font-display); font-weight: 800; font-size: 1.125rem; color: var(--white); letter-spacing: -0.02em; }
-  .footer-logo span { color: var(--accent-light); }
-  .footer-copy { font-size: 0.8125rem; color: var(--muted); }
-  .footer-stack { font-size: 0.8125rem; color: var(--muted); }
-  .footer-stack span { color: var(--text); }
-  .form-success { display: none; background: rgba(37,99,235,0.1); border: 1px solid rgba(37,99,235,0.3); border-radius: 8px; padding: 1.5rem; text-align: center; color: var(--accent-light); font-weight: 500; }
-  @media (max-width: 768px) {
-    nav { padding: 1rem 1.5rem; } .nav-links { display: none; }
-    .hero { padding: 7rem 1.5rem 4rem; } .hero-metrics { flex-wrap: wrap; gap: 2rem; }
-    section { padding: 4rem 1.5rem; } .trust-block { grid-template-columns: 1fr; }
-    .inquiry-wrap { grid-template-columns: 1fr; gap: 3rem; }
-    footer { padding: 2rem 1.5rem; flex-direction: column; align-items: flex-start; }
-  }
+/* ═══════════════════════════════════════════════════════════════
+   C22Arc Design Tokens
+   ═══════════════════════════════════════════════════════════════ */
+:root {
+  /* Color — Base */
+  --base: #080B14;
+  --surface-0: #0C1021;
+  --surface-1: #0F172A;
+  --surface-2: #1E293B;
+  --surface-3: #283548;
+  --overlay: #334155;
+
+  /* Color — Accent */
+  --accent: #2563EB;
+  --accent-light: #3B82F6;
+  --accent-bright: #60A5FA;
+  --accent-dim: rgba(37,99,235,0.10);
+  --accent-glow: rgba(37,99,235,0.25);
+  --green: #22C55E;
+  --green-dim: rgba(34,197,94,0.12);
+
+  /* Color — Text */
+  --white: #F8FAFC;
+  --text: #E2E8F0;
+  --text-secondary: #94A3B8;
+  --muted: #64748B;
+  --faint: #475569;
+
+  /* Color — Border */
+  --border-subtle: rgba(255,255,255,0.05);
+  --border: rgba(255,255,255,0.08);
+  --border-strong: rgba(255,255,255,0.14);
+  --border-accent: rgba(37,99,235,0.35);
+
+  /* Elevation */
+  --shadow-raised: 0 1px 3px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.3);
+  --shadow-overlay: 0 4px 16px rgba(0,0,0,0.5), 0 2px 4px rgba(0,0,0,0.3);
+  --inset-highlight: inset 0 1px 0 rgba(255,255,255,0.06);
+
+  /* Spacing */
+  --space-xs: 0.25rem; --space-sm: 0.5rem; --space-md: 1rem;
+  --space-lg: 1.5rem; --space-xl: 2rem; --space-2xl: 3rem;
+  --space-3xl: 4rem; --space-4xl: 6rem; --space-5xl: 8rem;
+
+  /* Radius */
+  --radius-sm: 4px; --radius-md: 8px; --radius-lg: 12px;
+  --radius-xl: 16px; --radius-full: 100px;
+
+  /* Typography */
+  --font-display: 'Syne', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  --text-display-xl: clamp(2.75rem, 5.5vw, 4.5rem);
+  --text-display-lg: clamp(2rem, 4vw, 3rem);
+  --text-display-md: clamp(1.75rem, 3vw, 2.5rem);
+  --text-heading: clamp(1.25rem, 2vw, 1.5rem);
+  --text-body-lg: 1.0625rem;
+  --text-body: 0.9375rem;
+  --text-small: 0.8125rem;
+  --text-caption: 0.75rem;
+
+  /* Motion */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 200ms;
+  --duration-slow: 400ms;
+
+  /* Layout */
+  --page-max: 1280px;
+  --page-gutter: clamp(1.25rem, 4vw, 4rem);
+  --measure: 68ch;
+}
+
+/* ═══ Reset & Base ═══ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--base);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Focus */
+:focus-visible {
+  outline: 2px solid var(--accent-light);
+  outline-offset: 2px;
+}
+:focus:not(:focus-visible) { outline: none; }
+
+/* ═══ Navigation ═══ */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 var(--page-gutter); height: 64px;
+  background: rgba(8,11,20,0.88); backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border-subtle);
+}
+.nav-logo {
+  font-family: var(--font-display); font-weight: 800; font-size: 1.25rem;
+  color: var(--white); text-decoration: none; letter-spacing: -0.02em;
+}
+.nav-logo span { color: var(--accent-light); }
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a {
+  color: var(--text-secondary); text-decoration: none; font-size: var(--text-body);
+  font-weight: 500; transition: color var(--duration-fast) var(--ease);
+  padding: var(--space-sm) 0;
+}
+.nav-links a:hover { color: var(--white); }
+.nav-cta {
+  background: var(--accent); color: var(--white);
+  padding: 0.5rem 1.25rem; border-radius: var(--radius-md);
+  font-size: var(--text-body); font-weight: 600; text-decoration: none;
+  transition: background var(--duration-fast) var(--ease), transform var(--duration-fast) var(--ease);
+  border: none; cursor: pointer; font-family: var(--font-body);
+}
+.nav-cta:hover { background: var(--accent-light); transform: translateY(-1px); }
+
+/* Mobile nav toggle */
+.nav-toggle {
+  display: none; background: none; border: none; cursor: pointer;
+  width: 44px; height: 44px; align-items: center; justify-content: center;
+}
+.nav-toggle svg { color: var(--text); }
+.nav-mobile-menu {
+  display: none; position: fixed; top: 64px; left: 0; right: 0;
+  background: var(--surface-0); border-bottom: 1px solid var(--border);
+  padding: var(--space-lg) var(--page-gutter); flex-direction: column; gap: var(--space-md);
+}
+.nav-mobile-menu.active { display: flex; }
+.nav-mobile-menu a {
+  color: var(--text); text-decoration: none; font-size: var(--text-body-lg);
+  font-weight: 500; padding: var(--space-sm) 0;
+}
+
+/* ═══ Hero — Two-column asymmetric (CR-05) ═══ */
+.hero {
+  min-height: 100vh; display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center; gap: var(--space-3xl);
+  padding: calc(64px + var(--space-4xl)) var(--page-gutter) var(--space-4xl);
+  position: relative; overflow: hidden;
+}
+.hero::before {
+  content: ''; position: absolute; top: -20%; left: -10%;
+  width: 50%; height: 70%;
+  background: radial-gradient(ellipse, rgba(37,99,235,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-content { max-width: 620px; position: relative; z-index: 1; }
+.hero-eyebrow {
+  display: flex; align-items: center; gap: 0.75rem; margin-bottom: var(--space-xl);
+}
+.hero-eyebrow-dot {
+  width: 6px; height: 6px; border-radius: 50%; background: var(--accent-light);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+.hero-eyebrow-text {
+  font-size: var(--text-caption); font-weight: 600; color: var(--accent-light);
+  letter-spacing: 0.06em; text-transform: uppercase;
+}
+.hero h1 {
+  font-family: var(--font-display); font-size: var(--text-display-xl);
+  font-weight: 800; color: var(--white); line-height: 1.05;
+  letter-spacing: -0.04em; margin-bottom: var(--space-lg);
+}
+.hero-sub {
+  font-size: var(--text-body-lg); color: var(--text-secondary);
+  max-width: var(--measure); line-height: 1.7; margin-bottom: var(--space-2xl);
+}
+.hero-sub strong { color: var(--text); font-weight: 600; }
+.hero-actions { display: flex; gap: var(--space-md); flex-wrap: wrap; align-items: center; }
+.btn-primary {
+  background: var(--accent); color: var(--white);
+  padding: 0.875rem 2rem; border-radius: var(--radius-md);
+  font-size: var(--text-body); font-weight: 600; text-decoration: none;
+  transition: background var(--duration-fast) var(--ease), transform var(--duration-fast) var(--ease), box-shadow var(--duration-fast) var(--ease);
+  display: inline-flex; align-items: center; gap: var(--space-sm);
+  border: none; cursor: pointer; font-family: var(--font-body);
+}
+.btn-primary:hover { background: var(--accent-light); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(37,99,235,0.3); }
+.btn-ghost {
+  color: var(--text); padding: 0.875rem 1.5rem; border-radius: var(--radius-md);
+  font-size: var(--text-body); font-weight: 500; text-decoration: none;
+  border: 1px solid var(--border-strong);
+  transition: border-color var(--duration-fast) var(--ease), color var(--duration-fast) var(--ease);
+}
+.btn-ghost:hover { border-color: var(--accent-light); color: var(--accent-light); }
+
+/* Hero visual — animated agent graph (CR-05) */
+.hero-visual {
+  position: relative; display: flex; align-items: center; justify-content: center;
+}
+.agent-graph {
+  width: 100%; max-width: 520px; aspect-ratio: 1;
+}
+.agent-graph .node {
+  fill: var(--surface-1); stroke: var(--border-strong); stroke-width: 1.5;
+}
+.agent-graph .node-core {
+  fill: var(--accent); stroke: none;
+}
+.agent-graph .edge {
+  stroke: var(--border-strong); stroke-width: 1; fill: none;
+}
+.agent-graph .edge-active {
+  stroke: var(--accent-light); stroke-width: 1.5; fill: none;
+  stroke-dasharray: 8 4;
+  animation: edgeFlow 2s linear infinite;
+}
+.agent-graph .node-label {
+  font-family: var(--font-mono); font-size: 9px; fill: var(--text-secondary);
+  text-anchor: middle; dominant-baseline: central;
+}
+.agent-graph .node-label-core {
+  font-family: var(--font-mono); font-size: 10px; fill: var(--white);
+  text-anchor: middle; dominant-baseline: central; font-weight: 500;
+}
+@keyframes edgeFlow { to { stroke-dashoffset: -24; } }
+@media (prefers-reduced-motion: reduce) {
+  .agent-graph .edge-active { animation: none; }
+  .hero-eyebrow-dot { animation: none; }
+}
+
+/* ═══ Proof Bar — Full-bleed horizontal (CR-03) ═══ */
+.proof-bar {
+  padding: var(--space-2xl) var(--page-gutter);
+  background: var(--surface-0);
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+}
+.proof-bar-inner {
+  display: flex; align-items: center; justify-content: center;
+  gap: var(--space-3xl); flex-wrap: wrap;
+}
+.proof-item {
+  display: flex; align-items: center; gap: var(--space-sm);
+  font-size: var(--text-small); color: var(--muted); font-weight: 500;
+  white-space: nowrap;
+}
+.proof-item svg { color: var(--accent-light); flex-shrink: 0; }
+.proof-divider {
+  width: 1px; height: 24px; background: var(--border);
+}
+
+/* ═══ Healthcare Flagship — Split layout (CR-06) ═══ */
+.flagship {
+  padding: 10rem var(--page-gutter);
+  position: relative;
+}
+.flagship::before {
+  content: ''; position: absolute; top: 0; right: 0; bottom: 0; left: 0;
+  background: linear-gradient(135deg, rgba(37,99,235,0.04) 0%, transparent 50%);
+  pointer-events: none;
+}
+.flagship-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: var(--space-4xl); align-items: start;
+  max-width: var(--page-max); margin: 0 auto;
+}
+.flagship-sticky {
+  position: sticky; top: calc(64px + var(--space-3xl));
+}
+.flagship-label {
+  display: inline-flex; align-items: center; gap: var(--space-sm);
+  background: var(--accent-dim); border: 1px solid var(--border-accent);
+  border-radius: var(--radius-full);
+  padding: 0.375rem 1rem; font-size: var(--text-caption);
+  font-weight: 600; color: var(--accent-light);
+  margin-bottom: var(--space-lg);
+}
+.flagship-title {
+  font-family: var(--font-display); font-size: var(--text-display-md);
+  font-weight: 800; color: var(--white); letter-spacing: -0.03em;
+  line-height: 1.1; margin-bottom: var(--space-lg);
+}
+.flagship-sub {
+  font-size: var(--text-body-lg); color: var(--text-secondary);
+  line-height: 1.75; max-width: var(--measure); margin-bottom: var(--space-2xl);
+}
+.tool-card {
+  background: var(--surface-1); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: var(--space-xl);
+  margin-bottom: var(--space-lg); box-shadow: var(--shadow-raised);
+  transition: border-color var(--duration-normal) var(--ease), transform var(--duration-normal) var(--ease), box-shadow var(--duration-normal) var(--ease);
+}
+.tool-card:hover {
+  border-color: var(--border-accent); transform: translateY(-2px);
+  box-shadow: var(--shadow-overlay);
+}
+.tool-card-header {
+  display: flex; align-items: center; gap: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+.tool-icon {
+  width: 40px; height: 40px; background: var(--accent-dim);
+  border-radius: var(--radius-md); display: flex; align-items: center;
+  justify-content: center; flex-shrink: 0;
+}
+.tool-icon svg { color: var(--accent-light); }
+.tool-name {
+  font-family: var(--font-display); font-size: var(--text-body-lg);
+  font-weight: 700; color: var(--white);
+}
+.tool-platform {
+  font-family: var(--font-mono); font-size: var(--text-caption);
+  color: var(--accent-light); margin-top: 2px;
+}
+.tool-desc {
+  font-size: var(--text-body); color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+/* ═══ How We Work — Horizontal timeline (CR-02) ═══ */
+.methodology {
+  padding: 7rem var(--page-gutter);
+  border-top: 1px solid var(--border-subtle);
+}
+.methodology-inner {
+  max-width: var(--page-max); margin: 0 auto;
+}
+.section-label {
+  font-size: var(--text-caption); font-weight: 600; color: var(--accent-light);
+  letter-spacing: 0.08em; text-transform: uppercase;
+  margin-bottom: var(--space-lg);
+}
+.section-title {
+  font-family: var(--font-display); font-size: var(--text-display-md);
+  font-weight: 700; color: var(--white); letter-spacing: -0.03em;
+  line-height: 1.12; max-width: 640px; margin-bottom: var(--space-lg);
+}
+.section-body {
+  font-size: var(--text-body-lg); color: var(--text-secondary);
+  max-width: var(--measure); line-height: 1.75;
+}
+.timeline {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 0; margin-top: var(--space-3xl); position: relative;
+}
+.timeline::before {
+  content: ''; position: absolute; top: 28px; left: 24px; right: 24px;
+  height: 2px; background: linear-gradient(90deg, var(--accent), var(--border-strong), var(--border));
+}
+.timeline-step {
+  padding: 0 var(--space-lg); position: relative;
+}
+.timeline-dot {
+  width: 12px; height: 12px; border-radius: 50%;
+  background: var(--accent); border: 2px solid var(--base);
+  position: relative; z-index: 1; margin-bottom: var(--space-xl);
+  box-shadow: 0 0 0 4px var(--accent-dim);
+}
+.timeline-step:nth-child(2) .timeline-dot { background: var(--accent-light); }
+.timeline-step:nth-child(3) .timeline-dot { background: var(--accent-bright); }
+.timeline-number {
+  font-family: var(--font-mono); font-size: var(--text-caption);
+  color: var(--accent-light); font-weight: 500; margin-bottom: var(--space-sm);
+}
+.timeline-name {
+  font-family: var(--font-display); font-size: var(--text-heading);
+  font-weight: 700; color: var(--white); margin-bottom: var(--space-md);
+  letter-spacing: -0.01em;
+}
+.timeline-desc {
+  font-size: var(--text-body); color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+/* ═══ Services Grid (CR-02, CR-07) ═══ */
+.services {
+  padding: 12rem var(--page-gutter);
+  background: var(--surface-0);
+  border-top: 1px solid var(--border-subtle);
+}
+.services-inner {
+  max-width: var(--page-max); margin: 0 auto;
+}
+.services-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-lg); margin-top: var(--space-3xl);
+}
+.service-card {
+  background: var(--surface-1); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: var(--space-xl);
+  box-shadow: var(--inset-highlight), var(--shadow-raised);
+  transition: border-color var(--duration-normal) var(--ease), transform var(--duration-normal) var(--ease), box-shadow var(--duration-normal) var(--ease);
+}
+.service-card:hover {
+  border-color: var(--accent); transform: translateY(-3px);
+  box-shadow: var(--inset-highlight), var(--shadow-overlay);
+}
+.service-icon {
+  width: 40px; height: 40px; background: var(--accent-dim);
+  border-radius: var(--radius-md); display: flex; align-items: center;
+  justify-content: center; margin-bottom: var(--space-lg);
+}
+.service-icon svg { color: var(--accent-light); }
+.service-name {
+  font-family: var(--font-display); font-size: var(--text-body-lg);
+  font-weight: 700; color: var(--white); margin-bottom: var(--space-sm);
+  letter-spacing: -0.01em;
+}
+.service-desc {
+  font-size: var(--text-body); color: var(--text-secondary); line-height: 1.7;
+}
+.verticals-row {
+  display: flex; flex-wrap: wrap; gap: var(--space-sm);
+  margin-top: var(--space-2xl); justify-content: flex-start;
+}
+.vertical-tag {
+  background: var(--surface-1); border: 1px solid var(--border);
+  border-radius: var(--radius-full); padding: 0.375rem 1rem;
+  font-size: var(--text-small); color: var(--text-secondary); font-weight: 500;
+  transition: border-color var(--duration-fast) var(--ease), color var(--duration-fast) var(--ease);
+}
+.vertical-tag:hover { border-color: var(--accent-light); color: var(--text); }
+
+/* ═══ Case Study (CR-03) ═══ */
+.case-study {
+  padding: 10rem var(--page-gutter);
+  background: linear-gradient(180deg, var(--base) 0%, var(--surface-0) 100%);
+  border-top: 1px solid var(--border-subtle);
+}
+.case-study-inner {
+  max-width: 960px; margin: 0 auto;
+}
+.case-study-card {
+  background: var(--surface-1); border: 1px solid var(--border);
+  border-radius: var(--radius-xl); padding: var(--space-3xl);
+  box-shadow: var(--inset-highlight), var(--shadow-overlay);
+  position: relative;
+}
+.case-study-badge {
+  display: inline-flex; align-items: center; gap: var(--space-sm);
+  background: var(--green-dim); border: 1px solid rgba(34,197,94,0.3);
+  border-radius: var(--radius-full);
+  padding: 0.375rem 0.875rem; font-size: var(--text-caption);
+  font-weight: 600; color: var(--green); margin-bottom: var(--space-xl);
+}
+.case-study-title {
+  font-family: var(--font-display); font-size: var(--text-heading);
+  font-weight: 700; color: var(--white); margin-bottom: var(--space-lg);
+  letter-spacing: -0.02em;
+}
+.case-study-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: var(--space-2xl); margin-top: var(--space-xl);
+}
+.case-study-field-label {
+  font-size: var(--text-caption); font-weight: 600; color: var(--muted);
+  text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: var(--space-sm);
+}
+.case-study-field-value {
+  font-size: var(--text-body); color: var(--text); line-height: 1.7;
+}
+.case-study-outcome {
+  margin-top: var(--space-2xl); padding-top: var(--space-2xl);
+  border-top: 1px solid var(--border);
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-xl);
+}
+.outcome-stat {
+  font-family: var(--font-display); font-size: 2rem;
+  font-weight: 800; color: var(--accent-light); letter-spacing: -0.03em;
+}
+.outcome-label {
+  font-size: var(--text-small); color: var(--text-secondary); margin-top: var(--space-xs);
+}
+.placeholder-flag {
+  background: rgba(250,204,21,0.1); border: 1px dashed rgba(250,204,21,0.4);
+  border-radius: var(--radius-md); padding: var(--space-md) var(--space-lg);
+  font-size: var(--text-small); color: #FACC15; margin-top: var(--space-xl);
+  font-family: var(--font-mono);
+}
+
+/* ═══ Trust & Governance — Feature rows (CR-02) ═══ */
+.trust {
+  padding: 7rem var(--page-gutter);
+  border-top: 1px solid var(--border-subtle);
+}
+.trust-inner {
+  max-width: var(--page-max); margin: 0 auto;
+}
+.trust-rows {
+  display: flex; flex-direction: column; gap: var(--space-3xl);
+  margin-top: var(--space-3xl);
+}
+.trust-row {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: var(--space-3xl); align-items: start;
+}
+.trust-row:nth-child(even) { direction: rtl; }
+.trust-row:nth-child(even) > * { direction: ltr; }
+.trust-badge {
+  display: inline-flex; align-items: center; gap: var(--space-sm);
+  background: var(--accent-dim); border: 1px solid var(--border-accent);
+  border-radius: var(--radius-full);
+  padding: 0.375rem 0.875rem; font-size: var(--text-caption);
+  font-weight: 600; color: var(--accent-light); margin-bottom: var(--space-lg);
+}
+.trust-title {
+  font-family: var(--font-display); font-size: var(--text-heading);
+  font-weight: 700; color: var(--white); margin-bottom: var(--space-md);
+  letter-spacing: -0.02em;
+}
+.trust-body {
+  font-size: var(--text-body); color: var(--text-secondary); line-height: 1.75;
+}
+.trust-buyers {
+  font-size: var(--text-small); color: var(--muted); margin-top: var(--space-lg);
+  font-style: italic;
+}
+.trust-visual {
+  background: var(--surface-1); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: var(--space-2xl);
+  box-shadow: var(--inset-highlight), var(--shadow-raised);
+  display: flex; align-items: center; justify-content: center;
+  min-height: 240px;
+}
+.trust-visual svg { color: var(--accent-dim); }
+
+/* ═══ Pricing (CR-10) ═══ */
+.pricing {
+  padding: 10rem var(--page-gutter);
+  background: var(--surface-0);
+  border-top: 1px solid var(--border-subtle);
+}
+.pricing-inner {
+  max-width: var(--page-max); margin: 0 auto;
+}
+.pricing-grid {
+  display: grid; gap: var(--space-lg); margin-top: var(--space-3xl);
+}
+.pricing-delivery {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-lg);
+}
+.price-card {
+  background: var(--surface-1); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: var(--space-2xl);
+  box-shadow: var(--inset-highlight), var(--shadow-raised);
+  transition: border-color var(--duration-normal) var(--ease), transform var(--duration-normal) var(--ease), box-shadow var(--duration-normal) var(--ease);
+  display: flex; flex-direction: column;
+}
+.price-card:hover {
+  transform: translateY(-2px); box-shadow: var(--inset-highlight), var(--shadow-overlay);
+}
+.price-card.recommended {
+  border-color: var(--accent); position: relative;
+  background: linear-gradient(160deg, rgba(37,99,235,0.08) 0%, var(--surface-1) 50%);
+}
+.price-recommend-badge {
+  position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+  background: var(--accent); color: var(--white); font-size: var(--text-caption);
+  font-weight: 600; padding: 0.25rem 1rem; border-radius: var(--radius-full);
+  white-space: nowrap;
+}
+.price-tier {
+  font-size: var(--text-caption); font-weight: 600; color: var(--accent-light);
+  letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: var(--space-md);
+}
+.price-amount {
+  font-family: var(--font-display); font-size: 2.25rem;
+  font-weight: 800; color: var(--white); letter-spacing: -0.04em;
+  margin-bottom: var(--space-xs);
+}
+.price-scope {
+  font-size: var(--text-body); color: var(--text-secondary);
+  margin-bottom: var(--space-lg); line-height: 1.6;
+}
+.price-bullets {
+  list-style: none; margin-bottom: var(--space-xl); flex: 1;
+}
+.price-bullets li {
+  font-size: var(--text-small); color: var(--text-secondary);
+  padding: var(--space-sm) 0; border-bottom: 1px solid var(--border-subtle);
+  display: flex; align-items: flex-start; gap: var(--space-sm);
+}
+.price-bullets li svg { color: var(--accent-light); flex-shrink: 0; margin-top: 2px; }
+.price-cta {
+  display: block; text-align: center; padding: 0.75rem;
+  border-radius: var(--radius-md); font-size: var(--text-body);
+  font-weight: 600; text-decoration: none;
+  transition: all var(--duration-fast) var(--ease);
+}
+.price-cta-primary {
+  background: var(--accent); color: var(--white);
+}
+.price-cta-primary:hover { background: var(--accent-light); }
+.price-cta-ghost {
+  background: none; color: var(--text); border: 1px solid var(--border-strong);
+}
+.price-cta-ghost:hover { border-color: var(--accent-light); color: var(--accent-light); }
+
+.pricing-standalone {
+  margin-top: var(--space-lg);
+}
+.price-card-standalone {
+  background: var(--surface-1); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: var(--space-2xl);
+  box-shadow: var(--inset-highlight), var(--shadow-raised);
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--space-2xl);
+  align-items: center;
+  transition: border-color var(--duration-normal) var(--ease);
+}
+.price-card-standalone:hover { border-color: var(--border-strong); }
+
+/* ═══ Testimonial (CR-03) ═══ */
+.testimonial {
+  padding: 7rem var(--page-gutter);
+  border-top: 1px solid var(--border-subtle);
+}
+.testimonial-inner {
+  max-width: 740px; margin: 0 auto; text-align: center;
+}
+.testimonial-quote {
+  font-family: var(--font-display); font-size: var(--text-heading);
+  font-weight: 700; color: var(--white); line-height: 1.5;
+  margin-bottom: var(--space-xl);
+  font-style: italic;
+}
+.testimonial-attr {
+  font-size: var(--text-body); color: var(--text-secondary);
+}
+.testimonial-attr strong { color: var(--text); font-weight: 600; }
+
+/* ═══ Contact (CR-11) ═══ */
+.inquiry-section {
+  padding: 10rem var(--page-gutter);
+  background: var(--surface-1);
+  border-top: 1px solid var(--border-subtle);
+}
+.inquiry-inner {
+  max-width: var(--page-max); margin: 0 auto;
+}
+.inquiry-wrap {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: var(--space-4xl); align-items: start;
+}
+.form-group {
+  display: flex; flex-direction: column; gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
+}
+.form-group label {
+  font-size: var(--text-small); font-weight: 600; color: var(--text);
+}
+.form-group input,
+.form-group textarea,
+.form-group select {
+  background: var(--base); border: 1px solid var(--border);
+  border-radius: var(--radius-md); padding: 0.75rem 1rem;
+  color: var(--white); font-family: var(--font-body);
+  font-size: var(--text-body); outline: none;
+  transition: border-color var(--duration-fast) var(--ease), box-shadow var(--duration-fast) var(--ease);
+  width: 100%;
+  appearance: none; -webkit-appearance: none;
+}
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  border-color: var(--accent-light);
+  box-shadow: 0 0 0 3px var(--accent-dim);
+}
+.form-group input[aria-invalid="true"],
+.form-group textarea[aria-invalid="true"] {
+  border-color: #EF4444;
+}
+.form-error {
+  font-size: var(--text-caption); color: #EF4444;
+  display: none; margin-top: var(--space-xs);
+}
+.form-group select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2394A3B8' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 1rem center;
+  padding-right: 2.5rem; cursor: pointer;
+}
+.form-group select option { background: var(--surface-1); }
+.form-group textarea { resize: vertical; min-height: 120px; }
+.form-submit {
+  background: var(--accent); color: var(--white); border: none;
+  padding: 0.875rem 2rem; border-radius: var(--radius-md);
+  font-size: var(--text-body); font-weight: 600; font-family: var(--font-body);
+  cursor: pointer; width: 100%;
+  transition: background var(--duration-fast) var(--ease);
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--space-sm);
+}
+.form-submit:hover { background: var(--accent-light); }
+.form-submit:disabled { opacity: 0.7; cursor: not-allowed; }
+.form-submit .spinner {
+  display: none; width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: var(--white); border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+.form-submit.loading .spinner { display: inline-block; }
+.form-submit.loading .btn-text { display: none; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.form-note {
+  font-size: var(--text-small); color: var(--muted);
+  margin-top: var(--space-md); line-height: 1.6;
+}
+.form-success {
+  display: none; background: var(--green-dim);
+  border: 1px solid rgba(34,197,94,0.3); border-radius: var(--radius-md);
+  padding: var(--space-xl); text-align: center; color: var(--green);
+  font-weight: 600;
+}
+.contact-sidebar { padding-top: var(--space-sm); }
+.contact-item {
+  display: flex; flex-direction: column; gap: var(--space-xs);
+  padding: var(--space-lg) 0; border-bottom: 1px solid var(--border);
+}
+.contact-label {
+  font-size: var(--text-caption); font-weight: 600; color: var(--muted);
+  text-transform: uppercase; letter-spacing: 0.05em;
+}
+.contact-value {
+  font-size: 1rem; color: var(--text); font-weight: 500; text-decoration: none;
+  transition: color var(--duration-fast) var(--ease);
+}
+a.contact-value:hover { color: var(--accent-light); }
+
+/* ═══ Footer — 3-column (CR-15) ═══ */
+.footer {
+  padding: var(--space-4xl) var(--page-gutter) 0;
+  border-top: 1px solid var(--border-subtle);
+}
+.footer-grid {
+  display: grid; grid-template-columns: 2fr 1fr 1fr;
+  gap: var(--space-3xl); max-width: var(--page-max); margin: 0 auto;
+  padding-bottom: var(--space-3xl);
+}
+.footer-brand {}
+.footer-logo {
+  font-family: var(--font-display); font-weight: 800; font-size: 1.25rem;
+  color: var(--white); letter-spacing: -0.02em;
+  margin-bottom: var(--space-md);
+}
+.footer-logo span { color: var(--accent-light); }
+.footer-tagline {
+  font-size: var(--text-body); color: var(--text-secondary);
+  max-width: 320px; line-height: 1.7;
+}
+.footer-nav-title {
+  font-size: var(--text-caption); font-weight: 600; color: var(--muted);
+  text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: var(--space-lg);
+}
+.footer-nav-links {
+  list-style: none; display: flex; flex-direction: column; gap: var(--space-md);
+}
+.footer-nav-links a {
+  color: var(--text-secondary); text-decoration: none; font-size: var(--text-body);
+  transition: color var(--duration-fast) var(--ease);
+}
+.footer-nav-links a:hover { color: var(--white); }
+.footer-bottom {
+  border-top: 1px solid var(--border-subtle);
+  padding: var(--space-lg) var(--page-gutter);
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: var(--space-md);
+  max-width: var(--page-max); margin: 0 auto;
+}
+.footer-copy { font-size: var(--text-small); color: var(--muted); }
+.footer-stack { font-size: var(--text-small); color: var(--muted); }
+.footer-stack span { color: var(--text-secondary); }
+
+/* ═══ Metrics strip ═══ */
+.metrics-strip {
+  display: flex; gap: var(--space-3xl); margin-top: var(--space-3xl);
+  padding-top: var(--space-2xl); border-top: 1px solid var(--border);
+}
+.metric { text-align: left; }
+.metric-value {
+  font-family: var(--font-display); font-size: 2rem;
+  font-weight: 800; color: var(--white); letter-spacing: -0.03em;
+}
+.metric-label {
+  font-size: var(--text-small); color: var(--text-secondary); margin-top: var(--space-xs);
+}
+
+/* ═══ Scroll reveal ═══ */
+.reveal {
+  opacity: 0; transform: translateY(16px);
+  transition: opacity var(--duration-slow) var(--ease-out), transform var(--duration-slow) var(--ease-out);
+}
+.reveal.visible {
+  opacity: 1; transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+}
+
+/* ═══ Responsive ═══ */
+@media (max-width: 1099px) {
+  .pricing-delivery { grid-template-columns: repeat(2, 1fr); }
+  .price-card-standalone { grid-template-columns: 1fr; }
+}
+@media (max-width: 1023px) {
+  .hero { grid-template-columns: 1fr; }
+  .hero-visual { display: none; }
+  .flagship-grid { grid-template-columns: 1fr; }
+  .flagship-sticky { position: static; }
+  .services-grid { grid-template-columns: repeat(2, 1fr); }
+  .trust-row { grid-template-columns: 1fr; }
+  .trust-row:nth-child(even) { direction: ltr; }
+  .trust-visual { min-height: 160px; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 767px) {
+  .nav-links { display: none; }
+  .nav-toggle { display: flex; }
+  .hero { padding-top: calc(64px + var(--space-2xl)); min-height: auto; }
+  .hero h1 { font-size: clamp(2rem, 7vw, 3rem); }
+  .services-grid { grid-template-columns: 1fr; }
+  .pricing-delivery { grid-template-columns: 1fr; }
+  .inquiry-wrap { grid-template-columns: 1fr; gap: var(--space-2xl); }
+  .timeline { grid-template-columns: 1fr; gap: var(--space-2xl); }
+  .timeline::before { display: none; }
+  .case-study-grid { grid-template-columns: 1fr; }
+  .case-study-outcome { grid-template-columns: 1fr; }
+  .metrics-strip { flex-direction: column; gap: var(--space-xl); }
+  .flagship { padding: var(--space-4xl) var(--page-gutter); }
+  .services, .pricing, .case-study, .inquiry-section { padding: var(--space-4xl) var(--page-gutter); }
+  .methodology, .trust, .testimonial { padding: var(--space-3xl) var(--page-gutter); }
+  .footer-grid { grid-template-columns: 1fr; gap: var(--space-2xl); }
+}
+@media (max-width: 413px) {
+  .hero-actions { flex-direction: column; align-items: stretch; }
+  .btn-primary, .btn-ghost { text-align: center; justify-content: center; }
+  .proof-bar-inner { flex-direction: column; gap: var(--space-md); }
+  .proof-divider { display: none; }
+}
 </style>
 </head>
 <body>
-<nav>
-  <a href="/" class="nav-logo">C22<span>Arc</span></a>
-  <ul class="nav-links">
-    <li><a href="#how">How We Work</a></li>
-    <li><a href="#services">Services</a></li>
-    <li><a href="#governance">Governance</a></li>
-    <li><a href="#pricing">Pricing</a></li>
-  </ul>
+
+<!-- ═══ Header ═══ -->
+<header class="nav" role="banner">
+  <a href="/" class="nav-logo" aria-label="C22Arc home">C22<span>Arc</span></a>
+  <nav aria-label="Main navigation">
+    <ul class="nav-links">
+      <li><a href="#healthcare">Healthcare</a></li>
+      <li><a href="#how">How We Work</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+    </ul>
+  </nav>
+  <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" onclick="document.querySelector('.nav-mobile-menu').classList.toggle('active'); this.setAttribute('aria-expanded', this.getAttribute('aria-expanded')==='false')">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
   <a href="#inquiry" class="nav-cta">Start a Project</a>
-</nav>
-<section class="hero">
-  <div class="hero-eyebrow"><div class="hero-eyebrow-dot"></div><span class="hero-eyebrow-text">Autonomous AI Development · Global Delivery</span></div>
-  <div class="hero-stat">60<span>+</span></div>
-  <h1 class="hero-headline">Production AI systems shipped.<br>Any industry. Any geography.</h1>
-  <p class="hero-sub">C22Arc builds autonomous AI applications for organizations that need <strong>working software</strong>, not prototypes. Remote or on-site. Work for hire. You own everything we deliver.</p>
-  <div class="hero-actions"><a href="#inquiry" class="btn-primary">Start a Project &rarr;</a><a href="#services" class="btn-ghost">See Our Services</a></div>
-  <div class="hero-metrics">
-    <div><div class="metric-value">32</div><div class="metric-label">Specialized AI Agents</div></div>
-    <div><div class="metric-value">186+</div><div class="metric-label">API Endpoints</div></div>
-    <div><div class="metric-value">12</div><div class="metric-label">Industry Verticals</div></div>
-    <div><div class="metric-value">SOC 2</div><div class="metric-label">Compliant Platform</div></div>
-  </div>
-</section>
-<section id="how">
-  <div class="section-label">Methodology</div>
-  <h2 class="section-title">We diagnose before we build.<br>We mentor after we deliver.</h2>
-  <p class="section-body">Most AI developers take a spec and ship code. Every C22Arc engagement follows a three-phase model that produces systems clients can actually own and scale.</p>
-  <div class="phases">
-    <div class="phase"><div class="phase-number">01</div><div class="phase-name">Discover</div><p class="phase-desc">We develop the use case from your raw problem — not what you think you need, but what you actually need. The problem is defined before a single line of code is written.</p></div>
-    <div class="phase"><div class="phase-number">02</div><div class="phase-name">Define</div><p class="phase-desc">That use case becomes structured requirements. We educate your team on what the solution must look like and why. You understand precisely what you are receiving before we build it.</p></div>
-    <div class="phase"><div class="phase-number">03</div><div class="phase-name">Deliver + Mentor</div><p class="phase-desc">We ship production software, then stay to mentor your team until they own it. You don't just receive an application — you gain the capability to own and scale it.</p></div>
-  </div>
-</section>
-<section id="services">
-  <div class="section-label">What We Build</div>
-  <h2 class="section-title">Autonomous AI across<br>12 industry verticals.</h2>
-  <p class="section-body">C22Arc delivers across the full stack — from single agents to multi-agent orchestration platforms, EHR automation suites, and enterprise SaaS systems.</p>
-  <div class="services-grid">
-    <div class="service-card"><div class="service-icon">⚡</div><div class="service-name">Autonomous AI Agent Development</div><p class="service-desc">Purpose-built agents that replace manual workflows. From single-task automations to 32-agent orchestration pipelines.</p></div>
-    <div class="service-card"><div class="service-icon">🏗️</div><div class="service-name">Full-Stack AI SaaS Engineering</div><p class="service-desc">Production SaaS platforms with AI at the core. React, Supabase, Vercel. Built to ship, not to demo.</p></div>
-    <div class="service-card"><div class="service-icon">🏥</div><div class="service-name">Healthcare AI & EHR Automation</div><p class="service-desc">Oracle Health / Cerner workflow automation. DCW Hub, CCL Master Agent, ReportWheel clinical analytics, DTA Wizard, EHR Support Hub.</p></div>
-    <div class="service-card"><div class="service-icon">🔄</div><div class="service-name">AI-Powered Workflow Automation</div><p class="service-desc">Cross-vertical workflow elimination. Any process that is repetitive, rule-based, or document-heavy is a candidate.</p></div>
-    <div class="service-card"><div class="service-icon">📊</div><div class="service-name">AI Data Analytics & Intelligence</div><p class="service-desc">Turn raw operational data into intelligence. Clinical reporting, executive dashboards, and predictive analytics pipelines.</p></div>
-    <div class="service-card"><div class="service-icon">🗺️</div><div class="service-name">Autonomous Geofencing & Targeting</div><p class="service-desc">C22Arc's proprietary geographic intelligence engine. Identify, analyze, and engage prospects by territory and vertical.</p></div>
-  </div>
-  <div class="verticals-row">
-    <span class="vertical-tag">Healthcare</span><span class="vertical-tag">SaaS</span><span class="vertical-tag">SMB Automation</span><span class="vertical-tag">Data & Analytics</span><span class="vertical-tag">Finance</span><span class="vertical-tag">Media</span><span class="vertical-tag">Legal</span><span class="vertical-tag">Real Estate</span><span class="vertical-tag">Music</span><span class="vertical-tag">Political</span><span class="vertical-tag">Infrastructure</span><span class="vertical-tag">Consumer</span>
-  </div>
-</section>
-<section id="governance">
-  <div class="section-label">Trust & Governance Suite</div>
-  <h2 class="section-title">Enterprise compliance.<br>Delivered as a service.</h2>
-  <p class="section-body">C22Arc is SOC 2 compliant — documented, audited, and enforced across every application we build and operate. We also deliver compliance and governance as standalone work-for-hire services.</p>
-  <div class="trust-block">
-    <div class="trust-card featured"><div class="trust-badge"><span>✓</span> SOC 2 Compliant</div><div class="trust-title">SOC 2 Compliance Delivery</div><p class="trust-body">C22Arc's platform is SOC 2 compliant — documented, audited, and enforced. We deliver SOC 2 readiness as a standalone service for client organizations preparing for audit, investment, or regulatory review.</p><p class="trust-buyers">Buyers: healthcare systems, government contractors, enterprise software organizations, pre-Series A companies.</p></div>
-    <div class="trust-card"><div class="trust-badge"><span>⬡</span> Provenance Protocol</div><div class="trust-title">Governance Protocol Agent</div><p class="trust-body">Every digital asset your organization produces is stamped at creation with a traceable Provenance Serial, copyright classification, and policy-compliant documentation. The agent runs autonomously. Your IP is documented, defensible, and yours.</p><p class="trust-buyers">Buyers: law firms, healthcare systems, government contractors, AI-forward companies.</p></div>
-  </div>
-</section>
-<section id="pricing">
-  <div class="section-label">Investment</div>
-  <h2 class="section-title">Project-based. Fixed scope.<br>You own everything.</h2>
-  <p class="section-body">All C22Arc engagements are work-for-hire. Upon delivery, the client owns all code, documentation, and IP outright.</p>
-  <div class="pricing-grid">
-    <div class="price-card"><div class="price-tier">Starter</div><div class="price-amount">$5K</div><p class="price-scope">Single agent or focused workflow automation. Scoped delivery, full documentation.</p><div class="price-divider"></div><p class="price-note">Best for: single-process automation, MVP agents, focused integrations.</p></div>
-    <div class="price-card featured"><div class="price-tier">Standard</div><div class="price-amount">$10–15K</div><p class="price-scope">Multi-component AI system or full SaaS platform. Discovery, build, and mentorship.</p><div class="price-divider"></div><p class="price-note">Best for: multi-agent pipelines, SaaS platforms, workflow suites.</p></div>
-    <div class="price-card"><div class="price-tier">Enterprise</div><div class="price-amount">$20–25K</div><p class="price-scope">Complex multi-agent platform, full delivery cycle, and extended post-delivery mentorship.</p><div class="price-divider"></div><p class="price-note">Best for: enterprise platforms, full EHR automation suites, multi-vertical systems.</p></div>
-    <div class="price-card"><div class="price-tier">Trust & Governance</div><div class="price-amount">$8K+</div><p class="price-scope">SOC 2 readiness delivery or Governance Protocol Agent deployment. Standalone engagement.</p><div class="price-divider"></div><p class="price-note">Best for: compliance-driven organizations, pre-audit preparation, IP governance.</p></div>
-  </div>
-</section>
-<section class="inquiry-section" id="inquiry">
-  <div class="inquiry-wrap">
-    <div>
-      <div class="section-label">Start a Project</div>
-      <h2 class="section-title">Tell us what you're building.</h2>
-      <p class="section-body">Every C22Arc engagement starts with a discovery conversation. Describe your problem — we'll tell you what it would take to solve it.</p>
-      <div class="contact-sidebar" style="margin-top:2.5rem;">
-        <div class="contact-item"><span class="contact-label">Email</span><a href="mailto:aj@c22arc.com" class="contact-value">aj@c22arc.com</a></div>
-        <div class="contact-item"><span class="contact-label">Phone</span><a href="tel:+19728664140" class="contact-value">(972) 866-4140</a></div>
-        <div class="contact-item"><span class="contact-label">Location</span><span class="contact-value">Denver, CO — Global Delivery</span></div>
-        <div class="contact-item"><span class="contact-label">Response Time</span><span class="contact-value">Within 24 hours</span></div>
+</header>
+<div class="nav-mobile-menu" role="navigation" aria-label="Mobile navigation">
+  <a href="#healthcare">Healthcare</a>
+  <a href="#how">How We Work</a>
+  <a href="#services">Services</a>
+  <a href="#pricing">Pricing</a>
+  <a href="#inquiry">Start a Project</a>
+</div>
+
+<!-- ═══ Hero — Two-column (CR-05) ═══ -->
+<main>
+<section class="hero" aria-labelledby="hero-heading">
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <div class="hero-eyebrow-dot" aria-hidden="true"></div>
+      <span class="hero-eyebrow-text">Autonomous AI Development</span>
+    </div>
+    <h1 id="hero-heading">Production AI systems.<br>Any industry.<br>Any geography.</h1>
+    <p class="hero-sub">C22Arc builds autonomous AI applications for organizations that need <strong>working software</strong>, not prototypes. Remote or on-site. Work for hire. You own everything we deliver.</p>
+    <div class="hero-actions">
+      <a href="#inquiry" class="btn-primary">Start a Project <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      <a href="#services" class="btn-ghost">See Our Services</a>
+    </div>
+    <div class="metrics-strip">
+      <div class="metric">
+        <div class="metric-value" data-count="true" data-target="12">0</div>
+        <div class="metric-label">Production systems<br>delivered since 2024</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">SOC 2</div>
+        <div class="metric-label">Compliant<br>platform</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">100%</div>
+        <div class="metric-label">Client IP<br>ownership</div>
       </div>
     </div>
-    <div>
-      <form id="inquiryForm">
-        <div class="form-group"><label for="name">Your Name</label><input type="text" id="name" name="name" placeholder="Jane Smith" required></div>
-        <div class="form-group"><label for="email">Email Address</label><input type="email" id="email" name="email" placeholder="jane@company.com" required></div>
-        <div class="form-group"><label for="org">Organization</label><input type="text" id="org" name="org" placeholder="Company or hospital name"></div>
-        <div class="form-group"><label for="service">Service Line</label><select id="service" name="service"><option value="">Select a service</option><option>Autonomous AI Agent Development</option><option>Full-Stack AI SaaS Engineering</option><option>Healthcare AI & EHR Automation</option><option>AI-Powered Workflow Automation</option><option>Trust & Governance Suite (SOC 2)</option><option>Governance Protocol Agent</option><option>AI Data Analytics & Intelligence</option><option>Not sure — need discovery</option></select></div>
-        <div class="form-group"><label for="message">Describe your problem</label><textarea id="message" name="message" placeholder="What are you trying to solve? What does success look like?" required></textarea></div>
-        <button type="submit" class="form-submit">Send Inquiry &rarr;</button>
-        <p class="form-note">We respond within 24 hours. All inquiries are confidential.</p>
-        <div class="form-success" id="formSuccess">✓ Inquiry received. AJ will respond within 24 hours.</div>
-      </form>
+  </div>
+  <div class="hero-visual" aria-hidden="true">
+    <svg class="agent-graph" viewBox="0 0 400 400" fill="none">
+      <!-- Core orchestrator -->
+      <circle class="node-core" cx="200" cy="200" r="28"/>
+      <text class="node-label-core" x="200" y="200">ORCH</text>
+      <!-- Agent nodes -->
+      <circle class="node" cx="200" cy="70" r="22"/>
+      <text class="node-label" x="200" y="70">DCW</text>
+      <circle class="node" cx="320" cy="130" r="22"/>
+      <text class="node-label" x="320" y="130">CCL</text>
+      <circle class="node" cx="340" cy="260" r="22"/>
+      <text class="node-label" x="340" y="260">RPT</text>
+      <circle class="node" cx="260" cy="350" r="22"/>
+      <text class="node-label" x="260" y="350">DTA</text>
+      <circle class="node" cx="140" cy="350" r="22"/>
+      <text class="node-label" x="140" y="350">GEO</text>
+      <circle class="node" cx="60" cy="260" r="22"/>
+      <text class="node-label" x="60" y="260">GOV</text>
+      <circle class="node" cx="80" cy="130" r="22"/>
+      <text class="node-label" x="80" y="130">EHR</text>
+      <!-- Static edges -->
+      <line class="edge" x1="200" y1="172" x2="200" y2="92"/>
+      <line class="edge" x1="224" y1="184" x2="298" y2="142"/>
+      <line class="edge" x1="226" y1="210" x2="318" y2="248"/>
+      <line class="edge" x1="214" y1="226" x2="248" y2="334"/>
+      <line class="edge" x1="186" y1="226" x2="152" y2="334"/>
+      <line class="edge" x1="174" y1="210" x2="82" y2="248"/>
+      <line class="edge" x1="176" y1="184" x2="102" y2="142"/>
+      <!-- Active edges (animated) -->
+      <line class="edge-active" x1="200" y1="172" x2="200" y2="92"/>
+      <line class="edge-active" x1="224" y1="184" x2="298" y2="142"/>
+      <line class="edge-active" x1="174" y1="210" x2="82" y2="248"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ═══ Proof Bar (CR-03) ═══ -->
+<div class="proof-bar reveal">
+  <div class="proof-bar-inner">
+    <div class="proof-item">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+      SOC 2 Compliant
+    </div>
+    <div class="proof-divider" aria-hidden="true"></div>
+    <div class="proof-item">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      Oracle Health / Cerner Certified
+    </div>
+    <div class="proof-divider" aria-hidden="true"></div>
+    <div class="proof-item">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+      Vercel + Supabase Stack
+    </div>
+    <div class="proof-divider" aria-hidden="true"></div>
+    <div class="proof-item">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Work-for-Hire / Client Owns IP
+    </div>
+  </div>
+</div>
+
+<!-- ═══ Healthcare Flagship (CR-06) ═══ -->
+<section class="flagship" id="healthcare" aria-labelledby="flagship-heading">
+  <div class="flagship-grid">
+    <div class="flagship-sticky reveal">
+      <div class="flagship-label">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        Healthcare AI Flagship
+      </div>
+      <h2 class="flagship-title" id="flagship-heading">Oracle Health &amp; EHR automation is our strongest asset.</h2>
+      <p class="flagship-sub">Five purpose-built tools for clinical workflow automation, deployed inside Oracle Health / Cerner environments. This is not general-purpose AI bolted onto healthcare. It is healthcare automation from the inside.</p>
+    </div>
+    <div class="flagship-tools">
+      <div class="tool-card reveal">
+        <div class="tool-card-header">
+          <div class="tool-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </div>
+          <div>
+            <div class="tool-name">DCW Hub</div>
+            <div class="tool-platform">Oracle Health / Cerner</div>
+          </div>
+        </div>
+        <p class="tool-desc">Dynamic Clinical Workflow management. Automates documentation routing, task assignment, and clinical process orchestration.</p>
+      </div>
+      <div class="tool-card reveal">
+        <div class="tool-card-header">
+          <div class="tool-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          </div>
+          <div>
+            <div class="tool-name">CCL Master Agent</div>
+            <div class="tool-platform">Oracle Health / Cerner</div>
+          </div>
+        </div>
+        <p class="tool-desc">Autonomous CCL code generation, validation, and deployment. Replaces manual query-building with agent-driven development.</p>
+      </div>
+      <div class="tool-card reveal">
+        <div class="tool-card-header">
+          <div class="tool-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          </div>
+          <div>
+            <div class="tool-name">ReportWheel</div>
+            <div class="tool-platform">Clinical Analytics</div>
+          </div>
+        </div>
+        <p class="tool-desc">Clinical reporting and analytics engine. Transforms raw EHR data into actionable dashboards and compliance-ready reports.</p>
+      </div>
+      <div class="tool-card reveal">
+        <div class="tool-card-header">
+          <div class="tool-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          </div>
+          <div>
+            <div class="tool-name">DTA Wizard</div>
+            <div class="tool-platform">Oracle Health / Cerner</div>
+          </div>
+        </div>
+        <p class="tool-desc">Data Transfer Architecture automation. Streamlines interface configuration, data mapping, and system integration workflows.</p>
+      </div>
+      <div class="tool-card reveal">
+        <div class="tool-card-header">
+          <div class="tool-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M21 21v-2a4 4 0 0 0-3-3.87"/></svg>
+          </div>
+          <div>
+            <div class="tool-name">EHR Support Hub</div>
+            <div class="tool-platform">Multi-platform</div>
+          </div>
+        </div>
+        <p class="tool-desc">Centralized support orchestration for clinical IT teams. Automates ticket triage, knowledge routing, and escalation workflows.</p>
+      </div>
     </div>
   </div>
 </section>
-<footer>
-  <div class="footer-logo">C22<span>Arc</span></div>
-  <div class="footer-copy">© 2026 Customer22 LLC. All rights reserved. IP protected under C22Arc proprietary licensing.</div>
-  <div class="footer-stack">Built on <span>Vercel · Supabase · GitHub</span></div>
+
+<!-- ═══ How We Work — Timeline (CR-02) ═══ -->
+<section class="methodology" id="how" aria-labelledby="method-heading">
+  <div class="methodology-inner">
+    <div class="section-label reveal">Methodology</div>
+    <h2 class="section-title reveal" id="method-heading">We diagnose before we build.<br>We mentor after we deliver.</h2>
+    <p class="section-body reveal">Most AI developers take a spec and ship code. Every C22Arc engagement follows a three-phase model that produces systems clients can actually own and scale.</p>
+    <div class="timeline reveal">
+      <div class="timeline-step">
+        <div class="timeline-dot" aria-hidden="true"></div>
+        <div class="timeline-number">01</div>
+        <h3 class="timeline-name">Discover</h3>
+        <p class="timeline-desc">We develop the use case from your raw problem -- not what you think you need, but what you actually need. The problem is defined before a single line of code is written.</p>
+      </div>
+      <div class="timeline-step">
+        <div class="timeline-dot" aria-hidden="true"></div>
+        <div class="timeline-number">02</div>
+        <h3 class="timeline-name">Define</h3>
+        <p class="timeline-desc">That use case becomes structured requirements. We educate your team on what the solution must look like and why. You understand precisely what you are receiving before we build it.</p>
+      </div>
+      <div class="timeline-step">
+        <div class="timeline-dot" aria-hidden="true"></div>
+        <div class="timeline-number">03</div>
+        <h3 class="timeline-name">Deliver + Mentor</h3>
+        <p class="timeline-desc">We ship production software, then stay to mentor your team until they own it. You don't just receive an application -- you gain the capability to own and scale it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Services (CR-01, CR-07) ═══ -->
+<section class="services" id="services" aria-labelledby="services-heading">
+  <div class="services-inner">
+    <div class="section-label reveal">What We Build</div>
+    <h2 class="section-title reveal" id="services-heading">Deep expertise in healthcare.<br>Proven across six verticals.</h2>
+    <p class="section-body reveal">C22Arc delivers across the full stack -- from single agents to multi-agent orchestration platforms, EHR automation suites, and enterprise SaaS systems.</p>
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="service-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+        </div>
+        <h3 class="service-name">Autonomous AI Agent Development</h3>
+        <p class="service-desc">Purpose-built agents that replace manual workflows. From single-task automations to multi-agent orchestration pipelines.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        </div>
+        <h3 class="service-name">Full-Stack AI SaaS Engineering</h3>
+        <p class="service-desc">Production SaaS platforms with AI at the core. React, Supabase, Vercel. Built to ship, not to demo.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        </div>
+        <h3 class="service-name">Healthcare AI &amp; EHR Automation</h3>
+        <p class="service-desc">Oracle Health / Cerner workflow automation. Five production tools for clinical documentation, analytics, and support.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+        </div>
+        <h3 class="service-name">AI-Powered Workflow Automation</h3>
+        <p class="service-desc">Cross-vertical workflow elimination. Any process that is repetitive, rule-based, or document-heavy is a candidate.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        </div>
+        <h3 class="service-name">AI Data Analytics &amp; Intelligence</h3>
+        <p class="service-desc">Turn raw operational data into intelligence. Clinical reporting, executive dashboards, and predictive analytics pipelines.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <h3 class="service-name">Autonomous Geofencing &amp; Targeting</h3>
+        <p class="service-desc">Proprietary geographic intelligence engine. Identify, analyze, and engage prospects by territory and vertical.</p>
+      </div>
+    </div>
+    <div class="verticals-row reveal">
+      <span class="vertical-tag">Healthcare</span>
+      <span class="vertical-tag">SaaS</span>
+      <span class="vertical-tag">Data &amp; Analytics</span>
+      <span class="vertical-tag">Finance</span>
+      <span class="vertical-tag">Legal</span>
+      <span class="vertical-tag">Infrastructure</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Case Study (CR-03) — Placeholder ═══ -->
+<section class="case-study" aria-labelledby="casestudy-heading">
+  <div class="case-study-inner reveal">
+    <div class="case-study-card">
+      <div class="case-study-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+        Case Study
+      </div>
+      <h2 class="case-study-title" id="casestudy-heading"><!-- PLACEHOLDER: Case study title -->[Case Study Title — Awaiting Content]</h2>
+      <div class="case-study-grid">
+        <div>
+          <div class="case-study-field-label">Context</div>
+          <div class="case-study-field-value"><!-- PLACEHOLDER -->[Client context and background — awaiting content from AJ]</div>
+        </div>
+        <div>
+          <div class="case-study-field-label">Problem</div>
+          <div class="case-study-field-value"><!-- PLACEHOLDER -->[Problem statement — awaiting content from AJ]</div>
+        </div>
+        <div>
+          <div class="case-study-field-label">What Was Built</div>
+          <div class="case-study-field-value"><!-- PLACEHOLDER -->[Solution description — awaiting content from AJ]</div>
+        </div>
+        <div>
+          <div class="case-study-field-label">Duration</div>
+          <div class="case-study-field-value"><!-- PLACEHOLDER -->[Engagement duration — awaiting content from AJ]</div>
+        </div>
+      </div>
+      <div class="case-study-outcome">
+        <div>
+          <div class="outcome-stat"><!-- PLACEHOLDER -->[X%]</div>
+          <div class="outcome-label"><!-- PLACEHOLDER -->[Outcome metric 1]</div>
+        </div>
+        <div>
+          <div class="outcome-stat"><!-- PLACEHOLDER -->[Y]</div>
+          <div class="outcome-label"><!-- PLACEHOLDER -->[Outcome metric 2]</div>
+        </div>
+        <div>
+          <div class="outcome-stat"><!-- PLACEHOLDER -->[Z]</div>
+          <div class="outcome-label"><!-- PLACEHOLDER -->[Outcome metric 3]</div>
+        </div>
+      </div>
+      <div class="placeholder-flag">CONTENT PLACEHOLDER: Case study content awaiting input from AJ per CR-03. All fields above need real client data — do not ship with placeholder text.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Trust & Governance — Feature rows (CR-02) ═══ -->
+<section class="trust" id="governance" aria-labelledby="trust-heading">
+  <div class="trust-inner">
+    <div class="section-label reveal">Trust &amp; Governance Suite</div>
+    <h2 class="section-title reveal" id="trust-heading">Enterprise compliance.<br>Delivered as a service.</h2>
+    <p class="section-body reveal">C22Arc is SOC 2 compliant -- documented, audited, and enforced across every application we build and operate. We also deliver compliance and governance as standalone work-for-hire services.</p>
+    <div class="trust-rows">
+      <div class="trust-row reveal">
+        <div>
+          <div class="trust-badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            SOC 2 Compliant
+          </div>
+          <h3 class="trust-title">SOC 2 Compliance Delivery</h3>
+          <p class="trust-body">C22Arc's platform is SOC 2 compliant -- documented, audited, and enforced. We deliver SOC 2 readiness as a standalone service for client organizations preparing for audit, investment, or regulatory review.</p>
+          <p class="trust-buyers">Buyers: healthcare systems, government contractors, enterprise software organizations, pre-Series A companies.</p>
+        </div>
+        <div class="trust-visual" aria-hidden="true">
+          <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.75"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+        </div>
+      </div>
+      <div class="trust-row reveal">
+        <div>
+          <div class="trust-badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+            Provenance Protocol
+          </div>
+          <h3 class="trust-title">Governance Protocol Agent</h3>
+          <p class="trust-body">Every digital asset your organization produces is stamped at creation with a traceable Provenance Serial, copyright classification, and policy-compliant documentation. The agent runs autonomously. Your IP is documented, defensible, and yours.</p>
+          <p class="trust-buyers">Buyers: law firms, healthcare systems, government contractors, AI-forward companies.</p>
+        </div>
+        <div class="trust-visual" aria-hidden="true">
+          <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.75"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Pricing (CR-10) ═══ -->
+<section class="pricing" id="pricing" aria-labelledby="pricing-heading">
+  <div class="pricing-inner">
+    <div class="section-label reveal">Investment</div>
+    <h2 class="section-title reveal" id="pricing-heading">Project-based. Fixed scope.<br>You own everything.</h2>
+    <p class="section-body reveal">All C22Arc engagements are work-for-hire. Upon delivery, the client owns all code, documentation, and IP outright.</p>
+    <div class="pricing-grid">
+      <div class="pricing-delivery">
+        <div class="price-card reveal">
+          <div class="price-tier">Starter</div>
+          <div class="price-amount">$5K</div>
+          <p class="price-scope">Single agent or focused workflow automation.</p>
+          <ul class="price-bullets">
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg> One autonomous agent</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg> Scoped delivery + docs</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg> Full source code ownership</li>
+          </ul>
+          <a href="#inquiry" class="price-cta price-cta-ghost" data-service="Autonomous AI Agent Development">Start a Project</a>
+        </div>
+        <div class="price-card recommended reveal">
+          <div class="price-recommend-badge">Most Common</div>
+          <div class="price-tier">Standard</div>
+          <div class="price-amount">$10-15K</div>
+          <p class="price-scope">Multi-component AI system or full SaaS platform.</p>
+          <ul class="price-bullets">
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg> Multi-agent pipeline or SaaS</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg> Discovery + build + mentorship</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg> Full source code ownership</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg> Post-delivery team mentorship</li>
+          </ul>
+          <a href="#inquiry" class="price-cta price-cta-primary" data-service="Full-Stack AI SaaS Engineering">Start a Project</a>
+        </div>
+        <div class="price-card reveal">
+          <div class="price-tier">Enterprise</div>
+          <div class="price-amount">$20-25K</div>
+          <p class="price-scope">Complex multi-agent platform, full delivery cycle.</p>
+          <ul class="price-bullets">
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg> Enterprise-scale AI platform</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg> Full EHR automation suites</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg> Full source code ownership</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg> Extended post-delivery support</li>
+          </ul>
+          <a href="#inquiry" class="price-cta price-cta-ghost" data-service="Healthcare AI &amp; EHR Automation">Start a Project</a>
+        </div>
+      </div>
+      <div class="pricing-standalone reveal">
+        <div class="price-card-standalone">
+          <div>
+            <div class="price-tier">Trust &amp; Governance</div>
+            <div class="price-amount">$8K+</div>
+          </div>
+          <div>
+            <p class="price-scope" style="margin-bottom:0;">SOC 2 readiness delivery or Governance Protocol Agent deployment. A standalone engagement -- not a tier of the delivery services above.</p>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:flex-end;">
+            <a href="#inquiry" class="price-cta price-cta-ghost" data-service="Trust &amp; Governance Suite (SOC 2)">Start a Project</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Testimonial (CR-03) — Placeholder ═══ -->
+<section class="testimonial" aria-labelledby="testimonial-heading">
+  <div class="testimonial-inner reveal">
+    <h2 class="sr-only" id="testimonial-heading">Client Testimonial</h2>
+    <blockquote class="testimonial-quote"><!-- PLACEHOLDER -->"[Testimonial quote awaiting content from AJ. Must include attributed name, title, and organization per CR-03.]"</blockquote>
+    <p class="testimonial-attr"><!-- PLACEHOLDER --><strong>[Name]</strong>, [Title] at [Organization]</p>
+    <div class="placeholder-flag">CONTENT PLACEHOLDER: Testimonial awaiting attributed quote from AJ per CR-03. If no attributable quote exists, remove this section entirely.</div>
+  </div>
+</section>
+
+<!-- ═══ Contact (CR-11) ═══ -->
+<section class="inquiry-section" id="inquiry" aria-labelledby="inquiry-heading">
+  <div class="inquiry-inner">
+    <div class="inquiry-wrap">
+      <div>
+        <div class="section-label">Start a Project</div>
+        <h2 class="section-title" id="inquiry-heading">Tell us what you're building.</h2>
+        <p class="section-body">Every C22Arc engagement starts with a discovery conversation. Describe your problem -- we'll tell you what it would take to solve it.</p>
+        <div class="contact-sidebar" style="margin-top:var(--space-2xl);">
+          <div class="contact-item"><span class="contact-label">Email</span><a href="mailto:aj@c22arc.com" class="contact-value">aj@c22arc.com</a></div>
+          <div class="contact-item"><span class="contact-label">Phone</span><a href="tel:+19728664140" class="contact-value">(972) 866-4140</a></div>
+          <div class="contact-item"><span class="contact-label">Location</span><span class="contact-value">Denver, CO -- Global Delivery</span></div>
+          <div class="contact-item"><span class="contact-label">Response Time</span><span class="contact-value">Within 24 hours</span></div>
+        </div>
+      </div>
+      <div>
+        <form id="inquiryForm" novalidate>
+          <div class="form-group">
+            <label for="name">Your Name</label>
+            <input type="text" id="name" name="name" placeholder="Full name" required aria-required="true">
+            <span class="form-error" id="name-error" role="alert">Please enter your name.</span>
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="you@company.com" required aria-required="true">
+            <span class="form-error" id="email-error" role="alert">Please enter a valid email address.</span>
+          </div>
+          <div class="form-group">
+            <label for="org">Organization</label>
+            <input type="text" id="org" name="org" placeholder="Company or organization name">
+          </div>
+          <div class="form-group">
+            <label for="service">Service Line</label>
+            <select id="service" name="service">
+              <option value="">Select a service</option>
+              <option>Autonomous AI Agent Development</option>
+              <option>Full-Stack AI SaaS Engineering</option>
+              <option>Healthcare AI &amp; EHR Automation</option>
+              <option>AI-Powered Workflow Automation</option>
+              <option>Trust &amp; Governance Suite (SOC 2)</option>
+              <option>Governance Protocol Agent</option>
+              <option>AI Data Analytics &amp; Intelligence</option>
+              <option>Not sure -- need discovery</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message">Describe your problem</label>
+            <textarea id="message" name="message" placeholder="What are you trying to solve? What does success look like?" required aria-required="true"></textarea>
+            <span class="form-error" id="message-error" role="alert">Please describe your project.</span>
+          </div>
+          <button type="submit" class="form-submit">
+            <span class="btn-text">Send Inquiry</span>
+            <span class="spinner" aria-hidden="true"></span>
+          </button>
+          <p class="form-note">We respond within 24 hours. All inquiries are confidential.</p>
+          <div class="form-success" id="formSuccess" role="status">Inquiry received. AJ will respond within 24 hours.</div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ═══ Footer — 3-column (CR-15) ═══ -->
+<footer class="footer" role="contentinfo">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="footer-logo">C22<span>Arc</span></div>
+      <p class="footer-tagline">Autonomous AI development studio. Production systems for healthcare, enterprise, and beyond.</p>
+    </div>
+    <div>
+      <div class="footer-nav-title">Navigate</div>
+      <ul class="footer-nav-links">
+        <li><a href="#healthcare">Healthcare AI</a></li>
+        <li><a href="#how">How We Work</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#inquiry">Start a Project</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-nav-title">Contact</div>
+      <ul class="footer-nav-links">
+        <li><a href="mailto:aj@c22arc.com">aj@c22arc.com</a></li>
+        <li><a href="tel:+19728664140">(972) 866-4140</a></li>
+        <li><span style="color:var(--text-secondary);">Denver, CO</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">&copy; 2026 Customer22 LLC. All rights reserved. IP protected under C22Arc proprietary licensing.</div>
+    <div class="footer-stack">Built on <span>Vercel &middot; Supabase &middot; GitHub</span></div>
+  </div>
 </footer>
+
+<!-- Screen reader only -->
+<style>.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}</style>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
+// ═══════════════════════════════════════════════════════════════
+// C22Arc — Form, Scroll Reveals, Count-up, Pricing CTAs
+// ═══════════════════════════════════════════════════════════════
+
 const SUPABASE_URL = 'https://pzghmurcwxputubvlyyb.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB6Z2htdXJjd3hwdXR1YnZseXliIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk5MjA5MDUsImV4cCI6MjEwNTQ5NjkwNX0.udHWFQi-wWegPuiUZGSL5N1wlMtF7mNzNl6hvpWwlZA';
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-document.getElementById('inquiryForm').addEventListener('submit', async function(e) {
+// — Scroll reveal (CR-09) —
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+if (!prefersReducedMotion) {
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        const delay = entry.target.dataset.delay || 0;
+        setTimeout(() => entry.target.classList.add('visible'), delay);
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach((el, i) => {
+    // Stagger siblings
+    const parent = el.parentElement;
+    const siblings = parent.querySelectorAll(':scope > .reveal');
+    if (siblings.length > 1) {
+      const idx = Array.from(siblings).indexOf(el);
+      el.dataset.delay = idx * 60;
+    }
+    revealObserver.observe(el);
+  });
+} else {
+  document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+}
+
+// — Count-up animation (CR-09) —
+if (!prefersReducedMotion) {
+  const countObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const target = parseInt(el.dataset.target);
+        const duration = 1200;
+        const start = performance.now();
+        function step(now) {
+          const progress = Math.min((now - start) / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          el.textContent = Math.round(eased * target);
+          if (progress < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+        countObserver.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  document.querySelectorAll('[data-count="true"]').forEach(el => countObserver.observe(el));
+} else {
+  document.querySelectorAll('[data-count="true"]').forEach(el => el.textContent = el.dataset.target);
+}
+
+// — Pricing CTAs pre-fill service (CR-10) —
+document.querySelectorAll('[data-service]').forEach(link => {
+  link.addEventListener('click', (e) => {
+    const service = link.dataset.service;
+    const select = document.getElementById('service');
+    if (select) {
+      const opt = Array.from(select.options).find(o => o.text === service || o.value === service);
+      if (opt) select.value = opt.value || opt.text;
+    }
+  });
+});
+
+// — Form validation & submission (CR-11) —
+const form = document.getElementById('inquiryForm');
+function showError(field, errorId) {
+  field.setAttribute('aria-invalid', 'true');
+  field.setAttribute('aria-describedby', errorId);
+  document.getElementById(errorId).style.display = 'block';
+}
+function clearError(field, errorId) {
+  field.removeAttribute('aria-invalid');
+  field.removeAttribute('aria-describedby');
+  document.getElementById(errorId).style.display = 'none';
+}
+
+form.addEventListener('submit', async function(e) {
   e.preventDefault();
+  let valid = true;
+  const nameEl = document.getElementById('name');
+  const emailEl = document.getElementById('email');
+  const messageEl = document.getElementById('message');
+
+  clearError(nameEl, 'name-error');
+  clearError(emailEl, 'email-error');
+  clearError(messageEl, 'message-error');
+
+  if (!nameEl.value.trim()) { showError(nameEl, 'name-error'); valid = false; }
+  if (!emailEl.value.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailEl.value)) { showError(emailEl, 'email-error'); valid = false; }
+  if (!messageEl.value.trim()) { showError(messageEl, 'message-error'); valid = false; }
+
+  if (!valid) return;
+
   const btn = this.querySelector('.form-submit');
   const success = document.getElementById('formSuccess');
-  btn.textContent = 'Sending...'; btn.disabled = true;
+  btn.classList.add('loading'); btn.disabled = true;
+
   try {
     const { error } = await supabase.from('inquiries').insert({
-      name: document.getElementById('name').value,
-      email: document.getElementById('email').value,
+      name: nameEl.value,
+      email: emailEl.value,
       org: document.getElementById('org').value || null,
       service: document.getElementById('service').value || null,
-      message: document.getElementById('message').value
+      message: messageEl.value
     });
     if (error) throw error;
     this.style.display = 'none'; success.style.display = 'block';
   } catch(err) {
-    btn.textContent = 'Send Inquiry →'; btn.disabled = false;
+    btn.classList.remove('loading'); btn.disabled = false;
     alert('Submission failed. Please email aj@c22arc.com directly.');
   }
+});
+
+// Clear errors on input
+['name','email','message'].forEach(id => {
+  document.getElementById(id).addEventListener('input', function() {
+    clearError(this, id + '-error');
+  });
 });
 </script>
 </body>
