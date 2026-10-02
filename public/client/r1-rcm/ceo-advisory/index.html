@@ -386,8 +386,10 @@ ul.ul li:last-child { border-bottom: none; }
 </style>
 
 <!-- NAV -->
+<a id="top"></a>
 <nav>
-  <span class="brand">R1 RCM · GCC CEO Advisory · V3.7 · Oct 2026</span>
+  <span class="brand">R1 RCM · GCC CEO Advisory · V3.9 · Oct 2026</span>
+  <a href="#top" style="color:var(--accent);font-weight:700;">↑ Top</a>
   <a href="#overview">Overview</a>
   <a href="#customers">US vs Global</a>
   <a href="#organalysis">Capability Gaps</a>
@@ -1768,5 +1770,9 @@ document.addEventListener('DOMContentLoaded', () => {
   if (vt1 && !vt1.checked && vt4 && vt4.checked) triggerDashboardAnim();
 });
 </script>
+
+<!-- BACK TO TOP -->
+<a href="#top" id="back-to-top" title="Back to top" style="display:none;position:fixed;bottom:1.6rem;right:1.4rem;z-index:9998;width:42px;height:42px;border-radius:50%;background:var(--accent);color:#04070f;font-size:1.15rem;font-weight:900;text-align:center;line-height:42px;box-shadow:0 4px 18px rgba(0,198,178,.4);text-decoration:none;transition:opacity .25s,transform .25s;opacity:0;">↑</a>
+<script>(function(){var b=document.getElementById('back-to-top');if(!b)return;window.addEventListener('scroll',function(){var s=window.scrollY>400;b.style.display=s?'block':'none';b.style.opacity=s?'1':'0';b.style.transform=s?'translateY(0)':'translateY(12px)';},{passive:true});})();</script>
 
 </body></html>
