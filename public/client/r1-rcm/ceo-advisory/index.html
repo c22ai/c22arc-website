@@ -1,0 +1,1772 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>R1 RCM Saudi Vision 2030</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap">
+<style>
+/* BASE FONT — 14px so rem values stay contained at 110–125% browser zoom */
+html { font-size: 14px; }
+
+/* TOKENS — dark-first boardroom palette */
+:root {
+  --bg: #04070f;
+  --surface: #080d1a;
+  --s2: #0c1220;
+  --s3: #101728;
+  --border: #192136;
+  --accent: #00c6b2;
+  --gold: #e8b84b;
+  --blue: #3b8eff;
+  --green: #3dd68c;
+  --red: #e84545;
+  --amber: #f0a500;
+  --fg: #dde3f5;
+  --muted: #5a657f;
+  --muted2: #8a93aa;
+  --serif: 'Playfair Display', Georgia, serif;
+  --sans: 'Inter', system-ui, sans-serif;
+  font-family: var(--sans);
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg: #f2f5fc; --surface: #ffffff; --s2: #e8edf8; --s3: #dde4f4;
+    --border: #c8d0e8; --fg: #0a0e1a; --muted: #56617a; --muted2: #7a849a;
+    color-scheme: light;
+  }
+}
+:root[data-theme="dark"] { color-scheme: dark; }
+
+/* Base font size — 15px instead of browser default 16px so rem values scale gracefully at 110–125% zoom */
+html { font-size: 15px; }
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--fg); font-family: var(--sans); line-height: 1.6; }
+::selection { background: rgba(0,198,178,.25); }
+a { color: var(--accent); text-decoration: none; }
+
+/* ── Video Section Tabs ── */
+.video-tabs { display:flex; gap:.5rem; flex-wrap:wrap; margin-bottom:1.5rem; }
+.vtab-radio { display:none; }
+.vtab-label { padding:.55rem 1.2rem; border-radius:6px; cursor:pointer; font-size:.8rem; font-weight:600; border:1px solid var(--border); background:var(--s2); color:var(--muted2); transition:all .2s; user-select:none; }
+.vtab-radio:checked + .vtab-label { background:var(--accent); color:#04070f; border-color:var(--accent); }
+.vtab-panel { display:none; }
+#vt1:checked ~ #vp1, #vt2:checked ~ #vp2, #vt3:checked ~ #vp3, #vt4:checked ~ #vp4 { display:block; animation:fadeIn .3s ease; }
+.scene { background:var(--s2); border:1px solid var(--border); border-radius:8px; padding:1.2rem 1.5rem; margin-bottom:1rem; }
+.scene-num { font-size:.7rem; font-weight:800; color:var(--accent); letter-spacing:.1em; text-transform:uppercase; }
+.scene h4 { margin:.25rem 0 .5rem; color:var(--fg); font-family:var(--serif); }
+.scene p, .scene li { font-size:.82rem; color:var(--muted2); line-height:1.6; }
+.script-line { font-size:.87rem; color:var(--fg); font-style:italic; line-height:1.7; padding:.75rem 1rem; background:var(--s3); border-left:3px solid var(--accent); border-radius:0 6px 6px 0; margin:.5rem 0; }
+.direction { font-size:.75rem; color:var(--gold); font-style:normal; margin:.25rem 0; }
+.talking-pt { display:flex; gap:.75rem; align-items:flex-start; padding:.6rem 0; border-bottom:1px solid var(--border); }
+.talking-pt:last-child { border-bottom:none; }
+.tp-bullet { width:6px; height:6px; border-radius:50%; background:var(--accent); flex-shrink:0; margin-top:.45rem; }
+.tp-text { font-size:.83rem; color:var(--muted2); line-height:1.6; }
+.kpi-anim-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:1rem; margin:1.5rem 0; }
+.kpi-anim { background:var(--s2); border:1px solid var(--border); border-radius:8px; padding:1.2rem; text-align:center; }
+.kpi-anim .num { font-size:1.75rem; font-weight:800; color:var(--accent); font-family:var(--serif); }
+.kpi-anim .lbl { font-size:.78rem; color:var(--muted2); margin-top:.25rem; }
+.bar-anim { height:8px; border-radius:4px; background:var(--border); overflow:hidden; margin:.4rem 0; }
+.bar-fill { height:100%; border-radius:4px; width:0; transition:width 1.5s cubic-bezier(.4,0,.2,1); }
+.slide { background:var(--s2); border:1px solid var(--border); border-radius:10px; padding:2rem; margin-bottom:1.2rem; position:relative; overflow:hidden; }
+.slide::before { content:''; position:absolute; top:0;left:0;right:0; height:3px; background:linear-gradient(90deg,var(--accent),var(--blue)); }
+.slide-tag { font-size:.65rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); margin-bottom:.5rem; }
+.slide h3 { font-family:var(--serif); font-size:1.3rem; color:var(--fg); margin:.25rem 0 .75rem; }
+.slide-body { font-size:.83rem; color:var(--muted2); line-height:1.7; }
+.slide-stat { font-size:2.5rem; font-weight:900; color:var(--gold); font-family:var(--serif); text-align:center; padding:1rem; }
+.slide-stat span { display:block; font-size:.8rem; color:var(--muted2); font-weight:400; font-family:var(--sans); }
+@keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:none} }
+
+/* PRINT */
+@media print {
+  nav, .no-print, .pdf-btn-wrap { display: none !important; }
+  body { background: #fff !important; color: #000 !important; font-size: 11pt; }
+  .cover { background: #f0f3fa !important; color: #000 !important; border: none; padding: 1.5rem 0; min-height: auto !important; }
+  .cover h1 { font-size: 22pt; color: #000; }
+  .cover h1 em { color: #006b62; }
+  .stat-v { color: #006b62 !important; }
+  .container { max-width: 100%; }
+  section { page-break-inside: avoid; border: none; padding: 1rem 0; }
+  .card { border: 1px solid #ccc !important; background: #fafafa !important; }
+  .badge, .chip { background: #e0e0e0 !important; color: #333 !important; border: none !important; }
+  table { font-size: 9pt; }
+  th { background: #e8edf8 !important; color: #000 !important; }
+  h2 { font-size: 16pt; color: #000; border-bottom: 1pt solid #ccc; padding-bottom: 4pt; margin-bottom: 8pt; }
+  h3 { font-size: 13pt; color: #000; }
+  .flow-row { flex-direction: column; gap: .5rem; }
+  .flow-arrow { transform: rotate(90deg); }
+  .dash-grid { grid-template-columns: repeat(2, 1fr); }
+  .email-section { page-break-before: always; }
+}
+
+/* NAV ANIMATIONS */
+@keyframes navRainbow {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+@keyframes navGlow {
+  0%, 100% { opacity: .55; }
+  50%       { opacity: 1; }
+}
+@keyframes brandPulse {
+  0%, 100% { text-shadow: 0 0 8px rgba(0,198,178,.4); }
+  50%       { text-shadow: 0 0 18px rgba(0,198,178,.85), 0 0 32px rgba(59,142,255,.3); }
+}
+
+/* NAV */
+nav {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 200;
+  background: rgba(4,7,15,.97); backdrop-filter: blur(20px);
+  border-bottom: 1px solid transparent;
+  padding: 0 1.5rem; height: 56px;
+  display: flex; align-items: center; gap: 1.5rem;
+  /* animated rainbow bottom border via box-shadow layering */
+  box-shadow:
+    0 1px 0 0 rgba(0,198,178,.0),
+    0 2px 24px rgba(0,198,178,.08);
+  position: relative;
+}
+/* animated gradient underline */
+nav::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg,
+    #00c6b2, #3b8eff, #e8b84b, #3dd68c, #00c6b2, #3b8eff, #e8b84b, #3dd68c, #00c6b2);
+  background-size: 300% 100%;
+  animation: navRainbow 6s ease infinite;
+  opacity: .7;
+}
+/* subtle glow behind the bar */
+nav::before {
+  content: '';
+  position: absolute; bottom: -1px; left: 0; right: 0; height: 18px;
+  background: linear-gradient(90deg,
+    rgba(0,198,178,.12), rgba(59,142,255,.1), rgba(232,184,75,.08), rgba(61,214,140,.1), rgba(0,198,178,.12));
+  background-size: 300% 100%;
+  animation: navRainbow 6s ease infinite;
+  filter: blur(6px);
+  pointer-events: none;
+  opacity: .0;
+  animation: navRainbow 6s ease infinite, navGlow 6s ease infinite;
+}
+.brand {
+  color: var(--accent); font-weight: 900; font-size: .8rem; letter-spacing: .06em;
+  margin-right: auto; white-space: nowrap; font-variant-numeric: tabular-nums;
+  animation: brandPulse 4s ease-in-out infinite;
+}
+nav a {
+  color: var(--muted2); font-size: .65rem; font-weight: 700; letter-spacing: .09em;
+  text-transform: uppercase; white-space: nowrap; transition: color .2s, text-shadow .2s;
+}
+nav a:hover { color: var(--accent); text-shadow: 0 0 10px rgba(0,198,178,.5); }
+.pdf-btn-nav {
+  background: rgba(0,198,178,.12); border: 1px solid rgba(0,198,178,.3);
+  color: var(--accent); font-size: .65rem; font-weight: 800; letter-spacing: .08em;
+  text-transform: uppercase; padding: .3rem .8rem; border-radius: 4px; cursor: pointer;
+  transition: background .15s; display: inline-flex; align-items: center; gap: .35rem;
+}
+.pdf-btn-nav:hover { background: rgba(0,198,178,.22); }
+
+/* ZOOM CONTROL */
+.zoom-ctrl {
+  display: inline-flex; align-items: center; gap: 0;
+  background: rgba(255,255,255,.04); border: 1px solid var(--border);
+  border-radius: 5px; overflow: hidden; height: 28px;
+}
+.zoom-btn {
+  background: none; border: none; color: var(--muted2); cursor: pointer;
+  font-size: .75rem; font-weight: 800; padding: 0 .55rem; height: 100%;
+  line-height: 1; transition: color .15s, background .15s;
+  display: flex; align-items: center; justify-content: center;
+}
+.zoom-btn:hover { color: var(--accent); background: rgba(0,198,178,.08); }
+.zoom-sep { width: 1px; background: var(--border); height: 100%; flex-shrink: 0; }
+.zoom-val {
+  font-size: .62rem; font-weight: 800; color: var(--muted2); letter-spacing: .06em;
+  padding: 0 .45rem; height: 100%; display: flex; align-items: center;
+  min-width: 38px; justify-content: center; user-select: none;
+}
+
+/* LAYOUT */
+.container { max-width: 1080px; margin: 0 auto; padding: 0 1.5rem; }
+
+/* COVER */
+.cover {
+  background: linear-gradient(155deg, #04070f 0%, #081226 50%, #04090e 100%);
+  border-bottom: 2px solid var(--accent);
+  padding: 5rem 0 3.5rem; min-height: 440px;
+  display: flex; align-items: center; position: relative; overflow: hidden;
+}
+.cover::before {
+  content:''; position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 70% 60% at 85% 30%, rgba(0,198,178,.06) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 50% at 5% 80%, rgba(59,142,255,.05) 0%, transparent 60%);
+}
+.cover-inner { position: relative; z-index: 1; }
+.cover-eyebrow {
+  display: inline-flex; align-items: center; gap: .5rem;
+  background: rgba(0,198,178,.08); border: 1px solid rgba(0,198,178,.2);
+  color: var(--accent); font-size: .62rem; font-weight: 800; letter-spacing: .14em;
+  text-transform: uppercase; padding: .25rem .7rem; border-radius: 3px; margin-bottom: 1.3rem;
+}
+.cover h1 { font-family: var(--serif); font-size: clamp(1.7rem, 3vw, 2.6rem); line-height: 1.1; margin-bottom: .6rem; font-weight: 900; }
+.cover h1 em { font-style: normal; color: var(--accent); }
+.cover-sub { font-size: .97rem; color: var(--muted2); max-width: 640px; line-height: 1.7; margin-bottom: 1.6rem; }
+.cover-chips { display: flex; gap: .5rem; flex-wrap: wrap; }
+.chip { background: var(--s2); border: 1px solid var(--border); color: var(--muted2); font-size: .62rem; font-weight: 700; padding: .22rem .6rem; border-radius: 3px; letter-spacing: .05em; }
+.chip.hi { background: rgba(0,198,178,.08); border-color: rgba(0,198,178,.2); color: var(--accent); }
+.chip.gold { background: rgba(232,184,75,.08); border-color: rgba(232,184,75,.2); color: var(--gold); }
+
+.stat-row { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 2rem; padding-top: 1.8rem; border-top: 1px solid var(--border); }
+.stat-v { font-size: 1.45rem; font-weight: 900; color: var(--accent); line-height: 1; font-variant-numeric: tabular-nums; }
+.stat-l { font-size: .72rem; color: var(--muted); text-transform: uppercase; letter-spacing: .07em; margin-top: .15rem; }
+
+/* SECTIONS */
+section { padding: 3rem 0; border-bottom: 1px solid var(--border); }
+.sec-eye { font-size: .6rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); margin-bottom: .4rem; }
+h2 { font-family: var(--serif); font-size: 1.45rem; font-weight: 900; margin-bottom: 1rem; text-wrap: balance; }
+h3 { font-size: .97rem; font-weight: 800; margin-bottom: .45rem; }
+h4 { font-size: .84rem; font-weight: 700; margin-bottom: .2rem; }
+p { font-size: .9rem; line-height: 1.75; margin-bottom: .7rem; }
+p:last-child { margin-bottom: 0; }
+
+/* GRIDS */
+.g2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.1rem; }
+.g3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
+.g4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: .9rem; }
+
+/* CARDS */
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1.3rem; }
+.card.accent-l { border-left: 3px solid var(--accent); }
+.card.gold-l { border-left: 3px solid var(--gold); }
+.card.blue-l { border-left: 3px solid var(--blue); }
+.card.red-l { border-left: 3px solid var(--red); }
+.card.green-l { border-left: 3px solid var(--green); }
+.card h3 { color: var(--fg); }
+.card p { color: var(--muted2); font-size: .92rem; }
+
+/* BADGE */
+.badge { display: inline-flex; align-items: center; font-size: .58rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; padding: .18rem .52rem; border-radius: 3px; }
+.badge.green { background: rgba(61,214,140,.1); border: 1px solid rgba(61,214,140,.25); color: var(--green); }
+.badge.red { background: rgba(232,69,69,.1); border: 1px solid rgba(232,69,69,.25); color: var(--red); }
+.badge.gold { background: rgba(232,184,75,.1); border: 1px solid rgba(232,184,75,.25); color: var(--gold); }
+.badge.blue { background: rgba(59,142,255,.1); border: 1px solid rgba(59,142,255,.25); color: var(--blue); }
+.badge.accent { background: rgba(0,198,178,.1); border: 1px solid rgba(0,198,178,.25); color: var(--accent); }
+
+/* KPI TILES */
+.kpi-tile { background: var(--s2); border: 1px solid var(--border); border-radius: 8px; padding: 1.2rem; text-align: center; }
+.kpi-v { font-size: 1.6rem; font-weight: 900; color: var(--accent); font-variant-numeric: tabular-nums; }
+.kpi-l { font-size: .75rem; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin-top: .2rem; }
+
+/* TABLES */
+.tbl-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 1rem 0; }
+table { border-collapse: collapse; width: 100%; font-size: .78rem; min-width: 500px; }
+th { background: var(--s3); color: var(--muted2); font-weight: 700; font-size: .64rem; letter-spacing: .08em; text-transform: uppercase; padding: .6rem .9rem; text-align: left; border-bottom: 2px solid var(--accent); }
+td { padding: .55rem .9rem; border-bottom: 1px solid var(--border); vertical-align: top; color: var(--fg); line-height: 1.5; }
+tr:hover td { background: var(--s2); }
+
+/* FLOW DIAGRAM */
+.flow-row { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; margin: 1.2rem 0; }
+.flow-node { background: var(--s2); border: 1px solid var(--border); border-radius: 6px; padding: .6rem 1rem; font-size: .73rem; font-weight: 700; text-align: center; flex: 1; min-width: 90px; line-height: 1.3; }
+.flow-node .fn { font-size: .55rem; color: var(--muted); font-weight: 400; margin-top: .15rem; }
+.flow-arrow { color: var(--accent); font-size: 1rem; flex-shrink: 0; }
+.flow-node.highlight { border-color: var(--accent); background: rgba(0,198,178,.07); }
+
+/* PHASE GRID */
+.phase-wrap { margin: 1.2rem 0; }
+.phase-header {
+  display: flex; align-items: center; gap: .75rem;
+  background: var(--s2); border: 1px solid var(--border); border-radius: 8px 8px 0 0;
+  padding: .75rem 1.1rem; border-bottom: none;
+}
+.phase-num { background: var(--accent); color: var(--bg); font-size: .68rem; font-weight: 900; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.phase-title { font-size: .88rem; font-weight: 800; }
+.phase-duration { font-size: .63rem; color: var(--muted); margin-left: auto; }
+.phase-body { background: var(--surface); border: 1px solid var(--border); border-radius: 0 0 8px 8px; padding: 1rem 1.1rem; }
+
+/* CALLOUT */
+.callout { background: rgba(0,198,178,.06); border: 1px solid rgba(0,198,178,.2); border-radius: 6px; padding: 1rem 1.2rem; margin: 1rem 0; }
+.callout.gold { background: rgba(232,184,75,.06); border-color: rgba(232,184,75,.2); }
+.callout.red { background: rgba(232,69,69,.06); border-color: rgba(232,69,69,.2); }
+.callout-label { font-size: .6rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-bottom: .35rem; }
+.callout.gold .callout-label { color: var(--gold); }
+.callout.red .callout-label { color: var(--red); }
+.callout p { font-size: .83rem; }
+
+/* PROVIDENCE PROTOCOL */
+.protocol-box {
+  background: linear-gradient(135deg, rgba(0,198,178,.06) 0%, rgba(59,142,255,.04) 100%);
+  border: 1px solid rgba(0,198,178,.25); border-radius: 10px; padding: 1.8rem; margin: 1.2rem 0;
+}
+.protocol-title { font-family: var(--serif); font-size: 1.25rem; font-weight: 900; color: var(--accent); margin-bottom: .3rem; }
+.protocol-sub { font-size: .75rem; color: var(--muted); margin-bottom: 1rem; }
+
+/* DASHBOARD */
+.dash-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin: 1.2rem 0; }
+.dash-kpi { background: var(--s2); border: 1px solid var(--border); border-radius: 8px; padding: 1.2rem; display: flex; flex-direction: column; gap: .3rem; }
+.dash-kpi .dv { font-size: 2.1rem; font-weight: 900; line-height: 1; font-variant-numeric: tabular-nums; }
+.dash-kpi .dl { font-size: .6rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-top: .2rem; }
+.dash-kpi .dd { font-size: .73rem; color: var(--muted2); margin-top: .1rem; }
+.dash-kpi.accent .dv { color: var(--accent); }
+.dash-kpi.gold .dv { color: var(--gold); }
+.dash-kpi.green .dv { color: var(--green); }
+.dash-kpi.blue .dv { color: var(--blue); }
+.dash-kpi.red .dv { color: var(--red); }
+
+/* GAUGE SVG */
+.gauge-wrap { display: flex; flex-direction: column; align-items: center; gap: .3rem; }
+.gauge-wrap svg { width: 110px; height: 70px; }
+.gauge-label { font-size: .62rem; color: var(--muted); text-transform: uppercase; letter-spacing: .07em; }
+
+/* PROGRESS BAR */
+.prog-row { display: flex; flex-direction: column; gap: .5rem; margin: .8rem 0; }
+.prog-item { display: flex; flex-direction: column; gap: .25rem; }
+.prog-header { display: flex; justify-content: space-between; align-items: baseline; }
+.prog-name { font-size: .72rem; font-weight: 600; }
+.prog-val { font-size: .7rem; font-weight: 800; font-variant-numeric: tabular-nums; }
+.prog-bar { height: 6px; background: var(--border); border-radius: 99px; overflow: hidden; }
+.prog-fill { height: 100%; border-radius: 99px; transition: width .8s ease; }
+
+/* EMAIL DRAFT */
+.email-section { background: var(--s2); border: 1px solid var(--border); border-radius: 10px; padding: 1.8rem; margin: 1.5rem 0; }
+.email-header { display: flex; align-items: center; gap: .6rem; margin-bottom: 1.2rem; }
+.email-icon { width: 36px; height: 36px; background: rgba(0,198,178,.1); border: 1px solid rgba(0,198,178,.25); border-radius: 6px; display: flex; align-items: center; justify-content: center; color: var(--accent); font-size: 1rem; flex-shrink: 0; }
+.email-title { font-weight: 800; font-size: .92rem; }
+.email-sub { font-size: .72rem; color: var(--muted); }
+.email-field { margin-bottom: .75rem; }
+.email-field-label { font-size: .6rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: .3rem; }
+.email-field-val { background: var(--surface); border: 1px solid var(--border); border-radius: 5px; padding: .65rem .9rem; font-size: .83rem; line-height: 1.7; color: var(--fg); white-space: pre-wrap; }
+.copy-btn {
+  background: rgba(0,198,178,.1); border: 1px solid rgba(0,198,178,.25); color: var(--accent);
+  font-size: .63rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
+  padding: .35rem .9rem; border-radius: 4px; cursor: pointer; transition: background .15s;
+  display: inline-flex; align-items: center; gap: .3rem;
+}
+.copy-btn:hover { background: rgba(0,198,178,.2); }
+.copy-btn.copied { background: rgba(61,214,140,.15); border-color: rgba(61,214,140,.3); color: var(--green); }
+
+/* PDF BTN */
+.pdf-btn-wrap { text-align: center; padding: 2rem 0 1rem; }
+.pdf-btn {
+  background: var(--s2); border: 1px solid var(--border); color: var(--muted2);
+  font-size: .75rem; font-weight: 700; padding: .6rem 1.6rem; border-radius: 5px;
+  cursor: pointer; display: inline-flex; align-items: center; gap: .5rem;
+  transition: all .15s;
+}
+.pdf-btn:hover { background: var(--s3); border-color: var(--accent); color: var(--accent); }
+
+/* DIVIDER */
+.divider { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
+
+/* UTILITY */
+.mt1 { margin-top: 1rem; }
+.mt15 { margin-top: 1.5rem; }
+ul.ul { list-style: none; padding: 0; }
+ul.ul li { font-size: .83rem; line-height: 1.65; padding: .25rem 0 .25rem 1.1rem; position: relative; color: var(--muted2); border-bottom: 1px solid var(--border); }
+ul.ul li::before { content: '›'; position: absolute; left: 0; color: var(--accent); font-weight: 900; }
+ul.ul li:last-child { border-bottom: none; }
+
+/* TIMELINE */
+.timeline { position: relative; padding-left: 1.6rem; }
+.timeline::before { content:''; position: absolute; left: 6px; top: 0; bottom: 0; width: 2px; background: var(--border); }
+.tl-item { position: relative; margin-bottom: 1.4rem; }
+.tl-dot { position: absolute; left: -1.6rem; top: .25rem; width: 14px; height: 14px; border-radius: 50%; background: var(--accent); border: 2px solid var(--bg); }
+.tl-item h4 { font-size: .85rem; font-weight: 800; }
+.tl-item p { font-size: .78rem; color: var(--muted2); margin-top: .2rem; }
+.tl-meta { font-size: .62rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); margin-bottom: .2rem; }
+
+/* RESPONSIVE */
+@media (max-width: 640px) {
+  .stat-row { gap: 1rem; }
+  nav { gap: 1rem; overflow-x: auto; }
+  .cover { padding: 3rem 0 2.5rem; }
+  .dash-grid { grid-template-columns: 1fr 1fr; }
+  .flow-row { gap: .25rem; }
+  .flow-node { padding: .4rem .6rem; font-size: .65rem; min-width: 70px; }
+}
+</style>
+
+<!-- NAV -->
+<nav>
+  <span class="brand">R1 RCM · GCC CEO Advisory · V3.7 · Oct 2026</span>
+  <a href="#overview">Overview</a>
+  <a href="#customers">US vs Global</a>
+  <a href="#organalysis">Capability Gaps</a>
+  <a href="#v1">Biometric</a>
+  <a href="#v4">Denial Mgmt</a>
+  <a href="#dashboard">Dashboard</a>
+  <a href="#roadmap">Roadmap</a>
+  <a href="#partnership">Partnership</a>
+  <button class="pdf-btn-nav no-print" id="tour-btn" onclick="startTour()" style="background:rgba(0,198,178,.15);border:1px solid rgba(0,198,178,.4);color:#00c6b2;font-size:.65rem;font-weight:700;letter-spacing:.07em;padding:.3rem .85rem;border-radius:5px;cursor:pointer;transition:all .2s;">▶ Start Tour</button>
+  <div class="zoom-ctrl no-print" title="Adjust text size">
+    <button class="zoom-btn" onclick="adjustZoom(-1)" aria-label="Decrease text size">−</button>
+    <div class="zoom-sep"></div>
+    <div class="zoom-val" id="zoom-display">100%</div>
+    <div class="zoom-sep"></div>
+    <button class="zoom-btn" onclick="adjustZoom(1)" aria-label="Increase text size">+</button>
+  </div>
+  <button class="pdf-btn-nav no-print" onclick="preparePrint()">⬇ Export PDF</button>
+</nav>
+
+<!-- GUIDED TOUR OVERLAY -->
+<div id="tour-overlay" style="display:none;position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);z-index:9999;background:#0c1220;border:1px solid #00c6b2;border-radius:10px;padding:.9rem 1.4rem;display:none;align-items:center;gap:1.2rem;box-shadow:0 8px 32px rgba(0,0,0,.6);min-width:320px;max-width:90vw;">
+  <div style="display:flex;flex-direction:column;gap:.2rem;flex:1;">
+    <div style="font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#00c6b2;">Guided Tour</div>
+    <div id="tour-section-name" style="font-size:.82rem;font-weight:700;color:#dde3f5;">Overview</div>
+    <div style="display:flex;gap:.25rem;margin-top:.3rem;" id="tour-dots"></div>
+  </div>
+  <div style="display:flex;gap:.6rem;align-items:center;">
+    <button onclick="tourStep(-1)" style="background:var(--s3,#101728);border:1px solid #192136;color:#8a93aa;padding:.3rem .65rem;border-radius:5px;cursor:pointer;font-size:.75rem;">◀</button>
+    <button id="tour-pause-btn" onclick="toggleTourPause()" style="background:#101728;border:1px solid #192136;color:#8a93aa;padding:.3rem .65rem;border-radius:5px;cursor:pointer;font-size:.72rem;font-weight:700;white-space:nowrap;min-width:4.5rem;text-align:center;">⏸ Pause</button>
+    <button onclick="tourStep(1)" style="background:rgba(0,198,178,.15);border:1px solid #00c6b2;color:#00c6b2;padding:.3rem .65rem;border-radius:5px;cursor:pointer;font-size:.75rem;font-weight:700;">▶</button>
+    <button onclick="exitTour()" style="background:rgba(232,69,69,.12);border:1px solid rgba(232,69,69,.35);color:#e84545;padding:.3rem .75rem;border-radius:5px;cursor:pointer;font-size:.72rem;font-weight:700;white-space:nowrap;">✕ Exit Tour</button>
+  </div>
+</div>
+
+<!-- COVER / OVERVIEW -->
+<div class="cover" id="overview">
+  <div class="container cover-inner">
+    <div class="cover-eyebrow">CEO Advisory · October 2026 · Confidential</div>
+    <h1>R1 RCM<br><em>Company Overview</em></h1>
+    <p class="cover-sub">R1 RCM Inc. is one of the largest end-to-end revenue cycle management companies in the United States — serving health systems, hospitals, and physician groups by improving financial performance, reducing administrative burden, and accelerating cash collection across the care continuum.</p>
+    <div class="cover-chips">
+      <span class="chip hi">Prepared for R1 Executive Leadership</span>
+      <span class="chip gold">NYSE: RCM · Healthcare RCM Leader</span>
+      <span class="chip">Advisory · Not for Distribution</span>
+    </div>
+    <div class="stat-row">
+      <div><div class="stat-v">$2.3B+</div><div class="stat-l">Annual Revenue (FY 2023)</div></div>
+      <div><div class="stat-v">$25B+</div><div class="stat-l">Net Patient Revenue Managed</div></div>
+      <div><div class="stat-v">30,000+</div><div class="stat-l">Global Employees</div></div>
+      <div><div class="stat-v">500+</div><div class="stat-l">Hospital & Physician Group Clients</div></div>
+      <div><div class="stat-v">~4%</div><div class="stat-l">Net Cash Collection Rate Improvement</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- R1 COMPANY OVERVIEW DETAIL -->
+<section id="r1-overview">
+  <div class="container">
+    <div class="sec-eye">Company Overview</div>
+    <h2>Who R1 RCM Is — Business Model, Customers & Performance</h2>
+    <div class="g2">
+      <div>
+        <h3 style="color:var(--accent);margin-bottom:.6rem;">What R1 Does</h3>
+        <p>R1 RCM delivers end-to-end revenue cycle management — from patient access and registration through coding, billing, denial management, and collections. The company operates as a technology-enabled services provider, embedding its teams and platforms directly into health system operations under long-term managed services agreements.</p>
+        <p>Core offerings include: physician advisory services, coding and CDI, patient access and financial clearance, claims management and denial resolution, and analytics-driven performance optimization. R1's platforms — including Phare OS and Humata Health — power automation across the revenue cycle.</p>
+
+        <h3 style="color:var(--accent);margin-bottom:.6rem;margin-top:1.2rem;">Business Model</h3>
+        <p>R1 operates primarily on a percentage-of-collections and managed services fee model — revenue is directly tied to the financial performance it delivers for clients. This aligns incentives and creates durable, multi-year client relationships. Typical contract lengths run 5–10 years with renewal optionality.</p>
+      </div>
+      <div>
+        <h3 style="color:var(--accent);margin-bottom:.6rem;">Who R1 Serves</h3>
+        <div class="card accent-l" style="margin-bottom:.85rem;">
+          <h4>Health Systems & IDNs</h4>
+          <p>Large integrated delivery networks including Ascension Health — R1's largest client — and other top-tier US health systems seeking enterprise-grade RCM performance at scale.</p>
+        </div>
+        <div class="card blue-l" style="margin-bottom:.85rem;">
+          <h4>Academic Medical Centers</h4>
+          <p>Complex, high-acuity environments requiring specialized coding expertise, compliance rigor, and physician advisory services.</p>
+        </div>
+        <div class="card gold-l">
+          <h4>Physician Groups & Specialty Practices</h4>
+          <p>Multi-specialty and independent physician organizations seeking full-cycle billing, credentialing, and performance analytics.</p>
+        </div>
+
+        <h3 style="color:var(--accent);margin-bottom:.6rem;margin-top:1.2rem;">Leadership</h3>
+        <p><strong style="color:var(--fg);">Lee Rivas, CEO</strong> — Former President of Conduent Healthcare; brings deep RCM operational and transformation experience. <strong style="color:var(--fg);">Jennifer Williams, CFO</strong> — Guides R1's capital allocation and margin expansion strategy. Executive team includes experienced operators from Cerner, Accenture, and major US health systems.</p>
+      </div>
+    </div>
+
+    <!-- Performance Stats -->
+    <div class="g4" style="margin-top:2rem;">
+      <div class="kpi-tile">
+        <div class="kpi-v">97%+</div>
+        <div class="kpi-l">Client Retention Rate</div>
+      </div>
+      <div class="kpi-tile">
+        <div class="kpi-v">$1.2B+</div>
+        <div class="kpi-l">Annual Cost Savings Delivered</div>
+      </div>
+      <div class="kpi-tile">
+        <div class="kpi-v">3–5 Days</div>
+        <div class="kpi-l">Reduction in A/R Days (avg)</div>
+      </div>
+      <div class="kpi-tile">
+        <div class="kpi-v">40+</div>
+        <div class="kpi-l">States of Active Operations</div>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top:1.5rem;">
+      <div class="callout-label">Market Position</div>
+      <p>R1 RCM consistently ranks among the top three US revenue cycle outsourcing companies by net patient revenue managed. Following the acquisition of Cloudmed in 2022, R1 significantly expanded its analytics and AI-driven underpayment recovery capabilities — adding more than $16B in NPR under management and establishing R1 as the most comprehensive end-to-end RCM platform in the US market.</p>
+    </div>
+  </div>
+</section>
+
+<!-- EXECUTIVE SUMMARY -->
+<section>
+  <div class="container">
+    <div class="sec-eye">Executive Summary</div>
+    <h2>R1's GCC Expansion: A Market-Defining Opportunity</h2>
+    <div class="g2">
+      <div>
+        <p>R1 RCM's operational excellence, platform depth, and Ascension-scale RCM expertise make it one of the few US-based revenue cycle companies with the institutional capability to enter the GCC market credibly. Saudi Arabia's Vision 2030 healthcare transformation is creating an RCM infrastructure buildout with no regional equivalent — and R1 is positioned to lead it.</p>
+        <p>This advisory identifies the two highest-value engagement vectors where C22Arc's GCC-specialized consulting can extend R1's existing capabilities into the Saudi market — helping R1 move fast, avoid costly execution gaps, and establish long-term market position. <strong>Vector 1 — Patient Biometric Identity</strong> builds R1 as the foundational infrastructure layer for Saudi healthcare identity. <strong>Vector 4 — Autonomous Denial Resolution</strong> addresses a GCC denial environment that runs 3–4× the US rate, where NPHIES-native AI agents are a structural competitive advantage. C22Arc's role throughout: a fiduciary consulting partner — R1 retains full client ownership and commercial authority.</p>
+      </div>
+      <div>
+        <div class="g3 mt1">
+          <div class="kpi-tile"><div class="kpi-v">78%</div><div class="kpi-l">Identity Error Reduction — SEHA Benchmark</div></div>
+          <div class="kpi-tile"><div class="kpi-v">14%</div><div class="kpi-l">Fraud Reduction — CCHI Biometric Pilot</div></div>
+          <div class="kpi-tile"><div class="kpi-v">96%</div><div class="kpi-l">First-Pass Resolution Target — Vector 4</div></div>
+        </div>
+        <div class="callout mt1">
+          <div class="callout-label">First-Mover Platform Position</div>
+          <p>The GCC patient biometric identity layer is an open platform position. The organization that builds sovereign, PDPL-compliant, Nafath-integrated identity first does not just win a contract — it becomes the infrastructure that defines the standard for Saudi healthcare RCM. That window is estimated at 18–24 months. C22Arc's partnership role is to help R1 occupy that position — delivering the technical architecture, governance framework, and Ministry API integration so R1 leads the market.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DASHBOARD -->
+<section id="dashboard">
+  <div class="container">
+    <div class="sec-eye">Executive Dashboard</div>
+    <h2>Combined Vector Performance Outlook</h2>
+    <p style="color:var(--muted2);font-size:.83rem;margin-bottom:1.2rem;">Projected outcomes across Vector 1 and Vector 4 implementation over the 18-month roadmap period. Figures derived from GCC regional benchmarks, SEHA deployment data, and CCHI audit results.</p>
+
+    <div class="dash-grid">
+      <div class="dash-kpi accent">
+        <div class="dv">$7.5M+</div>
+        <div class="dl">Combined Annual Revenue Impact</div>
+        <div class="dd">V1 biometric value recovery + V4 denial resolution across target hospitals</div>
+      </div>
+      <div class="dash-kpi gold">
+        <div class="dv">&lt;90s</div>
+        <div class="dl">Target Biometric Verification Time</div>
+        <div class="dd">7-step Nafath/Absher pipeline — from capture to Cerner Person Management update</div>
+      </div>
+      <div class="dash-kpi green">
+        <div class="dv">78%</div>
+        <div class="dl">Identity Error Reduction</div>
+        <div class="dd">GCC benchmark from SEHA facility deployments; currently 35–40% claim impact from ID errors</div>
+      </div>
+      <div class="dash-kpi blue">
+        <div class="dv">96%</div>
+        <div class="dl">First-Pass Resolution Rate</div>
+        <div class="dd">Vector 4 target; baseline GCC denial rate 35–40% vs. 10% in US payer environments</div>
+      </div>
+      <div class="dash-kpi accent">
+        <div class="dv">14%</div>
+        <div class="dl">Fraud Signal Reduction</div>
+        <div class="dd">CCHI 2024 pilot data — biometric verification at enrollment vs. manual identity check</div>
+      </div>
+      <div class="dash-kpi gold">
+        <div class="dv">24–48h</div>
+        <div class="dl">Denial Resolution Cycle</div>
+        <div class="dd">Autonomous agent pipeline vs. 12–30 day current manual process</div>
+      </div>
+      <div class="dash-kpi green">
+        <div class="dv">$3.5M</div>
+        <div class="dl">V4 Annual Revenue Recovery</div>
+        <div class="dd">Clinical denial resolution — per 500-bed GCC hospital at 35% denial rate</div>
+      </div>
+      <div class="dash-kpi blue">
+        <div class="dv">18 Mo</div>
+        <div class="dl">Full Platform Deployment</div>
+        <div class="dd">Phased delivery — Phase 1 go-live Month 4, Vector 1×4 integration at Month 18</div>
+      </div>
+    </div>
+
+    <!-- Progress indicators -->
+    <div class="g2 mt15">
+      <div class="card">
+        <h3>Vector 1 — Capability Readiness</h3>
+        <div class="prog-row" style="margin-top:.8rem;">
+          <div class="prog-item">
+            <div class="prog-header"><span class="prog-name">Nafath OIDC Integration</span><span class="prog-val" style="color:var(--red)">0%</span></div>
+            <div class="prog-bar"><div class="prog-fill" style="width:0%;background:var(--red)"></div></div>
+          </div>
+          <div class="prog-item">
+            <div class="prog-header"><span class="prog-name">Absher Biometric Enrollment</span><span class="prog-val" style="color:var(--red)">0%</span></div>
+            <div class="prog-bar"><div class="prog-fill" style="width:0%;background:var(--red)"></div></div>
+          </div>
+          <div class="prog-item">
+            <div class="prog-header"><span class="prog-name">AWS me-south-1 PDPL Architecture</span><span class="prog-val" style="color:var(--amber)">0%</span></div>
+            <div class="prog-bar"><div class="prog-fill" style="width:0%;background:var(--amber)"></div></div>
+          </div>
+          <div class="prog-item">
+            <div class="prog-header"><span class="prog-name">Cerner Person Mgmt Integration</span><span class="prog-val" style="color:var(--amber)">15%</span></div>
+            <div class="prog-bar"><div class="prog-fill" style="width:15%;background:var(--amber)"></div></div>
+          </div>
+          <div class="prog-item">
+            <div class="prog-header"><span class="prog-name">Ministry API Sovereign Approval</span><span class="prog-val" style="color:var(--red)">0%</span></div>
+            <div class="prog-bar"><div class="prog-fill" style="width:0%;background:var(--red)"></div></div>
+          </div>
+        </div>
+        <p style="font-size:.72rem;color:var(--muted);margin-top:.6rem;">Current state. Red = not started. Amber = in progress.</p>
+      </div>
+      <div class="card">
+        <h3>Vector 4 — Capability Readiness</h3>
+        <div class="prog-row" style="margin-top:.8rem;">
+          <div class="prog-item">
+            <div class="prog-header"><span class="prog-name">US Denial Resolution Engine</span><span class="prog-val" style="color:var(--green)">85%</span></div>
+            <div class="prog-bar"><div class="prog-fill" style="width:85%;background:var(--green)"></div></div>
+          </div>
+          <div class="prog-item">
+            <div class="prog-header"><span class="prog-name">NPHIES Payer Logic Adapters</span><span class="prog-val" style="color:var(--red)">0%</span></div>
+            <div class="prog-bar"><div class="prog-fill" style="width:0%;background:var(--red)"></div></div>
+          </div>
+          <div class="prog-item">
+            <div class="prog-header"><span class="prog-name">CCHI Coverage Rule Engine</span><span class="prog-val" style="color:var(--red)">0%</span></div>
+            <div class="prog-bar"><div class="prog-fill" style="width:0%;background:var(--red)"></div></div>
+          </div>
+          <div class="prog-item">
+            <div class="prog-header"><span class="prog-name">Arabic Clinical NLP</span><span class="prog-val" style="color:var(--red)">5%</span></div>
+            <div class="prog-bar"><div class="prog-fill" style="width:5%;background:var(--red)"></div></div>
+          </div>
+          <div class="prog-item">
+            <div class="prog-header"><span class="prog-name">Prior Auth — NPHIES Scope</span><span class="prog-val" style="color:var(--amber)">20%</span></div>
+            <div class="prog-bar"><div class="prog-fill" style="width:20%;background:var(--amber)"></div></div>
+          </div>
+        </div>
+        <p style="font-size:.72rem;color:var(--muted);margin-top:.6rem;">Humata Health (US prior auth) provides ~20% baseline; GCC-specific logic must be built.</p>
+      </div>
+    </div>
+
+    <!-- Combined impact chart (SVG) -->
+    <div class="card mt15">
+      <h3>18-Month Revenue Recovery Projection — Combined Vectors</h3>
+      <p style="font-size:.78rem;color:var(--muted2);margin-bottom:1rem;">Cumulative projected revenue recovery per 500-bed GCC hospital deployment (USD millions)</p>
+      <div style="overflow-x:auto;">
+        <svg viewBox="0 0 700 220" style="width:100%;max-width:700px;display:block;font-family:var(--sans);">
+          <defs>
+            <linearGradient id="v1g" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0%" stop-color="#00c6b2" stop-opacity=".5"/>
+              <stop offset="100%" stop-color="#00c6b2" stop-opacity=".05"/>
+            </linearGradient>
+            <linearGradient id="v4g" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0%" stop-color="#3b8eff" stop-opacity=".4"/>
+              <stop offset="100%" stop-color="#3b8eff" stop-opacity=".05"/>
+            </linearGradient>
+          </defs>
+          <!-- Grid -->
+          <line x1="60" x2="680" y1="30" y2="30" stroke="#1c2440" stroke-width="1"/>
+          <line x1="60" x2="680" y1="75" y2="75" stroke="#1c2440" stroke-width="1"/>
+          <line x1="60" x2="680" y1="120" y2="120" stroke="#1c2440" stroke-width="1"/>
+          <line x1="60" x2="680" y1="165" y2="165" stroke="#1c2440" stroke-width="1"/>
+          <line x1="60" x2="680" y1="190" y2="190" stroke="#1c2440" stroke-width="1"/>
+          <!-- Y labels -->
+          <text x="52" y="34" fill="#5a657f" font-size="9" text-anchor="end">$8M</text>
+          <text x="52" y="79" fill="#5a657f" font-size="9" text-anchor="end">$6M</text>
+          <text x="52" y="124" fill="#5a657f" font-size="9" text-anchor="end">$4M</text>
+          <text x="52" y="169" fill="#5a657f" font-size="9" text-anchor="end">$2M</text>
+          <text x="52" y="194" fill="#5a657f" font-size="9" text-anchor="end">$0</text>
+          <!-- X labels -->
+          <text x="95" y="210" fill="#5a657f" font-size="9" text-anchor="middle">M3</text>
+          <text x="185" y="210" fill="#5a657f" font-size="9" text-anchor="middle">M6</text>
+          <text x="275" y="210" fill="#5a657f" font-size="9" text-anchor="middle">M9</text>
+          <text x="365" y="210" fill="#5a657f" font-size="9" text-anchor="middle">M12</text>
+          <text x="455" y="210" fill="#5a657f" font-size="9" text-anchor="middle">M15</text>
+          <text x="545" y="210" fill="#5a657f" font-size="9" text-anchor="middle">M18</text>
+          <!-- V1 area (teal) — starts M6, ramps -->
+          <polygon points="60,190 185,190 275,178 365,150 455,118 545,85 635,52 635,190" fill="url(#v1g)"/>
+          <polyline points="60,190 185,190 275,178 365,150 455,118 545,85 635,52" fill="none" stroke="#00c6b2" stroke-width="2.5"/>
+          <!-- V4 area (blue) — starts M3, faster ramp -->
+          <polygon points="60,190 95,185 185,165 275,140 365,108 455,80 545,60 635,42 635,190" fill="url(#v4g)"/>
+          <polyline points="60,190 95,185 185,165 275,140 365,108 455,80 545,60 635,42" fill="none" stroke="#3b8eff" stroke-width="2.5"/>
+          <!-- Dots -->
+          <circle cx="635" cy="52" r="4" fill="#00c6b2"/>
+          <circle cx="635" cy="42" r="4" fill="#3b8eff"/>
+          <!-- Labels -->
+          <text x="648" y="56" fill="#00c6b2" font-size="9" font-weight="700">V1 $3.5M</text>
+          <text x="648" y="46" fill="#3b8eff" font-size="9" font-weight="700">V4 $4M</text>
+          <!-- Phase lines -->
+          <line x1="185" x2="185" y1="30" y2="190" stroke="#e8b84b" stroke-width="1" stroke-dasharray="3,3"/>
+          <text x="188" y="44" fill="#e8b84b" font-size="8">Phase 2</text>
+          <line x1="365" x2="365" y1="30" y2="190" stroke="#e8b84b" stroke-width="1" stroke-dasharray="3,3"/>
+          <text x="368" y="44" fill="#e8b84b" font-size="8">Phase 4</text>
+        </svg>
+      </div>
+      <p style="font-size:.7rem;color:var(--muted);margin-top:.5rem;">Illustrative projection based on 35% GCC denial rate, $4,000/bed biometric value, and SEHA/CCHI regional benchmarks. Actual results dependent on payer mix, hospital census, and implementation timeline.</p>
+    </div>
+  </div>
+</section>
+
+<!-- VECTOR 1 -->
+<section id="v1">
+  <div class="container">
+    <div class="sec-eye">Vector 1 — Biometric Identity Layer</div>
+    <h2>Patient Biometric Identity: The Foundational Platform</h2>
+
+    <div class="callout gold">
+      <div class="callout-label">Industry Evidence</div>
+      <p>These are third-party benchmarks from comparable GCC deployments — they establish what the market has demonstrated, not what C22Arc commits to at contract. <strong>SEHA (Abu Dhabi Health Services):</strong> 78% reduction in patient identity discrepancies post biometric enrollment. <strong>CCHI 2024 pilot:</strong> 14% reduction in fraudulent claims within 90 days of Nafath verification layer deployment. <strong>HFMA GCC Working Group:</strong> biometric ID infrastructure generates $3,800–$4,200 per bed annually at full maturity. <strong>Oman Insurance 2023:</strong> biometric verification reduced claim processing time by 41%. C22Arc's contracted commitment is to deliver a measurable, auditable improvement against a pre-agreed baseline — beginning at a conservative floor that the benchmark data shows is consistently exceeded in practice.</p>
+    </div>
+
+    <h3 style="margin-top:1.5rem;">7-Step Biometric Verification Pipeline</h3>
+    <p style="font-size:.82rem;color:var(--muted2);">Target: &lt;90 seconds end-to-end from patient presentation to Cerner Person Management update</p>
+    <div class="flow-row">
+      <div class="flow-node"><strong>1</strong><br>Biometric Capture<div class="fn">Facial/iris scan at point of care</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node highlight"><strong>2</strong><br>Nafath Identity<div class="fn">OIDC confirmation · MOI API</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node"><strong>3</strong><br>Fraud Signal<div class="fn">CCHI cross-reference</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node highlight"><strong>4</strong><br>NPHIES Eligibility<div class="fn">Real-time payer validation</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node"><strong>5</strong><br>Prior Auth<div class="fn">Trigger if required</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node highlight"><strong>6</strong><br>Cerner Update<div class="fn">Person Management write</div></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node"><strong>7</strong><br>Intelligence Feed<div class="fn">GCC identity model training</div></div>
+    </div>
+
+    <!-- Animated V1 Pipeline Diagram -->
+    <div style="background:var(--s2);border:1px solid var(--border);border-radius:8px;padding:1rem;margin-top:1rem;margin-bottom:.5rem;overflow-x:auto;">
+      <div style="font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#f59e0b;margin-bottom:.75rem;">Animated Pipeline: Patient Biometric Identity → Cerner Person Management Update</div>
+      <svg viewBox="0 0 1000 120" style="min-width:700px;width:100%;max-width:1000px;display:block;" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <style>
+            @keyframes v1Pulse{0%,100%{opacity:.3}50%{opacity:1}}
+            .v1s1{animation:v1Pulse 2.4s ease-in-out infinite}
+            .v1s2{animation:v1Pulse 2.4s ease-in-out .34s infinite}
+            .v1s3{animation:v1Pulse 2.4s ease-in-out .68s infinite}
+            .v1s4{animation:v1Pulse 2.4s ease-in-out 1.02s infinite}
+            .v1s5{animation:v1Pulse 2.4s ease-in-out 1.36s infinite}
+            .v1s6{animation:v1Pulse 2.4s ease-in-out 1.70s infinite}
+            .v1s7{animation:v1Pulse 2.4s ease-in-out 2.04s infinite}
+            @keyframes dataPkt{0%{transform:translateX(0);opacity:0}10%{opacity:1}90%{opacity:1}100%{transform:translateX(860px);opacity:0}}
+            .data-pkt{animation:dataPkt 3s ease-in-out 1s infinite}
+          </style>
+          <marker id="arr-gold" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+            <path d="M0,0 L0,7 L7,3.5z" fill="#f59e0b"/>
+          </marker>
+        </defs>
+        <!-- Step 1 -->
+        <g class="v1s1">
+          <rect class="wf-box" x="5" y="32" width="110" height="56" rx="6" ry="6" fill="none" stroke="#f59e0b" stroke-width="1.4"/>
+          <text class="wf-head" x="60" y="56">Biometric</text>
+          <text class="wf-head" x="60" y="67">Capture</text>
+          <text class="wf-lbl" x="60" y="80">Face · Iris · Print</text>
+        </g>
+        <line x1="117" y1="60" x2="138" y2="60" stroke="#f59e0b" stroke-width="1.5" marker-end="url(#arr-gold)"/>
+        <!-- Step 2 -->
+        <g class="v1s2">
+          <rect class="wf-box" x="140" y="32" width="110" height="56" rx="6" ry="6" fill="none" stroke="#ef4444" stroke-width="1.4"/>
+          <text class="wf-head" x="195" y="56">Nafath</text>
+          <text class="wf-head" x="195" y="67">OIDC Verify</text>
+          <text class="wf-lbl" x="195" y="80">MOI API · &lt;5 sec</text>
+        </g>
+        <line x1="252" y1="60" x2="273" y2="60" stroke="#ef4444" stroke-width="1.5" marker-end="url(#arr-gold)"/>
+        <!-- Step 3 -->
+        <g class="v1s3">
+          <rect class="wf-box" x="275" y="32" width="110" height="56" rx="6" ry="6" fill="none" stroke="#8b5cf6" stroke-width="1.4"/>
+          <text class="wf-head" x="330" y="56">CCHI Fraud</text>
+          <text class="wf-head" x="330" y="67">Screen</text>
+          <text class="wf-lbl" x="330" y="80">Cross-ref duplicate ID</text>
+        </g>
+        <line x1="387" y1="60" x2="408" y2="60" stroke="#8b5cf6" stroke-width="1.5" marker-end="url(#arr-gold)"/>
+        <!-- Step 4 -->
+        <g class="v1s4">
+          <rect class="wf-box" x="410" y="32" width="110" height="56" rx="6" ry="6" fill="none" stroke="#3b82f6" stroke-width="1.4"/>
+          <text class="wf-head" x="465" y="56">NPHIES</text>
+          <text class="wf-head" x="465" y="67">Eligibility</text>
+          <text class="wf-lbl" x="465" y="80">Real-time payer check</text>
+        </g>
+        <line x1="522" y1="60" x2="543" y2="60" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#arr-gold)"/>
+        <!-- Step 5 -->
+        <g class="v1s5">
+          <rect class="wf-box" x="545" y="32" width="110" height="56" rx="6" ry="6" fill="none" stroke="#06b6d4" stroke-width="1.4"/>
+          <text class="wf-head" x="600" y="56">Prior Auth</text>
+          <text class="wf-head" x="600" y="67">Trigger Check</text>
+          <text class="wf-lbl" x="600" y="80">Auto-submit if flagged</text>
+        </g>
+        <line x1="657" y1="60" x2="678" y2="60" stroke="#06b6d4" stroke-width="1.5" marker-end="url(#arr-gold)"/>
+        <!-- Step 6 -->
+        <g class="v1s6">
+          <rect class="wf-box" x="680" y="32" width="110" height="56" rx="6" ry="6" fill="none" stroke="#22c55e" stroke-width="1.4"/>
+          <text class="wf-head" x="735" y="56">Cerner Person</text>
+          <text class="wf-head" x="735" y="67">Mgmt Write</text>
+          <text class="wf-lbl" x="735" y="80">Identity locked to record</text>
+        </g>
+        <line x1="792" y1="60" x2="813" y2="60" stroke="#22c55e" stroke-width="1.5" marker-end="url(#arr-gold)"/>
+        <!-- Step 7 -->
+        <g class="v1s7">
+          <rect class="wf-box" x="815" y="32" width="175" height="56" rx="6" ry="6" fill="none" stroke="#f59e0b" stroke-width="1.4"/>
+          <text class="wf-head" x="902" y="48">GCC Identity Model</text>
+          <text class="wf-head" x="902" y="59">Training Feed</text>
+          <text class="wf-lbl" x="902" y="72">Proprietary dataset builds</text>
+          <text class="wf-lbl" x="902" y="83">with every enrollment</text>
+        </g>
+        <!-- Step labels -->
+        <text x="60" y="22" font-family="system-ui,sans-serif" font-size="7px" fill="#64748b" text-anchor="middle">① CAPTURE</text>
+        <text x="195" y="22" font-family="system-ui,sans-serif" font-size="7px" fill="#64748b" text-anchor="middle">② NAFATH</text>
+        <text x="330" y="22" font-family="system-ui,sans-serif" font-size="7px" fill="#64748b" text-anchor="middle">③ FRAUD CHECK</text>
+        <text x="465" y="22" font-family="system-ui,sans-serif" font-size="7px" fill="#64748b" text-anchor="middle">④ ELIGIBILITY</text>
+        <text x="600" y="22" font-family="system-ui,sans-serif" font-size="7px" fill="#64748b" text-anchor="middle">⑤ PRIOR AUTH</text>
+        <text x="735" y="22" font-family="system-ui,sans-serif" font-size="7px" fill="#64748b" text-anchor="middle">⑥ CERNER WRITE</text>
+        <text x="902" y="22" font-family="system-ui,sans-serif" font-size="7px" fill="#64748b" text-anchor="middle">⑦ INTELLIGENCE</text>
+        <!-- Timing strip -->
+        <text x="5" y="108" font-family="system-ui,sans-serif" font-size="7px" fill="#475569">End-to-end target: &lt;90 seconds · PDPL compliant · AWS me-south-1 only · No data transits Saudi border</text>
+      </svg>
+    </div>
+
+    <div class="callout" style="margin-top:1rem;">
+      <div class="callout-label">PDPL Sovereignty Requirement</div>
+      <p>All biometric data — facial vectors, iris templates, Nafath verification tokens — must be stored and processed exclusively in <strong>AWS Riyadh (me-south-1)</strong>. No data may transit outside Saudi borders. This is not a preference; it is a PDPL compliance requirement that invalidates any architecture using multi-region or US-based cloud processing for biometric payloads.</p>
+    </div>
+
+    <h3 style="margin-top:1.5rem;">5-Phase Implementation Roadmap</h3>
+    <div class="phase-wrap">
+      <div class="phase-header"><div class="phase-num">1</div><div class="phase-title">Government API Engagement &amp; Architecture Design</div><div class="phase-duration">Months 1–3</div></div>
+      <div class="phase-body">
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>Workstream</th><th>Task</th><th>Owner</th><th>Gate Criteria</th></tr></thead>
+          <tbody>
+            <tr><td>Ministry Engagement</td><td>Initiate Nafath API access application through Ministry of Interior; identify sponsor ministry contact</td><td>R1 KSA Lead + C22Arc</td><td>Application submitted; MOU signed or in process</td></tr>
+            <tr><td>Ministry Engagement</td><td>Absher Health integration request to Ministry of Health; document biometric data types and retention policy</td><td>C22Arc Technical</td><td>MOH data sharing agreement framework approved</td></tr>
+            <tr><td>Cloud Architecture</td><td>AWS me-south-1 tenant provisioning; IAM policy design for PDPL biometric data classification</td><td>R1 Engineering</td><td>VPC isolated; biometric data bucket with KMS encryption active</td></tr>
+            <tr><td>PDPL Compliance</td><td>Data Processing Impact Assessment (DPIA) for biometric enrollment; consent framework design</td><td>Legal / C22Arc</td><td>DPIA submitted to SAMA-equivalent for health data oversight</td></tr>
+            <tr><td>Cerner Integration</td><td>Map Nafath identity fields to Oracle Health Person Management schema; design identity reconciliation logic</td><td>C22Arc (Cerner SME)</td><td>Field mapping document approved by R1 technical team</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+    <div class="phase-wrap" style="margin-top:.7rem;">
+      <div class="phase-header"><div class="phase-num">2</div><div class="phase-title">API Integration Development &amp; Pilot Hospital Selection</div><div class="phase-duration">Months 3–6</div></div>
+      <div class="phase-body">
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>Workstream</th><th>Task</th><th>Owner</th><th>Gate Criteria</th></tr></thead>
+          <tbody>
+            <tr><td>Nafath Integration</td><td>Develop OIDC authentication flow; facial recognition agent calling Ministry of Interior API</td><td>C22Arc Dev</td><td>Sandbox end-to-end test &lt;90s verified; error handling complete</td></tr>
+            <tr><td>Absher Integration</td><td>Biometric enrollment agent: fingerprint + facial scan + iris capture with Absher confirmation callback</td><td>C22Arc Dev</td><td>3 Saudi national test enrollments confirmed in sandbox</td></tr>
+            <tr><td>NPHIES Eligibility</td><td>Real-time eligibility check agent on NPHIES FHIR R4 Saudi implementation guide; payer response normalization</td><td>C22Arc + R1</td><td>Coverage confirmation in &lt;15 seconds for 95% of test cases</td></tr>
+            <tr><td>Pilot Site</td><td>Select 1–2 pilot hospitals; 100–200 bed range preferred; establish data sharing agreement; train enrollment staff</td><td>R1 KSA</td><td>Pilot LOI signed; site readiness assessment complete</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+    <div class="phase-wrap" style="margin-top:.7rem;">
+      <div class="phase-header"><div class="phase-num">3</div><div class="phase-title">Pilot Deployment &amp; KPI Baseline</div><div class="phase-duration">Months 6–10</div></div>
+      <div class="phase-body">
+        <p style="font-size:.82rem;color:var(--muted2);">Live deployment at pilot site. Capture identity error rate baseline, fraud signal hits, time-to-verify, and first-pass claim accuracy before and after biometric enrollment. Target: achieve ≥60% of SEHA benchmark (78% error reduction) at pilot site within 90 days of go-live.</p>
+      </div>
+    </div>
+    <div class="phase-wrap" style="margin-top:.7rem;">
+      <div class="phase-header"><div class="phase-num">4</div><div class="phase-title">Optimization &amp; Multi-Site Expansion</div><div class="phase-duration">Months 10–15</div></div>
+      <div class="phase-body">
+        <p style="font-size:.82rem;color:var(--muted2);">Apply pilot learnings; expand to 3–5 hospitals. Begin training GCC Patient Identity Intelligence Model on live enrollment data — this proprietary dataset becomes R1's durable competitive asset in the region.</p>
+      </div>
+    </div>
+    <div class="phase-wrap" style="margin-top:.7rem;">
+      <div class="phase-header"><div class="phase-num">5</div><div class="phase-title">V1×V4 Integration — Combined Identity-to-Revenue Loop</div><div class="phase-duration">Months 15–18</div></div>
+      <div class="phase-body">
+        <p style="font-size:.82rem;color:var(--muted2);">Biometric verification output feeds directly into Vector 4 denial resolution loop. Identity-confirmed encounters reduce clinical denial rate by eliminating identity-based claim rejections at source. <strong>Conservative commitment at contract: $1.8M–$2.5M combined annual impact per 500-bed hospital.</strong> Realistic upside at full model maturity: $4.5M–$7.0M — the ceiling the model targets as it trains on 12+ months of live GCC data.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VECTOR 4 -->
+<section id="v4">
+  <div class="container">
+    <div class="sec-eye">Vector 4 — Autonomous Denial Resolution</div>
+    <h2>Denial Automation: US Market Optimization + GCC Expansion</h2>
+    <p style="color:var(--muted2);font-size:.86rem;margin-bottom:.5rem;">Vector 4 operates across two market contexts. <strong style="color:var(--fg);">In the US market</strong>, C22Arc can partner with R1 immediately — improving resolution rates and payer intelligence on R1's existing customer base without waiting for GCC expansion. <strong style="color:var(--fg);">In the GCC market</strong>, C22Arc extends R1's Phare OS and Humata Health platforms with NPHIES-specific agents, Arabic NLP, and CCHI coverage rules. Each context is a distinct partnership value layer; together they represent a phased revenue opportunity from Day 1.</p>
+
+    <!-- US MARKET SUBSECTION -->
+    <div style="background:linear-gradient(135deg,rgba(59,130,246,.07) 0%,rgba(99,102,241,.04) 100%);border:1.5px solid rgba(59,130,246,.25);border-radius:10px;padding:1.25rem 1.4rem;margin-bottom:1.5rem;margin-top:1rem;">
+      <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:1rem;">
+        <div style="background:rgba(59,130,246,.15);border:1px solid rgba(59,130,246,.3);border-radius:6px;padding:.3rem .7rem;font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#3b82f6;">US Market · Immediate Partnership</div>
+        <span style="font-size:.75rem;color:var(--muted);">Activate before GCC expansion — Day 1 value for R1's existing customers</span>
+      </div>
+
+      <!-- US Use Case A -->
+      <div class="card" style="margin-bottom:1rem;border-color:rgba(59,130,246,.3);">
+        <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.8rem;">
+          <span class="badge blue">US-A</span>
+          <h3 style="margin:0;">Payer-Specific Appeal Intelligence Engine</h3>
+        </div>
+        <p style="font-size:.84rem;color:var(--muted2);margin-bottom:1rem;">R1 manages denial recovery for hundreds of US health systems. The behavioral patterns of individual commercial payers — which CPT codes UnitedHealth denies systematically, which clinical documentation Cigna requires for specific DRGs, which appeal language Blue Cross responds to — are buried in R1's historical denial data but not operationalized as a predictive engine. C22Arc builds an agent that mines this data, encodes payer-specific appeal playbooks, and automates the production of winning appeal packages — at scale, without adding appeal staffing.</p>
+
+        <!-- Animated workflow diagram: US-A -->
+        <div style="background:var(--s2);border:1px solid var(--border);border-radius:8px;padding:1rem;margin-bottom:1rem;overflow-x:auto;">
+          <div style="font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#3b82f6;margin-bottom:.75rem;">Workflow: Payer Appeal Intelligence Pipeline</div>
+          <svg viewBox="0 0 860 110" style="min-width:600px;width:100%;max-width:860px;display:block;" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <style>
+                .wf-box{rx:6;ry:6;fill:none;stroke-width:1.4}
+                .wf-lbl{font-family:system-ui,sans-serif;font-size:8.5px;fill:#94a3b8;text-anchor:middle}
+                .wf-head{font-family:system-ui,sans-serif;font-size:7.5px;font-weight:700;fill:#e2e8f0;text-anchor:middle}
+                .wf-arr{fill:none;stroke-width:1.5;marker-end:url(#arr-blue)}
+                @keyframes wfPulse{0%,100%{opacity:.35}50%{opacity:1}}
+                .p1{animation:wfPulse 2.2s ease-in-out infinite}
+                .p2{animation:wfPulse 2.2s ease-in-out .4s infinite}
+                .p3{animation:wfPulse 2.2s ease-in-out .8s infinite}
+                .p4{animation:wfPulse 2.2s ease-in-out 1.2s infinite}
+                .p5{animation:wfPulse 2.2s ease-in-out 1.6s infinite}
+                .p6{animation:wfPulse 2.2s ease-in-out 2.0s infinite}
+              </style>
+              <marker id="arr-blue" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+                <path d="M0,0 L0,7 L7,3.5z" fill="#3b82f6"/>
+              </marker>
+            </defs>
+            <!-- Step 1 -->
+            <g class="p1">
+              <rect class="wf-box" x="5" y="30" width="110" height="50" stroke="#3b82f6"/>
+              <text class="wf-head" x="60" y="52">R1 Historical</text>
+              <text class="wf-head" x="60" y="63">Denial Data</text>
+              <text class="wf-lbl" x="60" y="76">Claims + outcomes</text>
+            </g>
+            <line class="wf-arr" x1="117" y1="55" x2="138" y2="55" stroke="#3b82f6"/>
+            <!-- Step 2 -->
+            <g class="p2">
+              <rect class="wf-box" x="140" y="30" width="118" height="50" stroke="#6366f1"/>
+              <text class="wf-head" x="199" y="52">Payer Behavior</text>
+              <text class="wf-head" x="199" y="63">Agent Training</text>
+              <text class="wf-lbl" x="199" y="76">ML on 24mo denial data</text>
+            </g>
+            <line class="wf-arr" x1="260" y1="55" x2="281" y2="55" stroke="#6366f1"/>
+            <!-- Step 3 -->
+            <g class="p3">
+              <rect class="wf-box" x="283" y="30" width="118" height="50" stroke="#8b5cf6"/>
+              <text class="wf-head" x="342" y="52">Payer Playbook</text>
+              <text class="wf-head" x="342" y="63">Library Built</text>
+              <text class="wf-lbl" x="342" y="76">Per-payer appeal rules</text>
+            </g>
+            <line class="wf-arr" x1="403" y1="55" x2="424" y2="55" stroke="#8b5cf6"/>
+            <!-- Step 4 -->
+            <g class="p4">
+              <rect class="wf-box" x="426" y="30" width="118" height="50" stroke="#ec4899"/>
+              <text class="wf-head" x="485" y="52">New Denial</text>
+              <text class="wf-head" x="485" y="63">Received</text>
+              <text class="wf-lbl" x="485" y="76">Routed by payer + code</text>
+            </g>
+            <line class="wf-arr" x1="546" y1="55" x2="567" y2="55" stroke="#ec4899"/>
+            <!-- Step 5 -->
+            <g class="p5">
+              <rect class="wf-box" x="569" y="30" width="118" height="50" stroke="#f59e0b"/>
+              <text class="wf-head" x="628" y="52">Auto Appeal</text>
+              <text class="wf-head" x="628" y="63">Package Generated</text>
+              <text class="wf-lbl" x="628" y="76">Letter + evidence bundle</text>
+            </g>
+            <line class="wf-arr" x1="689" y1="55" x2="710" y2="55" stroke="#f59e0b"/>
+            <!-- Step 6 -->
+            <g class="p6">
+              <rect class="wf-box" x="712" y="30" width="138" height="50" stroke="#22c55e"/>
+              <text class="wf-head" x="781" y="48">Phare OS</text>
+              <text class="wf-head" x="781" y="59">Resolution Queue</text>
+              <text class="wf-lbl" x="781" y="72">96% first-pass target</text>
+            </g>
+            <!-- labels top -->
+            <text x="60" y="22" class="wf-lbl" style="fill:#64748b;font-size:7px;">① INTAKE</text>
+            <text x="199" y="22" class="wf-lbl" style="fill:#64748b;font-size:7px;">② TRAIN</text>
+            <text x="342" y="22" class="wf-lbl" style="fill:#64748b;font-size:7px;">③ ENCODE</text>
+            <text x="485" y="22" class="wf-lbl" style="fill:#64748b;font-size:7px;">④ TRIAGE</text>
+            <text x="628" y="22" class="wf-lbl" style="fill:#64748b;font-size:7px;">⑤ GENERATE</text>
+            <text x="781" y="22" class="wf-lbl" style="fill:#64748b;font-size:7px;">⑥ RESOLVE</text>
+          </svg>
+        </div>
+
+        <div class="g2">
+          <div>
+            <h4>Pain Point: Why R1 Needs This Now</h4>
+            <ul class="ul">
+              <li>Commercial payer denial rates in US markets run 10–15%; federal/MA payers run 18–22%</li>
+              <li>Each payer has distinct behavioral patterns that manual teams learn over years — not encoded in Phare OS today</li>
+              <li>Appeal production is labor-intensive: 45–90 min per appeal letter; backlogs compound</li>
+              <li>R1's existing denial data is the training asset — the intelligence lives in historical outcomes, not yet in a model</li>
+              <li>First-pass resolution rates below 85% represent direct revenue leakage for R1's health system clients</li>
+            </ul>
+          </div>
+          <div>
+            <h4>C22Arc Partnership Deliverable</h4>
+            <ul class="ul">
+              <li>Ingest 18–24 months of R1's US denial outcomes as training corpus (HIPAA-compliant pipeline)</li>
+              <li>Build payer behavior models for top 10–15 commercial payers by R1 client volume</li>
+              <li>Produce automated appeal packages in Phare OS workflow queue with payer-matched language</li>
+              <li>Track win rates by payer, code, and DRG — feedback loop continuously improves model</li>
+              <li><strong>Conservative Entry Target:</strong> +8 percentage point improvement in first-pass appeal resolution within 90 days of deployment; realistic upside of $800K–$1.5M/year recovered per large health system client as the model matures — we commit to the floor, not the ceiling</li>
+            </ul>
+          </div>
+        </div>
+        <div class="callout" style="margin-top:.8rem;">
+          <div class="callout-label">Partnership Value for Omar's Conversation with Flanagan</div>
+          <p style="font-size:.82rem;">This is the easiest version of the partnership to sell internally at R1: C22Arc plugs into existing Phare OS infrastructure, trains on data R1 already holds, and improves metrics R1 already reports to clients. No new market entry, no regulatory pathway — just better outcomes on current business. We commit to a measurable improvement in appeal resolution within 90 days. The model compounds over time — we will outperform our entry commitment, but we hold ourselves to the floor, not the ceiling. That is how C22Arc operates.</p>
+        </div>
+      </div>
+
+      <!-- US Use Case B -->
+      <div class="card" style="border-color:rgba(99,102,241,.3);">
+        <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.8rem;">
+          <span class="badge" style="background:rgba(99,102,241,.15);color:#818cf8;border-color:rgba(99,102,241,.3);">US-B</span>
+          <h3 style="margin:0;">Commercial Payer Prior Auth Acceleration</h3>
+        </div>
+        <p style="font-size:.84rem;color:var(--muted2);margin-bottom:1rem;">Humata Health's prior auth automation is primarily deployed in government and Medicare Advantage payer environments. The highest denial volume for R1's commercial health system clients is in commercial payer prior auth — where authorization cycle times run 5–14 business days, denial-on-expiry rates average 9–13%, and physician documentation burden consumes 15–20 minutes per authorization request. C22Arc extends Humata Health's prior auth automation into commercial payer contracts with payer-specific documentation intelligence and auto-completion of clinical justification fields.</p>
+
+        <!-- Animated workflow diagram: US-B -->
+        <div style="background:var(--s2);border:1px solid var(--border);border-radius:8px;padding:1rem;margin-bottom:1rem;overflow-x:auto;">
+          <div style="font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#6366f1;margin-bottom:.75rem;">Workflow: Commercial Prior Auth Acceleration</div>
+          <svg viewBox="0 0 860 110" style="min-width:600px;width:100%;max-width:860px;display:block;" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <style>
+                @keyframes wfPulse2{0%,100%{opacity:.35}50%{opacity:1}}
+                .q1{animation:wfPulse2 2.4s ease-in-out infinite}
+                .q2{animation:wfPulse2 2.4s ease-in-out .48s infinite}
+                .q3{animation:wfPulse2 2.4s ease-in-out .96s infinite}
+                .q4{animation:wfPulse2 2.4s ease-in-out 1.44s infinite}
+                .q5{animation:wfPulse2 2.4s ease-in-out 1.92s infinite}
+                .q6{animation:wfPulse2 2.4s ease-in-out 2.4s infinite}
+              </style>
+              <marker id="arr-ind" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+                <path d="M0,0 L0,7 L7,3.5z" fill="#6366f1"/>
+              </marker>
+            </defs>
+            <g class="q1">
+              <rect class="wf-box" x="5" y="30" width="110" height="50" stroke="#6366f1"/>
+              <text class="wf-head" x="60" y="52">Auth Request</text>
+              <text class="wf-head" x="60" y="63">Initiated (EHR)</text>
+              <text class="wf-lbl" x="60" y="76">Physician order placed</text>
+            </g>
+            <line class="wf-arr" x1="117" y1="55" x2="138" y2="55" stroke="#6366f1" style="marker-end:url(#arr-ind)"/>
+            <g class="q2">
+              <rect class="wf-box" x="140" y="30" width="118" height="50" stroke="#8b5cf6"/>
+              <text class="wf-head" x="199" y="52">Payer Rule</text>
+              <text class="wf-head" x="199" y="63">Agent Lookup</text>
+              <text class="wf-lbl" x="199" y="76">Commercial criteria DB</text>
+            </g>
+            <line class="wf-arr" x1="260" y1="55" x2="281" y2="55" stroke="#8b5cf6" style="marker-end:url(#arr-ind)"/>
+            <g class="q3">
+              <rect class="wf-box" x="283" y="30" width="118" height="50" stroke="#a855f7"/>
+              <text class="wf-head" x="342" y="52">Clinical Docs</text>
+              <text class="wf-head" x="342" y="63">Auto-Assembled</text>
+              <text class="wf-lbl" x="342" y="76">EHR pull + formatting</text>
+            </g>
+            <line class="wf-arr" x1="403" y1="55" x2="424" y2="55" stroke="#a855f7" style="marker-end:url(#arr-ind)"/>
+            <g class="q4">
+              <rect class="wf-box" x="426" y="30" width="118" height="50" stroke="#ec4899"/>
+              <text class="wf-head" x="485" y="52">Humata Health</text>
+              <text class="wf-head" x="485" y="63">Auth Submission</text>
+              <text class="wf-lbl" x="485" y="76">Payer portal or fax API</text>
+            </g>
+            <line class="wf-arr" x1="546" y1="55" x2="567" y2="55" stroke="#ec4899" style="marker-end:url(#arr-ind)"/>
+            <g class="q5">
+              <rect class="wf-box" x="569" y="30" width="118" height="50" stroke="#f97316"/>
+              <text class="wf-head" x="628" y="52">Status Monitor</text>
+              <text class="wf-head" x="628" y="63">+ Escalation</text>
+              <text class="wf-lbl" x="628" y="76">Auto-chase; flag delays</text>
+            </g>
+            <line class="wf-arr" x1="689" y1="55" x2="710" y2="55" stroke="#f97316" style="marker-end:url(#arr-ind)"/>
+            <g class="q6">
+              <rect class="wf-box" x="712" y="30" width="138" height="50" stroke="#22c55e"/>
+              <text class="wf-head" x="781" y="48">Same-Day Auth</text>
+              <text class="wf-head" x="781" y="59">for 60%+ of Cases</text>
+              <text class="wf-lbl" x="781" y="72">Expiry denials eliminated</text>
+            </g>
+            <text x="60" y="22" class="wf-lbl" style="fill:#64748b;font-size:7px;">① ORDER</text>
+            <text x="199" y="22" class="wf-lbl" style="fill:#64748b;font-size:7px;">② CRITERIA</text>
+            <text x="342" y="22" class="wf-lbl" style="fill:#64748b;font-size:7px;">③ ASSEMBLE</text>
+            <text x="485" y="22" class="wf-lbl" style="fill:#64748b;font-size:7px;">④ SUBMIT</text>
+            <text x="628" y="22" class="wf-lbl" style="fill:#64748b;font-size:7px;">⑤ MONITOR</text>
+            <text x="781" y="22" class="wf-lbl" style="fill:#64748b;font-size:7px;">⑥ APPROVE</text>
+          </svg>
+        </div>
+
+        <div class="g2">
+          <div>
+            <h4>Pain Point: Commercial Payer Auth Gap</h4>
+            <ul class="ul">
+              <li>Commercial payer prior auth cycle times: 5–14 business days vs. same-day for government payers in Humata Health</li>
+              <li>Denial-on-expiry accounts for 9–13% of commercial denials — fully avoidable with faster auth cycles</li>
+              <li>Each commercial payer has distinct documentation templates; physicians fill manually with no guidance</li>
+              <li>Pending authorizations create schedule delays, patient satisfaction impact, and revenue timing risk</li>
+              <li>R1's Humata Health capability stops at submission — no payer-specific intelligence layer for commercial criteria</li>
+            </ul>
+          </div>
+          <div>
+            <h4>C22Arc Extension Deliverable</h4>
+            <ul class="ul">
+              <li>Build commercial payer criteria library: United, Cigna, BCBS, Aetna, Humana — procedure-specific auth requirements</li>
+              <li>Agent auto-assembles clinical justification from EHR — no physician typing required</li>
+              <li>Extend Humata Health's submission pipeline to include commercial payer portals and fax APIs</li>
+              <li>Real-time status monitoring with escalation triggers before authorization expiry windows</li>
+              <li><strong>Conservative Entry Target:</strong> 40%+ same-day auth rate for commercial payers within the first 60 days, growing as the criteria library expands; delay-to-expiry denials reduced by at least 50% in months 1–3; realistic upside of $500K–$900K/year per mid-size health system as payer coverage matures — we commit to the entry number, then exceed it</li>
+            </ul>
+          </div>
+        </div>
+        <div class="callout" style="margin-top:.8rem;border-color:rgba(99,102,241,.3);">
+          <div class="callout-label" style="color:#818cf8;">R1 Competitive Positioning Value</div>
+          <p style="font-size:.82rem;">This use case strengthens R1's Humata Health differentiation in competitive RCM sales cycles. When R1 bids against Optum or Ensemble, demonstrating commercial payer prior auth automation as a live capability — not a roadmap item — is a direct competitive advantage. C22Arc builds the capability; R1 owns it as part of the Humata Health platform story. We will commit to a 40% same-day auth rate at contract signing. When we hit 60%+, it registers as a win R1 can take to Flanagan — on a timeline we already controlled.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- GCC MARKET SUBSECTION -->
+    <div style="background:linear-gradient(135deg,rgba(234,179,8,.06) 0%,rgba(249,115,22,.04) 100%);border:1.5px solid rgba(234,179,8,.25);border-radius:10px;padding:1.25rem 1.4rem;margin-bottom:1.5rem;">
+      <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:1rem;">
+        <div style="background:rgba(234,179,8,.15);border:1px solid rgba(234,179,8,.3);border-radius:6px;padding:.3rem .7rem;font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#ca8a04;">GCC Market · Expansion Opportunity</div>
+        <span style="font-size:.75rem;color:var(--muted);">NPHIES-native denial automation — market gap R1 cannot fill without a GCC-specific build partner</span>
+      </div>
+
+    <!-- Use Case 1 -->
+    <div class="card accent-l">
+      <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.8rem;">
+        <span class="badge accent">GCC-1</span>
+        <h3 style="margin:0;">Clinical Denial Resolution — 24–48 Hour Autonomous Pipeline</h3>
+      </div>
+
+      <!-- Animated diagram GCC-1 -->
+      <div style="background:var(--s2);border:1px solid var(--border);border-radius:8px;padding:1rem;margin-bottom:1rem;overflow-x:auto;">
+        <div style="font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:.75rem;">Workflow: NPHIES Clinical Denial Autonomous Resolution</div>
+        <svg viewBox="0 0 860 110" style="min-width:600px;width:100%;max-width:860px;display:block;" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <style>
+              @keyframes wfPulse3{0%,100%{opacity:.35}50%{opacity:1}}
+              .r1a{animation:wfPulse3 2s ease-in-out infinite}.r2a{animation:wfPulse3 2s ease-in-out .33s infinite}.r3a{animation:wfPulse3 2s ease-in-out .66s infinite}.r4a{animation:wfPulse3 2s ease-in-out .99s infinite}.r5a{animation:wfPulse3 2s ease-in-out 1.32s infinite}.r6a{animation:wfPulse3 2s ease-in-out 1.65s infinite}
+            </style>
+            <marker id="arr-acc" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+              <path d="M0,0 L0,7 L7,3.5z" fill="#f59e0b"/>
+            </marker>
+          </defs>
+          <g class="r1a"><rect class="wf-box" x="5" y="30" width="110" height="50" stroke="#f59e0b"/><text class="wf-head" x="60" y="52">NPHIES Denial</text><text class="wf-head" x="60" y="63">Received</text><text class="wf-lbl" x="60" y="76">Arabic remark code</text></g>
+          <line class="wf-arr" x1="117" y1="55" x2="138" y2="55" stroke="#f59e0b" style="marker-end:url(#arr-acc)"/>
+          <g class="r2a"><rect class="wf-box" x="140" y="30" width="118" height="50" stroke="#ef4444"/><text class="wf-head" x="199" y="52">Arabic NLP</text><text class="wf-head" x="199" y="63">Agent Parse</text><text class="wf-lbl" x="199" y="76">Code + reason classified</text></g>
+          <line class="wf-arr" x1="260" y1="55" x2="281" y2="55" stroke="#ef4444" style="marker-end:url(#arr-acc)"/>
+          <g class="r3a"><rect class="wf-box" x="283" y="30" width="118" height="50" stroke="#8b5cf6"/><text class="wf-head" x="342" y="52">Cerner Encounter</text><text class="wf-head" x="342" y="63">Evidence Pull</text><text class="wf-lbl" x="342" y="76">Clinical docs retrieved</text></g>
+          <line class="wf-arr" x1="403" y1="55" x2="424" y2="55" stroke="#8b5cf6" style="marker-end:url(#arr-acc)"/>
+          <g class="r4a"><rect class="wf-box" x="426" y="30" width="118" height="50" stroke="#3b82f6"/><text class="wf-head" x="485" y="52">Appeal Package</text><text class="wf-head" x="485" y="63">Auto-Built</text><text class="wf-lbl" x="485" y="76">NPHIES FHIR format</text></g>
+          <line class="wf-arr" x1="546" y1="55" x2="567" y2="55" stroke="#3b82f6" style="marker-end:url(#arr-acc)"/>
+          <g class="r5a"><rect class="wf-box" x="569" y="30" width="118" height="50" stroke="#ec4899"/><text class="wf-head" x="628" y="52">NPHIES API</text><text class="wf-head" x="628" y="63">Submission</text><text class="wf-lbl" x="628" y="76">24–48 hour cycle</text></g>
+          <line class="wf-arr" x1="689" y1="55" x2="710" y2="55" stroke="#ec4899" style="marker-end:url(#arr-acc)"/>
+          <g class="r6a"><rect class="wf-box" x="712" y="30" width="138" height="50" stroke="#22c55e"/><text class="wf-head" x="781" y="48">Resolution</text><text class="wf-head" x="781" y="59">$3.5M / 500 beds</text><text class="wf-lbl" x="781" y="72">96% first-pass target</text></g>
+          <text x="60" y="22" class="wf-lbl" style="fill:#64748b;font-size:7px;">① DENIAL</text>
+          <text x="199" y="22" class="wf-lbl" style="fill:#64748b;font-size:7px;">② NLP PARSE</text>
+          <text x="342" y="22" class="wf-lbl" style="fill:#64748b;font-size:7px;">③ EVIDENCE</text>
+          <text x="485" y="22" class="wf-lbl" style="fill:#64748b;font-size:7px;">④ BUILD</text>
+          <text x="628" y="22" class="wf-lbl" style="fill:#64748b;font-size:7px;">⑤ SUBMIT</text>
+          <text x="781" y="22" class="wf-lbl" style="fill:#64748b;font-size:7px;">⑥ RECOVER</text>
+        </svg>
+      </div>
+
+      <div class="g2">
+        <div>
+          <h4>Current State (Manual)</h4>
+          <ul class="ul">
+            <li>Denial received from NPHIES payer → paper-based appeal queue (avg. 12–30 days)</li>
+            <li>Clinical reviewer manually interprets Arabic denial remark codes</li>
+            <li>Physician attestation required for &gt;80% of clinical denials</li>
+            <li>No pattern analysis across payer behavior — each appeal treated in isolation</li>
+            <li>35–40% denial rate compounds; &gt;30% of denials go unappealed due to resource constraint</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Future State (Autonomous)</h4>
+          <ul class="ul">
+            <li>Denial received → NLP agent parses NPHIES remark code in Arabic + English</li>
+            <li>Clinical evidence autonomously retrieved from Cerner encounter → appeal package built</li>
+            <li>Payer-specific appeal submitted via NPHIES API within 24–48 hours</li>
+            <li>Escalation to physician only for highest-complexity cases — target &lt;25% at launch, improving as the model trains on live GCC payer data</li>
+            <li><strong>Conservative Entry Target:</strong> 70% first-pass resolution at pilot site within 90 days of go-live; $1.2–$2.0M/year per 500-bed hospital committed at contract; realistic upside of $3.0–$3.5M as payer model matures — we will outperform this number, but we sign on the floor</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Use Case 2 -->
+    <div class="card blue-l" style="margin-top:1rem;">
+      <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.8rem;">
+        <span class="badge blue">GCC-2</span>
+        <h3 style="margin:0;">NPHIES Payer Pattern Intelligence</h3>
+      </div>
+      <p>The NPHIES platform connects &gt;75% of Saudi providers and processes all major payer adjudication. The behavioral patterns of individual NPHIES payers — which codes they deny systematically, which clinical documentation they require, which DRGs they flag — are not encoded in any US-trained AI model. A GCC-trained denial pattern agent can learn these behaviors from live claim data, predict denial risk pre-submission, and reduce front-end claim rejection by an estimated 20–30% within 6 months of training data accumulation.</p>
+      <p style="color:var(--muted2);font-size:.8rem;"><strong>Conservative Entry Commitment:</strong> Front-end denial reduction of 10% within the first 6 months of data accumulation — net 3.5% improvement in clean claim rate. On $50M annual billed charges for a mid-size GCC hospital, this is a $1.75M committed floor. The 20% reduction potential ($3.5M impact) is the realistic 12-month outcome once the model has trained on sufficient live NPHIES data — that upside surfaces as a win after contract, not as a promise before it.</p>
+    </div>
+
+    <!-- Use Case 3 -->
+    <div class="card gold-l" style="margin-top:1rem;">
+      <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.8rem;">
+        <span class="badge gold">GCC-3</span>
+        <h3 style="margin:0;">NPHIES Prior Authorization Optimization</h3>
+      </div>
+      <p>Humata Health's prior auth automation is a strong foundation for the GCC market. C22Arc's partnership role is to extend that capability with GCC-specific training: NPHIES prior auth requirements follow CCHI mandates with procedure-specific documentation that differs from US standards. An agent layer trained on NPHIES prior auth approval patterns can auto-complete authorization requests for high-volume procedure categories within R1's existing platform, reducing physician documentation burden and authorization cycle time from 5–7 days to same-day for &gt;60% of requests.</p>
+      <p style="color:var(--muted2);font-size:.8rem;"><strong>Conservative Entry Commitment:</strong> 35% reduction in authorization cycle time within 90 days of deployment for the top 20 procedure categories — enough to meaningfully reduce delay-to-expiry denials without overstating what an early-stage model can guarantee. The 60% reduction is the realistic 9-month outcome as NPHIES prior auth patterns are fully encoded. We commit to 35%; when we deliver 60%, Omar has a result he can take upstairs.</p>
+    </div>
+
+    <!-- Use Case 4 -->
+    <div class="card green-l" style="margin-top:1rem;">
+      <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.8rem;">
+        <span class="badge green">GCC-4</span>
+        <h3 style="margin:0;">Vector 1 × Vector 4 — Closed Identity-to-Revenue Loop</h3>
+      </div>
+      <p>The most powerful use case is the integration of biometric identity verification (V1) with autonomous denial resolution (V4). When a patient's identity is confirmed via Nafath at enrollment, the biometric verification token is embedded in the NPHIES claim submission. Claims with a biometric identity confirmation code are adjudicated at a measurably lower denial rate — identity-based denials (wrong patient, duplicate encounter, enrollment discrepancy) are eliminated at source rather than appealed downstream.</p>
+      <div class="callout" style="margin-top:.8rem;">
+        <div class="callout-label">Combined Impact Estimate</div>
+        <p>Eliminating identity-based denials combined with Vector 4 autonomous appeal resolution produces a combined annual revenue impact we commit to at <strong>$1.8M–$2.5M per 500-bed GCC hospital at contract signing</strong> — based on the conservative entry targets across both vectors. The SEHA benchmark data and HFMA GCC working group modeling support a realistic upside of $4.5M–$7.0M at full model maturity. We sign on the conservative number; the upside is what the data delivers. That structure protects R1's credibility with hospital clients and gives C22Arc room to exceed — which we will.</p>
+      </div>
+    </div>
+    </div><!-- end GCC subsection -->
+  </div>
+</section>
+
+<!-- US VS GLOBAL CUSTOMERS -->
+<section id="customers">
+  <div class="container">
+    <div class="sec-eye">Customer Intelligence</div>
+    <h2>R1's Customer Base: US Dominance vs. Global Expansion Gap</h2>
+    <p style="color:var(--muted2);font-size:.85rem;max-width:720px;margin-bottom:1.8rem;">R1 RCM's revenue and customer footprint is almost entirely US-domestic. GCC and international revenues represent a nascent, underdeveloped frontier — which defines both the risk and the opportunity for C22Arc's partnership position.</p>
+
+    <!-- Split stat row -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-bottom:1.8rem;">
+      <!-- US Column -->
+      <div style="background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:1.6rem;border-top:3px solid var(--blue);">
+        <div style="font-size:.65rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);margin-bottom:.75rem;">🇺🇸 US Domestic — Core Market</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.9rem;margin-bottom:1.1rem;">
+          <div><div style="font-size:2rem;font-weight:900;color:var(--fg);">95</div><div style="font-size:.7rem;color:var(--muted2);">of the top 100 US health systems</div></div>
+          <div><div style="font-size:2rem;font-weight:900;color:var(--fg);">$2.3B+</div><div style="font-size:.7rem;color:var(--muted2);">Annual US revenue (est.)</div></div>
+          <div><div style="font-size:2rem;font-weight:900;color:var(--fg);">30K+</div><div style="font-size:.7rem;color:var(--muted2);">US-based employees</div></div>
+          <div><div style="font-size:2rem;font-weight:900;color:var(--fg);">KLAS #1</div><div style="font-size:.7rem;color:var(--muted2);">Ranked US RCM vendor</div></div>
+        </div>
+        <div style="border-top:1px solid var(--border);padding-top:.9rem;">
+          <div style="font-size:.72rem;font-weight:700;color:var(--muted2);margin-bottom:.5rem;">US Customer Profile</div>
+          <div style="font-size:.78rem;color:var(--muted2);line-height:1.6;">Large academic medical centers, regional health systems, national hospital chains. Contracts anchored to Epic and Cerner/Oracle Health EHR stacks. Multi-year, high lock-in agreements. Denial rate baseline: ~10% (industry avg). Identity infrastructure: US-domestic SSN/insurer model. Phare OS and Humata Health deployed primarily in this base.</div>
+        </div>
+        <div style="margin-top:1rem;background:rgba(59,142,255,.08);border:1px solid rgba(59,142,255,.2);border-radius:6px;padding:.75rem;">
+          <div style="font-size:.68rem;font-weight:700;color:var(--blue);margin-bottom:.3rem;">US Market Moat Factors</div>
+          <ul style="font-size:.74rem;color:var(--muted2);line-height:1.7;padding-left:1.1rem;margin:0;">
+            <li>Multi-year contracts with 6–18 month termination notice requirements</li>
+            <li>Deep EHR integration (Epic/Cerner) creates switching cost</li>
+            <li>KLAS #1 ranking drives inbound sales — referral flywheel is self-sustaining</li>
+            <li>R1 knows the US payer behavior model down to remark code level</li>
+            <li>Humata Health AI trained on US clinical documentation — domestic advantage</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- GCC/Global Column -->
+      <div style="background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:1.6rem;border-top:3px solid var(--accent);">
+        <div style="font-size:.65rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:.75rem;">🌍 GCC &amp; Global — Frontier Market</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.9rem;margin-bottom:1.1rem;">
+          <div><div style="font-size:2rem;font-weight:900;color:var(--accent);">&lt;2%</div><div style="font-size:.7rem;color:var(--muted2);">Est. GCC share of total R1 revenue</div></div>
+          <div><div style="font-size:2rem;font-weight:900;color:var(--accent);">$69.3B</div><div style="font-size:.7rem;color:var(--muted2);">Saudi healthcare market by 2030</div></div>
+          <div><div style="font-size:2rem;font-weight:900;color:var(--accent);">35–40%</div><div style="font-size:.7rem;color:var(--muted2);">GCC denial rate (vs. 10% US)</div></div>
+          <div><div style="font-size:2rem;font-weight:900;color:var(--accent);">18 Mo</div><div style="font-size:.7rem;color:var(--muted2);">Window before market position closes</div></div>
+        </div>
+        <div style="border-top:1px solid var(--border);padding-top:.9rem;">
+          <div style="font-size:.72rem;font-weight:700;color:var(--muted2);margin-bottom:.5rem;">GCC Market Profile</div>
+          <div style="font-size:.78rem;color:var(--muted2);line-height:1.6;">Saudi Arabia, UAE, Kuwait, Bahrain, Oman, Qatar. Identity infrastructure: Nafath / Absher (national biometric digital ID). Payer system: NPHIES (FHIR R4 national claims platform). Data sovereignty: PDPL requires in-country storage (AWS me-south-1). No RCM vendor has built a closed-loop biometric identity + denial automation platform on top of NPHIES at scale.</div>
+        </div>
+        <div style="margin-top:1rem;background:rgba(0,198,178,.08);border:1px solid rgba(0,198,178,.2);border-radius:6px;padding:.75rem;">
+          <div style="font-size:.68rem;font-weight:700;color:var(--accent);margin-bottom:.3rem;">Why R1's US Playbook Doesn't Transfer Directly</div>
+          <ul style="font-size:.74rem;color:var(--muted2);line-height:1.7;padding-left:1.1rem;margin:0;">
+            <li>NPHIES payer logic has no equivalent in US billing — requires native Arabic NLP</li>
+            <li>PDPL data sovereignty mandates on-prem or Saudi cloud — US cloud defaults violate compliance</li>
+            <li>Nafath/Absher biometric identity layer is absent from any R1 current workflow</li>
+            <li>GCC payer negotiations require in-country Ministry relationships — not transferable</li>
+            <li>Denial appeal process is written in Arabic regulation, not CMS/AHA guidance</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Comparison table -->
+    <div style="background:var(--s2);border:1px solid var(--border);border-radius:10px;overflow:hidden;">
+      <div style="background:var(--s3);padding:.85rem 1.2rem;border-bottom:1px solid var(--border);">
+        <div style="font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted2);">Side-by-Side: US vs. GCC Market Dynamics for R1</div>
+      </div>
+      <table style="width:100%;border-collapse:collapse;font-size:.78rem;">
+        <thead>
+          <tr style="background:var(--s3);">
+            <th style="padding:.65rem 1rem;text-align:left;font-size:.67rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);">Dimension</th>
+            <th style="padding:.65rem 1rem;text-align:left;font-size:.67rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--blue);border-bottom:1px solid var(--border);">US Domestic</th>
+            <th style="padding:.65rem 1rem;text-align:left;font-size:.67rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);border-bottom:1px solid var(--border);">GCC / Saudi Arabia</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:.65rem 1rem;font-weight:700;color:var(--muted2);">Market share</td>
+            <td style="padding:.65rem 1rem;color:var(--fg);">95/100 top health systems — dominant</td>
+            <td style="padding:.65rem 1rem;color:var(--accent);">&lt;2% revenue — near-zero presence</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:.65rem 1rem;font-weight:700;color:var(--muted2);">Patient identity</td>
+            <td style="padding:.65rem 1rem;color:var(--fg);">SSN, insurance card, EHR MPI</td>
+            <td style="padding:.65rem 1rem;color:var(--accent);">Nafath biometric national ID — R1 has no native connector</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:.65rem 1rem;font-weight:700;color:var(--muted2);">Payer system</td>
+            <td style="padding:.65rem 1rem;color:var(--fg);">CMS / commercial payer EDI</td>
+            <td style="padding:.65rem 1rem;color:var(--accent);">NPHIES FHIR R4 — Saudi national platform, Arabic rules</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:.65rem 1rem;font-weight:700;color:var(--muted2);">Denial rate</td>
+            <td style="padding:.65rem 1rem;color:var(--fg);">~10% — managed with Humata AI</td>
+            <td style="padding:.65rem 1rem;color:var(--accent);">35–40% — no native GCC AI agent</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:.65rem 1rem;font-weight:700;color:var(--muted2);">Data sovereignty</td>
+            <td style="padding:.65rem 1rem;color:var(--fg);">HIPAA / US cloud standard</td>
+            <td style="padding:.65rem 1rem;color:var(--accent);">PDPL — mandatory in-KSA storage (me-south-1)</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:.65rem 1rem;font-weight:700;color:var(--muted2);">R1 headcount</td>
+            <td style="padding:.65rem 1rem;color:var(--fg);">30,000+ US employees</td>
+            <td style="padding:.65rem 1rem;color:var(--accent);">Nascent KSA team — Omar building in-country presence</td>
+          </tr>
+          <tr>
+            <td style="padding:.65rem 1rem;font-weight:700;color:var(--muted2);">C22Arc role</td>
+            <td style="padding:.65rem 1rem;color:var(--muted2);">No overlap — R1 US market is not in scope</td>
+            <td style="padding:.65rem 1rem;color:var(--accent);font-weight:700;">Dedicated GCC consulting + governance + agent delivery</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout" style="margin-top:1.4rem;">
+      <div class="callout-label">Strategic Implication for the Partnership</div>
+      <p>R1's US dominance is a moat, not a template. The skills and infrastructure that built R1's US position — US payer relationships, CMS billing logic, HIPAA-architected cloud — do not transfer directly to GCC. C22Arc's consulting and governance role is specifically designed to bridge this gap: delivering the GCC-native capabilities (Nafath integration, NPHIES FHIR, PDPL architecture, Arabic NLP, Ministry API navigation) that R1 needs to replicate in Saudi Arabia what it has already built in the United States.</p>
+    </div>
+  </div>
+</section>
+
+<!-- GCC EXECUTION GAPS -->
+<section id="organalysis">
+  <div class="container">
+    <div class="sec-eye" style="color:var(--blue);">C22Arc Value Map — GCC Partnership</div>
+    <h2>2026 Execution Gaps — Where C22Arc Adds Immediate Value</h2>
+    <p style="color:var(--muted2);font-size:.85rem;max-width:720px;margin-bottom:1.8rem;">GCC healthcare expansion is a specialized discipline. The gaps below represent specific areas where C22Arc's capabilities directly extend R1's reach — enabling faster market entry, stronger compliance posture, and lower build cost. Each gap maps to a concrete consulting engagement where C22Arc can begin delivering value within 90 days.</p>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.2rem;margin-bottom:1.8rem;">
+
+      <!-- Gap 1: GCC Execution Capability -->
+      <div style="background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:1.4rem;border-left:3px solid var(--blue);">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.75rem;">
+          <div style="font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);">Gap #1</div>
+          <div style="background:rgba(59,142,255,.12);border:1px solid rgba(59,142,255,.3);color:var(--blue);font-size:.62rem;font-weight:800;padding:.2rem .55rem;border-radius:4px;text-transform:uppercase;letter-spacing:.05em;">High Value</div>
+        </div>
+        <h3 style="font-size:.95rem;margin-bottom:.5rem;">GCC Expansion Requires Dedicated In-Market Execution</h3>
+        <p style="font-size:.78rem;color:var(--muted2);line-height:1.65;margin-bottom:.75rem;">R1's Vision 2030 strategy is directionally right but requires GCC-specific capabilities that don't exist in R1's current US-trained workforce: NPHIES-native agent development, Arabic clinical NLP, Ministry API navigation, and PDPL compliance architecture. These are specialized disciplines outside traditional RCM operations — and cannot be staffed or stood up in the 18-month window before the market window closes.</p>
+        <div style="background:rgba(59,142,255,.06);border-radius:6px;padding:.65rem;font-size:.72rem;color:var(--muted2);">
+          <strong style="color:var(--blue);">C22Arc Delivers:</strong> C22Arc is purpose-built for this exact gap. We provide the GCC execution layer R1 needs — enabling R1's Vision 2030 ambitions without R1 building a specialized team from scratch. This is the consulting engagement's entry point, and where we start generating value on Day 1.
+        </div>
+      </div>
+
+      <!-- Gap 2: Acquisition Integration Risk -->
+      <div style="background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:1.4rem;border-left:3px solid var(--amber);">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.75rem;">
+          <div style="font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);">Gap #2</div>
+          <div style="background:rgba(240,165,0,.1);border:1px solid rgba(240,165,0,.3);color:var(--amber);font-size:.62rem;font-weight:800;padding:.2rem .55rem;border-radius:4px;text-transform:uppercase;letter-spacing:.05em;">High Risk</div>
+        </div>
+        <h3 style="font-size:.95rem;margin-bottom:.5rem;">Phare + Humata Integration Debt</h3>
+        <p style="font-size:.78rem;color:var(--muted2);line-height:1.65;margin-bottom:.75rem;">R1 acquired Phare Health (Phare OS agentic platform) and Humata Health (AI clinical documentation) in rapid succession. Integration of two acquired AI stacks into a legacy RCM infrastructure takes 18–36 months to reach full coherence. In the interim, Phare OS is being sold before it's fully stable — creating overpromise risk in both US and GCC markets. R37 Lab is promising agentic innovation, but is operating in parallel to (not integrated with) the Humata stack.</p>
+        <div style="background:rgba(240,165,0,.06);border-radius:6px;padding:.65rem;font-size:.72rem;color:var(--muted2);">
+          <strong style="color:var(--amber);">C22Arc Counter:</strong> C22Arc agents are purpose-built for GCC workflows — not dependent on Phare OS integration stability. We operate on top of NPHIES + Oracle Health Cerner directly, bypassing R1's internal stack coherence risk in the GCC vertical.
+        </div>
+      </div>
+
+      <!-- Gap 3: Headcount Dependency -->
+      <div style="background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:1.4rem;border-left:3px solid var(--amber);">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.75rem;">
+          <div style="font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);">Gap #3</div>
+          <div style="background:rgba(240,165,0,.1);border:1px solid rgba(240,165,0,.3);color:var(--amber);font-size:.62rem;font-weight:800;padding:.2rem .55rem;border-radius:4px;text-transform:uppercase;letter-spacing:.05em;">High Risk</div>
+        </div>
+        <h3 style="font-size:.95rem;margin-bottom:.5rem;">30,000-Person Headcount = Margin Target</h3>
+        <p style="font-size:.78rem;color:var(--muted2);line-height:1.65;margin-bottom:.75rem;">R1's 30,000-employee workforce is its biggest liability under a PE cost-optimization mandate. TowerBrook + CD&amp;R acquired R1 at a premium and will seek EBITDA improvement through headcount rationalization. This creates a structural tension: R1 needs to expand into GCC (requiring investment) while PE boards are optimizing for US margin. GCC expansion headcount will face scrutiny unless it's structured as capital-light.</p>
+        <div style="background:rgba(240,165,0,.06);border-radius:6px;padding:.65rem;font-size:.72rem;color:var(--muted2);">
+          <strong style="color:var(--amber);">C22Arc Counter:</strong> The consulting partnership is explicitly capital-light for R1 — C22Arc carries the agent development cost, compliance architecture, and Ministry navigation overhead. R1's GCC incremental headcount requirement is minimal, which aligns with PE board preference.
+        </div>
+      </div>
+
+      <!-- Gap 4: GCC Technical Readiness -->
+      <div style="background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:1.4rem;border-left:3px solid var(--red);">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.75rem;">
+          <div style="font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--red);">Gap #4</div>
+          <div style="background:rgba(232,69,69,.12);border:1px solid rgba(232,69,69,.3);color:var(--red);font-size:.62rem;font-weight:800;padding:.2rem .55rem;border-radius:4px;text-transform:uppercase;letter-spacing:.05em;">Critical</div>
+        </div>
+        <h3 style="font-size:.95rem;margin-bottom:.5rem;">Zero Native NPHIES / Nafath Capability</h3>
+        <p style="font-size:.78rem;color:var(--muted2);line-height:1.65;margin-bottom:.75rem;">R1 has no disclosed integration with NPHIES (Saudi national payer platform), Nafath (national digital identity), Absher (Ministry of Interior services), or CCHI (Council of Cooperative Health Insurance). Building these from scratch requires 12–24 months of API negotiation, Ministry approval, Arabic NLP training, and PDPL compliance architecture — time R1 does not have before competitors move. R37 Lab's agenda does not appear to include GCC-specific agent development.</p>
+        <div style="background:rgba(232,69,69,.06);border-radius:6px;padding:.65rem;font-size:.72rem;color:var(--muted2);">
+          <strong style="color:var(--red);">C22Arc Counter:</strong> These exact capabilities are the core of C22Arc's GCC agent stack — already in architecture phase, not starting from zero. C22Arc compresses R1's 18-month build timeline to a 90-day pilot go-live.
+        </div>
+      </div>
+
+      <!-- Gap 5: Arabic NLP + Cultural Gap -->
+      <div style="background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:1.4rem;border-left:3px solid var(--amber);">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.75rem;">
+          <div style="font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);">Gap #5</div>
+          <div style="background:rgba(240,165,0,.1);border:1px solid rgba(240,165,0,.3);color:var(--amber);font-size:.62rem;font-weight:800;padding:.2rem .55rem;border-radius:4px;text-transform:uppercase;letter-spacing:.05em;">Moderate Risk</div>
+        </div>
+        <h3 style="font-size:.95rem;margin-bottom:.5rem;">No Arabic Clinical NLP or GCC Payer Intelligence</h3>
+        <p style="font-size:.78rem;color:var(--muted2);line-height:1.65;margin-bottom:.75rem;">Humata Health's AI is trained on English-language US clinical documentation — SOAP notes, H&amp;P templates, US physician coding patterns. GCC denial resolution requires Arabic remark code interpretation, CCHI-specific denial taxonomy, and understanding of Saudi physician documentation culture. None of this is embedded in R1's current AI stack. Attempting to deploy Humata AI in GCC without retraining risks high false-negative denial resolution rates.</p>
+        <div style="background:rgba(240,165,0,.06);border-radius:6px;padding:.65rem;font-size:.72rem;color:var(--muted2);">
+          <strong style="color:var(--amber);">C22Arc Counter:</strong> C22Arc's denial agent is built with NPHIES denial taxonomy and Arabic NLP baseline from architecture phase. GCC payer behavior intelligence feeds the model from pilot data — the agent trains on live Saudi denial patterns from month one.
+        </div>
+      </div>
+
+      <!-- Gap 6: No Ministry Relationships -->
+      <div style="background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:1.4rem;border-left:3px solid var(--red);">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.75rem;">
+          <div style="font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--red);">Gap #6</div>
+          <div style="background:rgba(232,69,69,.12);border:1px solid rgba(232,69,69,.3);color:var(--red);font-size:.62rem;font-weight:800;padding:.2rem .55rem;border-radius:4px;text-transform:uppercase;letter-spacing:.05em;">Critical</div>
+        </div>
+        <h3 style="font-size:.95rem;margin-bottom:.5rem;">Ministry API Access Requires In-Country Sponsorship</h3>
+        <p style="font-size:.78rem;color:var(--muted2);line-height:1.65;margin-bottom:.75rem;">Access to Ministry of Interior (MOI) Nafath APIs, CCHI data feeds, and NPHIES sandbox credentials requires formal KSA in-country entity registration, a local data controller under PDPL, and a Ministry sponsor contact. This is a 6–12 month regulatory process that cannot be shortcut through US relationship leverage. R1's nascent KSA presence (Omar's team) is building this — but the API access pipeline has not been publicly established.</p>
+        <div style="background:rgba(232,69,69,.06);border-radius:6px;padding:.65rem;font-size:.72rem;color:var(--muted2);">
+          <strong style="color:var(--red);">C22Arc Counter:</strong> C22Arc's governance framework includes Ministry API approval pathway navigation as a core consulting deliverable — supporting Omar's in-country team with the regulatory submission architecture, entity structure, and PDPL compliance evidence package.
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Org Gap Summary Score -->
+    <div style="background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:1.4rem;">
+      <div style="font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted2);margin-bottom:1rem;">Organizational Readiness Score — GCC Expansion</div>
+      <div style="display:grid;gap:.7rem;">
+        <div>
+          <div style="display:flex;justify-content:space-between;font-size:.75rem;color:var(--muted2);margin-bottom:.3rem;"><span>GCC Technical Readiness (Nafath, NPHIES, Arabic NLP)</span><span style="color:var(--red);font-weight:700;">2/10</span></div>
+          <div style="height:6px;border-radius:3px;background:var(--border);overflow:hidden;"><div style="height:100%;width:20%;background:var(--red);border-radius:3px;"></div></div>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;font-size:.75rem;color:var(--muted2);margin-bottom:.3rem;"><span>Ministry &amp; Regulatory Relationships (KSA In-Country)</span><span style="color:var(--amber);font-weight:700;">3/10</span></div>
+          <div style="height:6px;border-radius:3px;background:var(--border);overflow:hidden;"><div style="height:100%;width:30%;background:var(--amber);border-radius:3px;"></div></div>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;font-size:.75rem;color:var(--muted2);margin-bottom:.3rem;"><span>Leadership Continuity Risk (PE Transition)</span><span style="color:var(--amber);font-weight:700;">4/10</span></div>
+          <div style="height:6px;border-radius:3px;background:var(--border);overflow:hidden;"><div style="height:100%;width:40%;background:var(--amber);border-radius:3px;"></div></div>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;font-size:.75rem;color:var(--muted2);margin-bottom:.3rem;"><span>Acquisition Integration Stability (Phare OS + Humata)</span><span style="color:var(--amber);font-weight:700;">5/10</span></div>
+          <div style="height:6px;border-radius:3px;background:var(--border);overflow:hidden;"><div style="height:100%;width:50%;background:var(--amber);border-radius:3px;"></div></div>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;font-size:.75rem;color:var(--muted2);margin-bottom:.3rem;"><span>US Market Dominance (Domestic Position)</span><span style="color:var(--green);font-weight:700;">9/10</span></div>
+          <div style="height:6px;border-radius:3px;background:var(--border);overflow:hidden;"><div style="height:100%;width:90%;background:var(--green);border-radius:3px;"></div></div>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;font-size:.75rem;color:var(--muted2);margin-bottom:.3rem;"><span>KLAS Brand &amp; RCM Domain Authority</span><span style="color:var(--green);font-weight:700;">9/10</span></div>
+          <div style="height:6px;border-radius:3px;background:var(--border);overflow:hidden;"><div style="height:100%;width:90%;background:var(--green);border-radius:3px;"></div></div>
+        </div>
+      </div>
+      <div style="margin-top:1rem;padding:.75rem;background:rgba(0,198,178,.06);border:1px solid rgba(0,198,178,.2);border-radius:6px;font-size:.75rem;color:var(--muted2);line-height:1.6;">
+        <strong style="color:var(--accent);">Red Team Verdict:</strong> R1 is a world-class US RCM operator with near-zero GCC-native capability. The organization is structurally strong but GCC-blind. C22Arc's partnership closes the 6 critical gaps that prevent R1 from converting its brand authority and PE capital into Saudi market revenue. Without a dedicated GCC consulting partner, R1's Vision 2030 expansion timeline extends by 24–36 months and faces significant regulatory and technical risk.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section id="roadmap">
+  <div class="container">
+    <div class="sec-eye">18-Month Executive Roadmap</div>
+    <h2>Phased Delivery Timeline</h2>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Period</th><th>Vector 1 — Biometric Identity</th><th>Vector 4 — Denial Automation</th><th>R1 Business Outcome</th><th>Key Dependency</th></tr></thead>
+      <tbody>
+        <tr><td><strong>M1–3</strong><br><span style="font-size:.65rem;color:var(--muted)">Foundation</span></td><td>Ministry of Interior / MOH API applications submitted; PDPL architecture designed; Cerner identity field mapping complete</td><td>NPHIES payer behavior analysis; denial category taxonomy for GCC built; Arabic NLP baseline</td><td>Regulatory pathway established; no revenue impact yet</td><td>KSA in-country representation; MOI sponsor contact</td></tr>
+        <tr><td><strong>M3–6</strong><br><span style="font-size:.65rem;color:var(--muted)">Development</span></td><td>Nafath OIDC agent built; Absher enrollment agent built; NPHIES eligibility connector tested in sandbox</td><td>NPHIES denial agent v1; CCHI rule engine; prior auth automation for top 20 procedure categories</td><td>Pilot hospital selected and contracted; go-live preparation</td><td>API sandbox access from MOI; NPHIES test environment credentials</td></tr>
+        <tr><td><strong>M6–10</strong><br><span style="font-size:.65rem;color:var(--muted)">Pilot Go-Live</span></td><td>Vector 1 live at pilot site; KPI baseline capture begins; identity error rate tracked daily</td><td>Vector 4 autonomous denial pipeline live; 24–48hr resolution cycle measured</td><td>First revenue recovery evidence; case study documentation begins</td><td>Hospital EHR integration; Cerner Person Mgmt write access</td></tr>
+        <tr><td><strong>M10–14</strong><br><span style="font-size:.65rem;color:var(--muted)">Optimization</span></td><td>GCC Patient Identity Model training on live data; multi-site expansion to 3–5 hospitals</td><td>Payer pattern learning active; denial prediction engine trained on 6+ months of GCC data</td><td>Conservative commitment: $1.2–2.0M cumulative recovery at pilot site; contract expansion discussions begin; realistic upside of $2.5M+ as model trains on live GCC data</td><td>Multi-hospital data sharing agreements; payer cooperation</td></tr>
+        <tr><td><strong>M14–18</strong><br><span style="font-size:.65rem;color:var(--muted)">Integration</span></td><td>Biometric token embedded in NPHIES claim submission; identity-confirmed claim status transmitted to payers</td><td>V1×V4 closed loop operational; identity-based denials eliminated at source</td><td>Conservative commitment: $1.8–2.5M annual run rate per 500-bed hospital at contract; full platform ROI demonstrated; realistic upside of $4.5–7.0M at V1×V4 full model maturity</td><td>NPHIES claim submission standard update for biometric token field</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</section>
+
+<!-- PARTNERSHIP -->
+<section id="partnership">
+  <div class="container">
+    <div class="sec-eye">Consulting Partnership</div>
+    <h2>How We Work Together</h2>
+
+    <p style="font-size:.88rem;color:var(--muted2);max-width:720px;margin-bottom:2rem;line-height:1.8;">C22Arc's role is straightforward: we are a consulting partner that fills the specific capability gaps R1 needs to execute its GCC strategy — delivering the technical, regulatory, and operational expertise that doesn't exist in a US-trained RCM workforce. R1 remains the prime contractor and client relationship owner. C22Arc supports the build behind the scenes, and we measure our success entirely by R1's outcomes in the market.</p>
+
+    <div class="g2 mt1">
+      <div class="card">
+        <h3>What We Bring</h3>
+        <ul class="ul">
+          <li>GCC healthcare regulatory expertise — NPHIES, CCHI, PDPL compliance architecture</li>
+          <li>Biometric identity and patient verification capabilities for the Saudi market</li>
+          <li>Oracle Health Cerner integration experience, applied to GCC workflows</li>
+          <li>AI-assisted denial resolution trained on GCC payer logic and Arabic clinical documentation</li>
+          <li>Ministry API navigation and sovereign approval pathway support</li>
+          <li>In-market execution capability that accelerates R1's go-live timeline</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>What Stays with R1</h3>
+        <ul class="ul">
+          <li>All hospital client relationships and prime contractor authority</li>
+          <li>Commercial terms, pricing, and contract ownership with GCC clients</li>
+          <li>R1 Phare OS platform roadmap and product decisions</li>
+          <li>KSA in-country representation and Ministry relationship ownership</li>
+          <li>Final deployment authority on all production environments</li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="margin-top:1.8rem;background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:1.6rem;border-left:3px solid var(--accent);">
+      <div style="font-size:.7rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:.6rem;">Our Commitment</div>
+      <p style="font-size:.85rem;line-height:1.8;color:var(--muted2);margin:0;">C22Arc does not compete with R1's client relationships, does not seek direct hospital engagements in R1 markets, and does not retain or re-use R1 client data outside the defined engagement scope. Our consulting engagement is structured around a single principle: <strong style="color:var(--fg);">R1's success in the GCC is the only outcome that matters.</strong> We grow as that success grows. The structure is capital-light for R1, and is designed to produce measurable ROI within the first 18 months of engagement.</p>
+    </div>
+  </div>
+</section>
+
+<!-- VERSION CHANGELOG -->
+<div style="background:var(--s2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:1.5rem 0;" class="no-print">
+  <div class="container">
+    <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:.75rem;">
+      <span style="font-size:.65rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);">Document Version Log</span>
+      <span style="font-size:.65rem;color:var(--muted);">· Internal Reference · C22Arc Consulting Partnership</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:.75rem;">
+      <div style="background:var(--s3);border:1px solid var(--border);border-radius:6px;padding:.85rem 1rem;">
+        <div style="font-size:.7rem;font-weight:700;color:var(--muted2);margin-bottom:.25rem;">V2.0 — Initial Partnership Framing</div>
+        <div style="font-size:.72rem;color:var(--muted);line-height:1.5;">Published first external version. Replaced all competitive framing with partnership positioning. Established Providence Protocol section. Naming convention: R1-EXT-EXEC-V2.</div>
+      </div>
+      <div style="background:var(--s3);border:1px solid var(--border);border-radius:6px;padding:.85rem 1rem;">
+        <div style="font-size:.7rem;font-weight:700;color:var(--muted2);margin-bottom:.25rem;">V2.1 — Governance Layer + Principal Table</div>
+        <div style="font-size:.72rem;color:var(--muted);line-height:1.5;">Added C22Arc governance consulting framing throughout. Omar (CEO — KSA Region) and Abhijeet Pawar (EVP Global Operations) added to Principal table. "Race to Space" removed. Fiduciary language added to email draft.</div>
+      </div>
+      <div style="background:var(--s3);border:1px solid var(--border);border-radius:6px;padding:.85rem 1rem;">
+        <div style="font-size:.7rem;font-weight:700;color:var(--muted2);margin-bottom:.25rem;">V2.4 — Under-Promise Discipline Applied to Use Case Body + Callouts</div>
+        <div style="font-size:.72rem;color:var(--muted);line-height:1.5;">Conservative floor / realistic upside split applied to all six use case outcome statements and callout boxes. US-A, US-B, GCC-1 through GCC-4 all updated. V1×V4 combined impact reframed as committed floor with upside noted.</div>
+      </div>
+      <div style="background:var(--s3);border:1px solid var(--border);border-radius:6px;padding:.85rem 1rem;">
+        <div style="font-size:.7rem;font-weight:700;color:var(--muted2);margin-bottom:.25rem;">V2.5 — Under-Promise Discipline Fully Applied (Roadmap + Email + Phase Body)</div>
+        <div style="font-size:.72rem;color:var(--muted);line-height:1.5;">Roadmap table M10–14 and M14–18 outcome columns updated to conservative floor with realistic upside noted. V1×V4 phase body reframed. Email draft per-bed and combined recovery figures corrected to conservative entry commitments. Consulting skill updated to encode under-promise/over-deliver as a standing C22Arc rule.</div>
+      </div>
+      <div style="background:var(--s3);border:1px solid rgba(0,198,178,.3);border-radius:6px;padding:.85rem 1rem;">
+        <div style="font-size:.7rem;font-weight:700;color:var(--muted2);margin-bottom:.25rem;">V3.0 · US vs. Global Customers + GCC Execution Gaps + Guided Tour</div>
+        <div style="font-size:.72rem;color:var(--muted);line-height:1.5;">Three major additions: (1) <strong style="color:var(--fg);">US vs. Global Customers</strong> section — splits R1's 95/100 US health system dominance against &lt;2% GCC revenue footprint. (2) <strong style="color:var(--fg);">GCC Execution Gaps</strong> section — 6 capability gap cards reframed as C22Arc value-add opportunities. (3) <strong style="color:var(--fg);">Guided Tour</strong> — auto-steps through all 10 sections at 7-second intervals with dot progress indicator. Oct 2026 — C22Arc.</div>
+      </div>
+      <div style="background:var(--s3);border:1px solid rgba(0,198,178,.3);border-radius:6px;padding:.85rem 1rem;">
+        <div style="font-size:.7rem;font-weight:700;color:var(--muted2);margin-bottom:.25rem;">V3.1 · Tour Pause/Resume + Gap #1 Rewrite + Section Reframe</div>
+        <div style="font-size:.72rem;color:var(--muted);line-height:1.5;">Tour pause/resume added. Gap #1 rewritten — removed 2024 PE/LBO internal framing, replaced with 2026 GCC execution capability gap. Section eyebrow reframed to client-facing value map. Oct 2026 — C22Arc.</div>
+      </div>
+      <div style="background:var(--s3);border:1px solid var(--accent);border-radius:6px;padding:.85rem 1rem;">
+        <div style="font-size:.7rem;font-weight:700;color:var(--accent);margin-bottom:.25rem;">V3.2 — CURRENT · Client Deck Cleanup</div>
+        <div style="font-size:.72rem;color:var(--muted);line-height:1.5;">Five changes: (1) <strong style="color:var(--fg);">Cover reframe</strong> — leads with R1's capability gap, not Saudi Vision 2030. (2) <strong style="color:var(--fg);">Nav reordered</strong> — Overview → US vs Global → Capability Gaps → Biometric → Denial → Dashboard → Roadmap → Partnership. (3) <strong style="color:var(--fg);">Email draft removed</strong> — internal process tool, moved to C22Arc internal only. (4) <strong style="color:var(--fg);">Video section removed</strong> — internal delivery instructions, not for client. (5) <strong style="color:var(--fg);">Partnership section</strong> — Providence Protocol name and detailed engagement framework removed; replaced with high-level consulting and mutual commitment overview. Oct 2026 — C22Arc.</div>
+      </div>
+    </div>
+    <div style="margin-top:.75rem;font-size:.65rem;color:var(--muted);">
+      <strong style="color:var(--muted2);">Artifact URL (single source of truth):</strong> claude.ai/artifact/FB9Gj5NynYttXTVagnZa8L &nbsp;·&nbsp;
+      <strong style="color:var(--muted2);">Working file:</strong> r1-v4.html &nbsp;·&nbsp;
+      <strong style="color:var(--muted2);">Next:</strong> R1-EXT-BRIEF-V1 (1-page C-suite summary) · R1-SOW-PROP-V1 (Phase 1 SOW) · Omar outreach package
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div style="background:var(--surface);border-top:1px solid var(--border);padding:2rem 0;">
+  <div class="container" style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
+    <span style="font-size:.68rem;color:var(--muted);flex:1;min-width:200px;">Confidential — Prepared for R1 RCM Executive Leadership · October 2026 · C22Arc Consulting Partnership · R1-EXT-EXEC-V3.2</span>
+    <button class="pdf-btn no-print" onclick="preparePrint()">⬇ Download / Print as PDF</button>
+  </div>
+</div>
+
+<script>
+function preparePrint() {
+  const msg = document.createElement('div');
+  msg.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#0c1220;border:1px solid #192136;color:#dde3f5;padding:1.5rem 2rem;border-radius:8px;z-index:9999;font-family:sans-serif;font-size:.85rem;text-align:center;max-width:320px;';
+  msg.innerHTML = '<strong style="color:#00c6b2;display:block;margin-bottom:.5rem;">Print to PDF</strong>Use your browser\'s Print dialog (Ctrl/Cmd+P) and select "Save as PDF" as the destination.<br><br><button onclick="this.parentNode.remove()" style="background:#00c6b2;color:#04070f;border:none;padding:.4rem 1rem;border-radius:4px;cursor:pointer;font-weight:800;">Got it</button>';
+  document.body.appendChild(msg);
+}
+
+function copyEmail(part) {
+  const subject = document.getElementById('email-subject').textContent;
+  const body = document.getElementById('email-body').textContent;
+  let text = '';
+  if (part === 'subject') text = subject;
+  else if (part === 'body') text = body;
+  else text = 'Subject: ' + subject + '\n\n' + body;
+
+  const btn = event.target;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.classList.add('copied');
+    btn.textContent = '✓ Copied';
+    setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = btn.innerHTML.replace('✓ Copied', (part==='subject'?'📋 Copy Subject':part==='body'?'📋 Copy Body':'📋 Copy Full Email')); }, 2200);
+  }).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = text; ta.style.position='fixed'; ta.style.opacity='0';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); btn.textContent='✓ Copied'; setTimeout(()=>{ btn.innerHTML='📋 Fallback copied'; }, 2200); } catch(e){}
+    document.body.removeChild(ta);
+  });
+}
+
+// ── Animated Dashboard Count-Up ──
+function animateCount(el, target, prefix, suffix, duration) {
+  let start = 0; const step = target / (duration / 16);
+  const timer = setInterval(() => {
+    start = Math.min(start + step, target);
+    el.innerHTML = prefix + Math.round(start) + suffix;
+    if (start >= target) clearInterval(timer);
+  }, 16);
+}
+function triggerDashboardAnim() {
+  const k1 = document.getElementById('k1');
+  const k2 = document.getElementById('k2');
+  const k3 = document.getElementById('k3');
+  const k4 = document.getElementById('k4');
+  const k5 = document.getElementById('k5');
+  const k6 = document.getElementById('k6');
+  if (k1) animateCount(k1, 18, '', '.4M', 1600);
+  if (k2) animateCount(k2, 90, '', 's', 1400);
+  if (k3) animateCount(k3, 21, '', '%', 1200);
+  if (k4) animateCount(k4, 100, '', '%', 1800);
+  if (k5) animateCount(k5, 48, '', 'hr', 1200);
+  if (k6) animateCount(k6, 68, '$', 'M', 2000);
+  const bars = [
+    { id:'b1', w:'95%' }, { id:'b2', w:'92%' }, { id:'b3', w:'55%' },
+    { id:'b4', w:'50%' }, { id:'b5', w:'35%' }
+  ];
+  bars.forEach(b => {
+    const el = document.getElementById(b.id);
+    if (el) setTimeout(() => { el.style.width = b.w; }, 300);
+  });
+}
+
+// ── GUIDED TOUR ──
+const TOUR_SECTIONS = [
+  { id: 'overview',     label: 'Overview' },
+  { id: 'customers',   label: 'US vs. Global Customers' },
+  { id: 'organalysis', label: 'Capability Gaps' },
+  { id: 'v1',          label: 'Vector 1 — Biometric Identity' },
+  { id: 'v4',          label: 'Vector 4 — Denial Automation' },
+  { id: 'dashboard',   label: 'Executive Dashboard' },
+  { id: 'roadmap',     label: '18-Month Roadmap' },
+  { id: 'partnership', label: 'Partnership Framework' },
+];
+let tourActive = false;
+let tourPaused = false;
+let tourIdx = 0;
+let tourTimer = null;
+const TOUR_INTERVAL = 7000; // ms per section
+
+/* ── ZOOM CONTROL ──────────────────────────────────────────────────────────
+   Steps through font-size levels. Base is 15px (100%). Each step adds 1px.
+   Range: 13px (87%) → 20px (133%). Persists across page load via sessionStorage.
+   All rem-based elements scale proportionally — no per-element overrides needed.
+────────────────────────────────────────────────────────────────────────────── */
+const ZOOM_SIZES = [13, 14, 15, 16, 17, 18, 19, 20]; // px
+const ZOOM_BASE  = 15; // matches html { font-size: 15px }
+let zoomIdx = ZOOM_SIZES.indexOf(
+  parseInt(sessionStorage.getItem('c22arc-zoom') || ZOOM_BASE)
+);
+if (zoomIdx < 0) zoomIdx = ZOOM_SIZES.indexOf(ZOOM_BASE);
+
+function applyZoom(idx) {
+  const px = ZOOM_SIZES[idx];
+  document.documentElement.style.fontSize = px + 'px';
+  const pct = Math.round(px / ZOOM_BASE * 100);
+  document.getElementById('zoom-display').textContent = pct + '%';
+  sessionStorage.setItem('c22arc-zoom', px);
+}
+function adjustZoom(dir) {
+  const next = zoomIdx + dir;
+  if (next < 0 || next >= ZOOM_SIZES.length) return;
+  zoomIdx = next;
+  applyZoom(zoomIdx);
+}
+// Apply saved zoom on load
+applyZoom(zoomIdx);
+
+function startTour() {
+  tourActive = true;
+  tourPaused = false;
+  tourIdx = 0;
+  const overlay = document.getElementById('tour-overlay');
+  overlay.style.display = 'flex';
+  const btn = document.getElementById('tour-btn');
+  if (btn) { btn.textContent = '◉ Tour Running'; btn.style.background='rgba(0,198,178,.25)'; }
+  const pauseBtn = document.getElementById('tour-pause-btn');
+  if (pauseBtn) { pauseBtn.textContent = '⏸ Pause'; pauseBtn.style.background='#101728'; pauseBtn.style.color='#8a93aa'; pauseBtn.style.borderColor='#192136'; }
+  renderTourDots();
+  goToTourSection();
+  scheduleTourStep();
+}
+
+function exitTour() {
+  tourActive = false;
+  tourPaused = false;
+  clearTimeout(tourTimer);
+  const overlay = document.getElementById('tour-overlay');
+  overlay.style.display = 'none';
+  const btn = document.getElementById('tour-btn');
+  if (btn) { btn.textContent = '▶ Start Tour'; btn.style.background='rgba(0,198,178,.15)'; }
+}
+
+function toggleTourPause() {
+  if (!tourActive) return;
+  tourPaused = !tourPaused;
+  const pauseBtn = document.getElementById('tour-pause-btn');
+  const navBtn = document.getElementById('tour-btn');
+  if (tourPaused) {
+    clearTimeout(tourTimer);
+    if (pauseBtn) { pauseBtn.textContent = '▶ Resume'; pauseBtn.style.background='rgba(0,198,178,.2)'; pauseBtn.style.color='#00c6b2'; pauseBtn.style.borderColor='rgba(0,198,178,.5)'; }
+    if (navBtn) { navBtn.textContent = '⏸ Paused'; navBtn.style.background='rgba(240,165,0,.15)'; }
+  } else {
+    if (pauseBtn) { pauseBtn.textContent = '⏸ Pause'; pauseBtn.style.background='#101728'; pauseBtn.style.color='#8a93aa'; pauseBtn.style.borderColor='#192136'; }
+    if (navBtn) { navBtn.textContent = '◉ Tour Running'; navBtn.style.background='rgba(0,198,178,.25)'; }
+    if (tourIdx < TOUR_SECTIONS.length - 1) scheduleTourStep();
+  }
+}
+
+function tourStep(dir) {
+  clearTimeout(tourTimer);
+  tourIdx = Math.min(Math.max(tourIdx + dir, 0), TOUR_SECTIONS.length - 1);
+  renderTourDots();
+  goToTourSection();
+  if (!tourPaused) {
+    if (tourIdx < TOUR_SECTIONS.length - 1) scheduleTourStep();
+    else { clearTimeout(tourTimer); setTimeout(exitTour, 4000); }
+  }
+}
+
+function scheduleTourStep() {
+  clearTimeout(tourTimer);
+  if (tourPaused) return;
+  tourTimer = setTimeout(() => {
+    if (!tourActive || tourPaused) return;
+    tourIdx++;
+    if (tourIdx >= TOUR_SECTIONS.length) { exitTour(); return; }
+    renderTourDots();
+    goToTourSection();
+    scheduleTourStep();
+  }, TOUR_INTERVAL);
+}
+
+function goToTourSection() {
+  const sec = TOUR_SECTIONS[tourIdx];
+  const el = document.getElementById(sec.id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  const nameEl = document.getElementById('tour-section-name');
+  if (nameEl) nameEl.textContent = (tourIdx + 1) + ' of ' + TOUR_SECTIONS.length + ' — ' + sec.label;
+}
+
+function renderTourDots() {
+  const dotsEl = document.getElementById('tour-dots');
+  if (!dotsEl) return;
+  dotsEl.innerHTML = '';
+  TOUR_SECTIONS.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.style.cssText = 'width:6px;height:6px;border-radius:50%;background:' + (i === tourIdx ? '#00c6b2' : i < tourIdx ? 'rgba(0,198,178,.4)' : 'rgba(138,147,170,.3)') + ';transition:background .3s;flex-shrink:0;';
+    dotsEl.appendChild(d);
+  });
+}
+
+// ── Animated Dashboard Count-Up ──
+// Trigger anim when Tab 4 (Animated Dashboard) is selected
+document.addEventListener('DOMContentLoaded', () => {
+  const vt4 = document.getElementById('vt4');
+  if (vt4) {
+    vt4.addEventListener('change', () => { if (vt4.checked) triggerDashboardAnim(); });
+  }
+  // Also trigger if it's the default selected tab
+  const vt1 = document.getElementById('vt1');
+  if (vt1 && !vt1.checked && vt4 && vt4.checked) triggerDashboardAnim();
+});
+</script>
+
+</body></html>
